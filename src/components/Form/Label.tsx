@@ -4,11 +4,19 @@ import {FormLabel} from "../../types/FormInfo";
 
 const Label = (label: FormLabel) => {
     return (
-        <Form.Group controlId={label.info.controlId}>
-            <Form.Label>{label.info.label}</Form.Label>
+        <Form.Group>
+            <Form.Label>{label.placeholder}</Form.Label>
             <Form.Control
-                onChange={label.onChange}
-                type={label.info.type} placeholder={label.info.placeholder}/>
+                type={label.type}
+                name={label.name}
+                placeholder={label.placeholder}
+                value={label.values[label.name]}
+                onChange={label.handleChange}
+                isInvalid={!!label.errors[label.name]}
+            />
+            <Form.Control.Feedback type="invalid">
+                {label.errors[label.name]}
+            </Form.Control.Feedback>
         </Form.Group>
     )
 };

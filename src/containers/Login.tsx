@@ -1,11 +1,14 @@
 import React from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
-import Form from "../components/Form/Form";
-import {emailLabel, passLabel} from "../types/FormInfo";
+import {emailLabel, FormInfo, passConfirmLabel, passLabel, userLabel} from "../types/FormInfo";
 import {useHistory} from 'react-router-dom'
 import '../app.css';
-import {LoginLabel} from "../types/User";
+import {Formik} from "formik";
+import {loginSchema} from "../components/Form/Schemas";
+import FormContainer from "../components/Form/FormContainer";
+import {Form} from "react-bootstrap";
+import FormButton from "../components/Form/FormButton";
 
 
 const Login = () => {
@@ -28,25 +31,45 @@ const Login = () => {
         })
     }
 
-    const labels = [emailLabel, passLabel];
-    const formLabels = labels.map((label, index) => {
-        return (
-            <Label key={index} info={label} onChange={handleChange}/>
-        )
-    });
-
     return (
         <div>
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>Back to
                 Home
             </Button>
-            <Form formSubmit={changeRoute} labels={formLabels} title={LoginLabel} buttonName={LoginLabel}/>
+            <Formik
+                validationSchema={loginSchema}
+                onSubmit={(values, actions) => {
+                    console.log(values)
+                }}
+                validateOnChange={false}
+                validateOnBlur={false}
+                initialValues={state}>
+                {({
+                      handleSubmit,
+                      handleChange,
+                      handleBlur,
+                      values,
+                      touched,
+                      isValid,
+                      errors,
+                  }) => {
+                    const labels = [userLabel, passLabel];
+                    const formLabels = labels.map((label: FormInfo, index: number) => {
+                        return (<Label key={index} errors={errors} handleChange={handleChange} name={label.name}
+                                       values={values} placeholder={label.placeholder} type={label.type}/>)
+                    });
+                    return (
+                        <FormContainer title={"Login"}>
+                            <Form noValidate onSubmit={handleSubmit}>
+                                {formLabels}
+                                <FormButton name={"Login"}/>
+                            </Form>
+                        </FormContainer>
+                    );
+                }}
+            </Formik>
         </div>
     )
 };
-
-// const login = () => {
-//     console.log(emailLabel.controlId)
-// };
 
 export default Login
