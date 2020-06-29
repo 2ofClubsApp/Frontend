@@ -1,39 +1,41 @@
 import * as React from "react";
+import {FormikErrors, FormikState, FormikValues} from "formik";
 
 export type FormInfo = {
-    controlId: string
-    label: string
-    type: string
+    type: "text" | "email" | "password"
+    name: string
     placeholder: string
 }
 
 export const userLabel: FormInfo = {
-    controlId: "username",
-    label: "Username",
+
     type: "text",
+    name: "username",
     placeholder: "Username"
+
 }
 export const emailLabel: FormInfo = {
-    controlId: "email",
-    label: "Email Address",
-    type: "email",
+    type: "text",
+    name: "email",
     placeholder: "Email"
 };
 export const passLabel: FormInfo = {
-    controlId: "password",
-    label: "Password",
     type: "password",
+    name: "password",
     placeholder: "Password"
 };
 export const passConfirmLabel: FormInfo = {
-    controlId: "confirmpassword",
-    label: "Confirm Password",
     type: "password",
-    placeholder: "Password"
+    name: "passwordConfirm",
+    placeholder: "Confirm Password"
 };
 
 export type FormLabel = {
     key?: number
-    info: FormInfo
-    onChange: React.ChangeEventHandler<HTMLTextAreaElement>
+    type: "text" | "email" | "password"
+    name: string
+    placeholder: string
+    values: any
+    errors: FormikErrors<FormikValues>
+    handleChange: React.ChangeEventHandler<HTMLTextAreaElement>
 }

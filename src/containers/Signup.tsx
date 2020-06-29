@@ -1,15 +1,17 @@
 import React from 'react'
-import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
-import Form from "../components/Form/Form";
-import {userLabel, emailLabel, passLabel, passConfirmLabel} from "../types/FormInfo";
-import {SignUpLabel} from "../types/User";
+import {Form, Button, Col, InputGroup} from "react-bootstrap"
+import FormContainer from "../components/Form/FormContainer";
+import {userLabel, emailLabel, passLabel, passConfirmLabel, FormInfo} from "../types/FormInfo";
 import {useHistory} from 'react-router-dom';
 import '../app.css';
 import axios from "../axios"
 import {setLogin} from "../store/actions/actions";
 import {connect} from "react-redux";
-
+import {Formik, useField} from "formik";
+import * as Yup from "yup"
+import FormButton from "../components/Form/FormButton";
+import {signUpSchema} from "../components/Form/Schemas";
 
 const SignUp = () => {
     const history = useHistory();
@@ -21,7 +23,7 @@ const SignUp = () => {
         username: "",
         email: "",
         password: "",
-        confirmpassword: ""
+        passwordConfirm: ""
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,13 +34,6 @@ const SignUp = () => {
             [id]: value
         })
     }
-
-    const labels = [userLabel, emailLabel, passLabel, passConfirmLabel];
-    const formLabels = labels.map((label, index) => {
-        return (
-            <Label key={index} info={label} onChange={handleChange}/>
-        )
-    });
 
     const signup = () => {
         axios.post("/signup", JSON.stringify({
@@ -59,7 +54,38 @@ const SignUp = () => {
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => redirect('/')}>Back to
                 Home
             </Button>
-            <Form formSubmit={signup} buttonName={SignUpLabel} labels={formLabels} title={SignUpLabel}/>
+            <Formik
+                validationSchema={signUpSchema}
+                onSubmit={(values, actions) => {
+                    console.log(values)
+                }}
+                validateOnChange={false}
+                validateOnBlur={false}
+                initialValues={state}>
+                {({
+                      handleSubmit,
+                      handleChange,
+                      handleBlur,
+                      values,
+                      touched,
+                      isValid,
+                      errors,
+                  }) => {
+                    const labels = [userLabel, emailLabel, passLabel, passConfirmLabel];
+                    const formLabels = labels.map((label: FormInfo, index: number) => {
+                        return (<Label key={index} errors={errors} handleChange={handleChange} name={label.name}
+                                       values={values} placeholder={label.placeholder} type={label.type}/>)
+                    });
+                    return (
+                        <FormContainer title={"Sign Up"}>
+                            <Form noValidate onSubmit={handleSubmit}>
+                                {formLabels}
+                                <FormButton name={"Sign Up"}/>
+                            </Form>
+                        </FormContainer>
+                    );
+                }}
+            </Formik>
         </div>
     )
 };
