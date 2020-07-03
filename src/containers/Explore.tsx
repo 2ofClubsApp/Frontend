@@ -5,6 +5,7 @@ import {emailLabel, FormInfo, passConfirmLabel, passLabel, userLabel} from "../t
 import {useHistory} from 'react-router-dom'
 import '../app.css';
 import { useSwipeable, Swipeable } from 'react-swipeable'
+import ClubDeck from "../components/Swipe/ClubDeck";
 
 
 const Explore = () => {
@@ -15,7 +16,6 @@ const Explore = () => {
 
     return (
         <div>
-            
         </div>
     )
 };

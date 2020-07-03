@@ -1,9 +1,25 @@
 import React from "react";
 import { string, number, array } from "prop-types";
-import { animated, interpolate } from "react-spring/hooks";
+import {animated, interpolate} from "react-spring";
 import Carousel from "nuka-carousel";
+import {GestureEvents} from "react-with-gesture";
 
-const ClubCard = ({ i, x, y, scale, trans, bind, data }) => {
+type values = {
+    i: number,
+    x: number,
+    y: number,
+    scale: number,
+    trans: any,
+    bind: any,
+    data: data[]
+}
+type data = {
+    name: string,
+    tags: any[]
+    text: string,
+    pics: any[]
+}
+const ClubCard = ({i, x, y, scale, trans, bind, data }: values) => {
   const { name, tags, text, pics } = data[i];
 
   return (

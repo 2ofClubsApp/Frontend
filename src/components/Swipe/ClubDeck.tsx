@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSprings } from "react-spring/hooks";
+import { useSprings } from "react-spring";
 import { useGesture } from "react-with-gesture";
 import { prependOnceListener } from "process";
 
@@ -9,7 +9,7 @@ import { format } from "path";
 import ClubCard from "./ClubCard";
 
 // End position of the card
-const to = i => ({
+const to = (i: number) => ({
     x: 0,
     y: 0,
     scale: 1,
@@ -17,15 +17,15 @@ const to = i => ({
 });
 
 // Starting position of the card
-const from = i => ({scale: 1.5, y: -1000 });
+const from = (i:number) => ({scale: 1.5, y: -1000 });
 
 // changes scale 
-const trans = (s) =>
+const trans = (s: number) =>
   `scale(${s})`;
 
 function ClubDeck() {
     // like using this.gone but function doesn't have this.x
-    // so we declaire a state variable
+    // so we declare a state variable
     // created a new set with gone
     const [gone] = useState(() => new Set());
 
@@ -63,7 +63,7 @@ function ClubDeck() {
                 }
                 gone.add(index);
             }
-
+            // @ts-ignore
             set(i => {
                 if (index !== i) return;
 
@@ -79,14 +79,14 @@ function ClubDeck() {
                     scale,
                     delay: undefined,
                     config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500}
-                    /* if down 
+                    /* if down
                         800
                         else {
                             if isGone
                                 200
                             else
                                 500*/
-                    
+
                 };
             });
             
