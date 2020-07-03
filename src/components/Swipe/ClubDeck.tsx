@@ -20,8 +20,8 @@ const to = i => ({
 const from = i => ({scale: 1.5, y: -1000 });
 
 // changes scale 
-const trans = (r, s) =>
-  `rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${s})`;
+const trans = (s) =>
+  `scale(${s})`;
 
 function ClubDeck() {
     // like using this.gone but function doesn't have this.x
@@ -70,7 +70,7 @@ function ClubDeck() {
                 // boolean checking if the card is gone or not
                 const isGone = gone.has(index);
 
-                const x = isGone ? (200 + window.innerWidth) * dir : xDelta: 0;
+                const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0;
 
                 const scale = down ? 1.1 : 1;
 
@@ -108,6 +108,7 @@ function ClubDeck() {
             x={x}
             y={y}
             scale={scale}
+            trans={trans}
             data={data}
             bind={bind}
         />

@@ -3,14 +3,14 @@ import { string, number, array } from "prop-types";
 import { animated, interpolate } from "react-spring/hooks";
 import Carousel from "nuka-carousel";
 
-const ClubCard = ({ i, x, y, scale, bind, data }) => {
-  const { name, age, distance, text, pics } = data[i];
+const ClubCard = ({ i, x, y, scale, trans, bind, data }) => {
+  const { name, tags, text, pics } = data[i];
 
   return (
     <animated.div
       key={i}
       style={{
-        transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`)
+        transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px, 0)`)
       }}
     >
       <animated.div
@@ -26,8 +26,7 @@ const ClubCard = ({ i, x, y, scale, bind, data }) => {
             ))}
           </Carousel>
           <h2>{name},</h2>
-          <h2>{age}</h2>
-          <h5>{distance}</h5>
+          <h5>{tags}</h5>
           <h5>{text}</h5>
         </div>
       </animated.div>
