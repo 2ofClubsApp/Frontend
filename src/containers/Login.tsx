@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
-import {emailLabel, FormInfo, passConfirmLabel, passLabel, userLabel} from "../types/FormInfo";
+import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
 import {useHistory} from 'react-router-dom'
 import '../app.css';
 import {Formik} from "formik";
@@ -9,27 +9,28 @@ import {loginSchema} from "../components/Form/Schemas";
 import FormContainer from "../components/Form/FormContainer";
 import {Form} from "react-bootstrap";
 import FormButton from "../components/Form/FormButton";
+import {connect, MapDispatchToProps} from "react-redux";
+import {RootState} from "../store";
+import {setLogin} from "../store/actions/actions";
 
-
-const Login = () => {
+const Login = (props: any) => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
-
-    const [state, setState] = React.useState({
+    const [state] = React.useState({
         username: "",
         password: "",
     });
 
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value
-        const id = event.target.id
-        setState({
-            ...state,
-            [id]: value
-        })
-    }
+    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     const value = event.target.value
+    //     const id = event.target.id
+    //     setState({
+    //         ...state,
+    //         [id]: value
+    //     })
+    // }
 
     return (
         <div>
@@ -39,7 +40,9 @@ const Login = () => {
             <Formik
                 validationSchema={loginSchema}
                 onSubmit={(values, actions) => {
-                    console.log(values)
+                    // console.log(values)
+                    props.onSetLogin()
+                    changeRoute("/")
                 }}
                 validateOnChange={false}
                 validateOnBlur={false}
@@ -47,10 +50,7 @@ const Login = () => {
                 {({
                       handleSubmit,
                       handleChange,
-                      handleBlur,
                       values,
-                      touched,
-                      isValid,
                       errors,
                   }) => {
                     const labels = [userLabel, passLabel];
@@ -72,4 +72,15 @@ const Login = () => {
     )
 };
 
-export default Login
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: () => dispatch(setLogin(true))
+    }
+}
+const mapStateToProps = (state: RootState) => {
+    return {
+        isLogged: state.system.isLoggedIn
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
