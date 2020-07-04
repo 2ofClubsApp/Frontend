@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormikErrors, FormikState, FormikValues} from "formik";
+import {FormikErrors, FormikValues} from "formik";
 
 export type FormInfo = {
     type: "text" | "email" | "password"

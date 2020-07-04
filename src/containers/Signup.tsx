@@ -1,15 +1,13 @@
 import React from 'react'
 import Label from "../components/Form/Label";
-import {Form, Button, Col, InputGroup} from "react-bootstrap"
+import {Form, Button} from "react-bootstrap"
 import FormContainer from "../components/Form/FormContainer";
 import {userLabel, emailLabel, passLabel, passConfirmLabel, FormInfo} from "../types/FormInfo";
 import {useHistory} from 'react-router-dom';
 import '../app.css';
-import axios from "../axios"
 import {setLogin} from "../store/actions/actions";
 import {connect} from "react-redux";
-import {Formik, useField} from "formik";
-import * as Yup from "yup"
+import {Formik} from "formik";
 import FormButton from "../components/Form/FormButton";
 import {signUpSchema} from "../components/Form/Schemas";
 
@@ -19,35 +17,35 @@ const SignUp = () => {
         history.replace({pathname: path})
     };
 
-    const [state, setState] = React.useState({
+    const [state] = React.useState({
         username: "",
         email: "",
         password: "",
         passwordConfirm: ""
     });
 
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value
-        const id = event.target.id
-        setState({
-            ...state,
-            [id]: value
-        })
-    }
+    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     const value = event.target.value
+    //     const id = event.target.id
+    //     setState({
+    //         ...state,
+    //         [id]: value
+    //     })
+    // }
 
-    const signup = () => {
-        axios.post("/signup", JSON.stringify({
-            "Username": state["username"],
-            "Password": state["password"],
-            "Email": state["email"],
-        })).then(response => {
-            console.log(response);
-            redirect("/login");
-            const login = setLogin(true)
-        }).catch(err => {
-            console.log(err + "Unable to get student ;.;");
-        })
-    };
+    // const signup = () => {
+    //     axios.post("/signup", JSON.stringify({
+    //         "Username": state["username"],
+    //         "Password": state["password"],
+    //         "Email": state["email"],
+    //     })).then(response => {
+    //         console.log(response);
+    //         redirect("/login");
+    //         const login = setLogin(true)
+    //     }).catch(err => {
+    //         console.log(err + "Unable to get student ;.;");
+    //     })
+    // };
 
     return (
         <div>
@@ -65,10 +63,7 @@ const SignUp = () => {
                 {({
                       handleSubmit,
                       handleChange,
-                      handleBlur,
                       values,
-                      touched,
-                      isValid,
                       errors,
                   }) => {
                     const labels = [userLabel, emailLabel, passLabel, passConfirmLabel];
