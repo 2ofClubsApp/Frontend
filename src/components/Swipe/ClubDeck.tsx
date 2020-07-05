@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useSprings } from "react-spring";
-import { useGesture } from "react-with-gesture";
-import { prependOnceListener } from "process";
+import React, {useState} from "react";
+import {useSprings} from "react-spring";
+import {useGesture} from "react-with-gesture";
+import {prependOnceListener} from "process";
 
 import data from "./testdata";
 import ClubCard from "./ClubCard";
-import "./styles/Deck.css";
+// import "./styles/Deck.css";
 
 // End position of the card
 const to = (i: number) => ({
@@ -16,13 +16,13 @@ const to = (i: number) => ({
 });
 
 // Starting position of the card
-const from = (i:number) => ({scale: 1.5, y: -1000 });
+const from = (i: number) => ({scale: 1.5, y: -1000});
 
 // changes scale 
 const trans = (s: number) =>
-  `scale(${s})`;
+    `scale(${s})`;
 
-function ClubDeck(): JSX.Element[] {
+const ClubDeck = () => {
     // like using this.gone but function doesn't have this.x
     // so we declare a state variable
     // created a new set with gone
@@ -37,27 +37,26 @@ function ClubDeck(): JSX.Element[] {
     const bind = useGesture(
         // state
         ({
-            args: [index],
-            down,
-            delta: [xDelta],
-            distance,
-            direction: [xDir],
-            velocity
-        }) => 
-        // do something
-        { 
+             args: [index],
+             down,
+             delta: [xDelta],
+             distance,
+             direction: [xDir],
+             velocity
+         }) =>
+            // do something
+        {
             // trigger if velocity is greater than 0.2
             const trigger = velocity > 0.2;
 
             // if x direction is less than 0, return -1, else return 1
-            const dir = xDir < 0? -1 : 1;
+            const dir = xDir < 0 ? -1 : 1;
 
             // if "card picked up" and swiped right, add to gone set
             if (!down && trigger) {
                 if ((xDir > 0)) {
                     //add to match
-                }
-                else {
+                } else {
                     // add to reject
                 }
                 gone.add(index);
@@ -77,7 +76,7 @@ function ClubDeck(): JSX.Element[] {
                     x,
                     scale,
                     delay: undefined,
-                    config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500}
+                    config: {friction: 50, tension: down ? 800 : isGone ? 200 : 500}
                     /* if down
                         800
                         else {
@@ -88,20 +87,19 @@ function ClubDeck(): JSX.Element[] {
 
                 };
             });
-            
+
             // Keep track of which way the person swipped
             if (!down && trigger) {
                 console.log(xDir);
                 console.log("Gone");
-              }
-        
+            }
+
             /*// if deck is all gone reset
             if (!down && gone.size == data.length) 
                 setTimeout(() => gone.clear() || set(i => to(i)), 600)*/
         }
     );
-
-    return props.map( ( { x, y, scale }, i) => (
+    const cards = props.map(({x, y, scale}, i) => (
         <ClubCard
             i={i}
             x={x}
@@ -112,6 +110,12 @@ function ClubDeck(): JSX.Element[] {
             bind={bind}
         />
     ));
+    return (
+        <div>
+            {cards}
+        </div>
+
+    )
 }
 
 export default ClubDeck;
