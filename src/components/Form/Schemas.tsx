@@ -3,8 +3,8 @@ import * as Yup from "yup";
 export const signUpSchema = Yup.object({
     username: Yup.string()
         .required("Username is a required field")
-        .min(2, "Minimum username length must be 2 characters")
-        .max(15, "Maximum username length must be 15 characters"),
+        .min(2, "Minimum username length is 2 characters")
+        .max(15, "Maximum username length is 15 characters"),
     email: Yup.string()
         .email("Enter a valid email address")
         .required("Email is a required field"),
