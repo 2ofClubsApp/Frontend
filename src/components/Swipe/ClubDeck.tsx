@@ -3,10 +3,9 @@ import { useSprings } from "react-spring";
 import { useGesture } from "react-with-gesture";
 import { prependOnceListener } from "process";
 
-import Card from "./ClubCard";
 import data from "./testdata";
-import { format } from "path";
 import ClubCard from "./ClubCard";
+import "./styles/Deck.css";
 
 // End position of the card
 const to = (i: number) => ({
@@ -23,7 +22,7 @@ const from = (i:number) => ({scale: 1.5, y: -1000 });
 const trans = (s: number) =>
   `scale(${s})`;
 
-function ClubDeck() {
+function ClubDeck(): JSX.Element[] {
     // like using this.gone but function doesn't have this.x
     // so we declare a state variable
     // created a new set with gone

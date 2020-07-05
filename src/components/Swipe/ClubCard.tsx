@@ -2,7 +2,6 @@ import React from "react";
 import { string, number, array } from "prop-types";
 import {animated, interpolate} from "react-spring";
 import Carousel from "nuka-carousel";
-import {GestureEvents} from "react-with-gesture";
 
 type values = {
     i: number,
@@ -26,7 +25,7 @@ const ClubCard = ({i, x, y, scale, trans, bind, data }: values) => {
     <animated.div
       key={i}
       style={{
-        transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px, 0)`)
+        transform: interpolate([x, y], (x: number, y: number) => `translate3d(${x}px,${y}px, 0)`)
       }}
     >
       <animated.div
