@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {Formik} from "formik";
 import FormButton from "../components/Form/FormButton";
 import {signUpSchema} from "../components/Form/Schemas";
+import axios from "../axios";
 
 const SignUp = () => {
     const history = useHistory();
@@ -33,19 +34,22 @@ const SignUp = () => {
     //     })
     // }
 
-    // const signup = () => {
-    //     axios.post("/signup", JSON.stringify({
-    //         "Username": state["username"],
-    //         "Password": state["password"],
-    //         "Email": state["email"],
-    //     })).then(response => {
-    //         console.log(response);
-    //         redirect("/login");
-    //         const login = setLogin(true)
-    //     }).catch(err => {
-    //         console.log(err + "Unable to get student ;.;");
-    //     })
-    // };
+    const signup = (values: any) => {
+        axios.post("/signup", JSON.stringify({
+            "Username": state["username"],
+            "Password": state["password"],
+            "Email": state["email"],
+        })).then(response => {
+            console.log(response);
+            redirect("/login");
+        }).catch(err => {
+            console.log(err + "Unable to get student ;.;");
+        })
+    };
+    const isValidInfo = async (endpoint: "usernames" | "emails", value: string) => {
+        const response = await axios.get(`/signup/${endpoint}/${value}`);
+        return response.data === "" ? true : false
+    };
 
     return (
         <div>
@@ -54,8 +58,14 @@ const SignUp = () => {
             </Button>
             <Formik
                 validationSchema={signUpSchema}
-                onSubmit={(values, actions) => {
-                    console.log(values)
+                // setSubmitting is already set to false when onSubmit is async
+                onSubmit={async (values, actions) => {
+                    const username = await isValidInfo("usernames", values.username)
+                    const email = await isValidInfo("emails", values.email)
+                    username && email ? signup(values) : actions.setErrors({
+                        username: username ? "" : "Username is already taken",
+                        email: email ? "" : "Email is already taken"
+                    });
                 }}
                 validateOnChange={false}
                 validateOnBlur={false}
