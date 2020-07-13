@@ -58,7 +58,7 @@ export const LandingPage = () => {
                 </Row>
                 <Row>
                     <Col xs className="text-center">
-                        <h3 className="landing-text" onClick={() => changeRoute('/login')}>
+                        <h3 className="landing-text" onClick={() => changeRoute('/explore')}>
                             CONTINUE WITHOUT ACCOUNT
                         </h3>
                     </Col>

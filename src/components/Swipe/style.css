@@ -1,0 +1,28 @@
+.card {
+    border: none;
+    border-radius: 50px;
+
+}
+
+.card-img-top {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        margin-top: 115px;
+        max-width: 540px;
+        max-height: 76%;
+        height: 100%;
+        border-radius: 50px;
+        
+    }
+
+    .modal-content {
+        height: 100%;
+        border-radius: 50px;
+    }
+    
+}
