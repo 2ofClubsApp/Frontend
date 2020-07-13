@@ -8,6 +8,7 @@ import Home from "./containers/Home";
 import {connect} from "react-redux";
 import {RootState} from "./store";
 import Explore from "./containers/Explore";
+import ClubInfo from "./containers/ClubInfo/ClubInfo";
 
 // type AppProps = {
 //     system: SystemState
@@ -22,6 +23,7 @@ const App = (props: any) => {
                 <Route exact path={"/login"} component={Login}/>
                 <Route exact path={"/signup"} component={SignUp}/>
                 <Route exact path={"/explore"} component={Explore}/>
+                <Route exact path={"/settings/info"} component={ClubInfo}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>
