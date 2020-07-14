@@ -1,13 +1,18 @@
 import React from 'react'
-import ClubForm from "../../components/Form/ClubForm"
+import ClubForm from "../../components/ClubForm/ClubForm"
+import NavBar from "../../components/NavBar/NavBar"
 
 
 const ClubInfo = () => {
 
     return (
-        <ClubForm title={"Save Changes"}>
+        <>
+            <NavBar></NavBar>
 
-        </ClubForm>
+            <ClubForm title={"Save Changes"}>
+
+            </ClubForm>
+        </>
     )
 };
 

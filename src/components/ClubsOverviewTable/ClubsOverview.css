@@ -1,0 +1,29 @@
+.clubsOverviewContainer {
+    background-color: white;
+    box-shadow: 2px 2px 5px grey;
+    border-radius: 1rem;}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: rgb(248, 248, 248);
+ }
+
+.title {
+    font-family: "Poppins", Helvetica, sans-serif;
+    font-size: 2rem;
+    color: #696de9;
+    margin: 2rem 0 1rem 0;
+}
+
+a {
+    color:#000000;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(0, 174, 255);
+    
+}
+
+b {
+    color: #696de9;
+}

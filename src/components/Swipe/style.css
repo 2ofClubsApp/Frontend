@@ -1,7 +1,7 @@
 .card {
     border: none;
     border-radius: 50px;
-
+    box-shadow: 5px 5px 10px rgba(126, 124, 161, 0.76);
 }
 
 .card-img-top {

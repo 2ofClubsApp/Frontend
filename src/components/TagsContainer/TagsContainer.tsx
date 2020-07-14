@@ -1,6 +1,6 @@
 import {Form} from "react-bootstrap";
 import React from "react";
-import styles from "./ClubForm.module.css"
+import styles from "../ClubForm/ClubForm.module.css"
 
 type FormDefinition = {
     children: React.ReactNode

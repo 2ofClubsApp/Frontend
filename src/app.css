@@ -24,14 +24,20 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    background-color: #ffffff!important;
+
 }
 
-.test{
-    color: red;
-}
-
-.test:hover {
-    color:red;
+.bubblebackground {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background:linear-gradient(-135deg, rgba(106, 189, 226, 0.75), rgba(105, 109, 233, 0.75)), url("https://cdn.discordapp.com/attachments/719267602886688829/720133822058070076/Untitled-2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
 }
 
 hr.rounded {

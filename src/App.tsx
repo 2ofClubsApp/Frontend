@@ -10,6 +10,7 @@ import {RootState} from "./store";
 import Explore from "./containers/Explore";
 import ClubInfo from "./containers/ClubInfo/ClubInfo";
 import CreateClub from "./containers/CreateClub";
+import ManageClubs from "./containers/ManageClubs"
 
 // type AppProps = {
 //     system: SystemState
@@ -26,6 +27,7 @@ const App = (props: any) => {
                 <Route exact path={"/explore"} component={Explore}/>
                 <Route exact path={"/settings/info"} component={ClubInfo}/>
                 <Route exact path={"/createclub"} component={CreateClub}/>
+                <Route exact path={"/manageclubs"} component={ManageClubs}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

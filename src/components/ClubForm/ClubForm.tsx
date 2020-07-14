@@ -3,7 +3,7 @@ import {ToggleButton, Container, Row, Image, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "./ClubForm.module.css"
-import TagsContainer from "./TagsContainer"
+import TagsContainer from "../TagsContainer/TagsContainer"
 
 type ClubFormDefinition = {
     title: string
@@ -13,20 +13,7 @@ type ClubFormDefinition = {
 const ClubForm = (form: ClubFormDefinition) => {
 
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <Button variant="outline-light" className="float-right"
-                            style={{margin: "10px", textTransform: "uppercase"}}>
-                        Logout
-                    </Button>
-                    <Button variant="outline-light" className="float-right"
-                            style={{margin: "10px", textTransform: "uppercase"}}>
-                        Profile
-                    </Button>
-                </Col>
-            </Row>
-            
+        <Container className={styles.container}>
             <Row>
                 <Col>
                     <h1 className={styles.title}>Tell us more about your club!</h1>
@@ -79,8 +66,7 @@ const ClubForm = (form: ClubFormDefinition) => {
             </Row>
             <Row>
                 <Col>
-                    <Button variant="outline-light" className="float-right"
-                            style={{margin: "10px", textTransform: "uppercase"}}>
+                    <Button className={"float-right mt-5"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
                         {form.title}
                     </Button>
                 </Col>

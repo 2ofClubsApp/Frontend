@@ -1,12 +1,11 @@
 import React from 'react'
 import {Container, Row, Col, Button} from "react-bootstrap";
 import '../app.css';
-import Card from "../components/Swipe/Card";
+import ClubsOverview from "../components/ClubsOverviewTable/ClubsOverview";
 import {useHistory} from 'react-router-dom'
-import '../app.css';
 import NavBar from "../components/NavBar/NavBar"
 
-const Explore = () => {
+const ManageClubs = () => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -28,12 +27,12 @@ const Explore = () => {
 
     return (
         <>
-            <NavBar></NavBar>
-            <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-                <Card />
-            </Container>
+        <NavBar></NavBar>
+        <Container className={"d-flex justify-content-center align-items-center mt-5"}>
+            <ClubsOverview></ClubsOverview>
+        </Container>
         </>
     )
 }
 
-export default Explore
+export default ManageClubs

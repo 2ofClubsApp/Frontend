@@ -53,7 +53,7 @@ const SignUp = () => {
     };
 
     return (
-        <div>
+        <div className={"bubblebackground"}>
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => redirect('/')}>Back to
                 Home
             </Button>
