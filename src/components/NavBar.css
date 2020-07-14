@@ -1,0 +1,22 @@
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff!important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.75)!important;
+}
+
+.navbar-light .navbar-nav .show>.nav-link {
+    color: rgb(255, 255, 255);
+}
+
+.dropdown-toggle {
+    color: #ffffff;
+    font-size: 2rem;
+}
+
+.dropdown-toggle::after {
+    color: #ffffff;
+    display: none;
+}
+

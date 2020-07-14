@@ -19,6 +19,7 @@
     "@types/yup": "^0.29.3",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "css-loader": "^3.6.0",
     "formik": "^2.1.4",
     "nuka-carousel": "^4.7.0",
     "react": "^16.13.1",
@@ -27,6 +28,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "style-loader": "^1.2.1",
     "typescript": "^3.7.5",
     "yup": "^0.29.1"
   },
