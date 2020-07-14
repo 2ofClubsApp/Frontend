@@ -15,7 +15,7 @@ const FormContainer = (form: FormDefinition) => {
             <Row>
                 <Col xs lg="12">
                     <h2 className="text-center mb-4">{form.title}</h2>
-                        {form.children}
+                    {form.children}
                 </Col>
             </Row>
         </Container>

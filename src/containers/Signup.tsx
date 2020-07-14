@@ -36,9 +36,10 @@ const SignUp = () => {
 
     const signup = (values: any) => {
         axios.post("/signup", JSON.stringify({
-            "Username": state["username"],
-            "Password": state["password"],
-            "Email": state["email"],
+            "IsStudent": true,
+            "Username": values["username"],
+            "Password": values["password"],
+            "Email": values["email"],
         })).then(response => {
             console.log(response);
             redirect("/login");
@@ -62,7 +63,7 @@ const SignUp = () => {
                 onSubmit={async (values, actions) => {
                     const username = await isValidInfo("usernames", values.username)
                     const email = await isValidInfo("emails", values.email)
-                    username && email ? signup(values) : actions.setErrors({
+                    username && email ? await signup(values) : actions.setErrors({
                         username: username ? "" : "Username is already taken",
                         email: email ? "" : "Email is already taken"
                     });

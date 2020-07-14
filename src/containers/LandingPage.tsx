@@ -7,21 +7,21 @@ import Col from "react-bootstrap/Col";
 import {useHistory} from 'react-router-dom'
 import "../app.css"
 
+const signup = {
+    fontSize: "1.25rem",
+    backgroundColor: "white",
+    color: "#696DE9",
+    padding: "1rem 2rem",
+    margin: "10vh 0 0 0",
+    borderRadius: "1rem"
+};
+
+const changeRoute = (path: string, history: any) => {
+    history.push({pathname: path})
+};
 
 export const LandingPage = () => {
     const history = useHistory();
-    const changeRoute = (path: string) => {
-        history.push({pathname: path})
-    };
-
-    const signup = {
-        fontSize: "1.25rem",
-        backgroundColor: "white",
-        color: "#696DE9",
-        padding: "1rem 2rem",
-        margin: "10vh 0 0 0",
-        borderRadius: "1rem"
-    };
 
     return (
         <Jumbotron fluid bsPrefix="landing">
@@ -30,7 +30,7 @@ export const LandingPage = () => {
                     <Col xs>
                         <Button variant="outline-light" className="float-right"
                                 style={{margin: "10px", textTransform: "uppercase"}}
-                                onClick={() => changeRoute('/login')}>
+                                onClick={() => changeRoute('/login', history)}>
                             Login
                         </Button>
                     </Col>
@@ -51,14 +51,14 @@ export const LandingPage = () => {
                 </Row>
                 <Row>
                     <Col xs className="text-center">
-                        <Button style={signup} onClick={() => changeRoute('/signup')}>
+                        <Button style={signup} onClick={() => changeRoute('/signup', history)}>
                             SIGN UP
                         </Button>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs className="text-center">
-                        <h3 className="landing-text" onClick={() => changeRoute('/explore')}>
+                        <h3 className="landing-text" onClick={() => changeRoute('/explore', history)}>
                             CONTINUE WITHOUT ACCOUNT
                         </h3>
                     </Col>
