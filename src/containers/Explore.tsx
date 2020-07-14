@@ -4,6 +4,7 @@ import '../app.css';
 import Card from "../components/Swipe/Card";
 import {useHistory} from 'react-router-dom'
 import '../app.css';
+import NavBar from "../components/NavBar"
 
 const Explore = () => {
     const history = useHistory();
@@ -27,9 +28,7 @@ const Explore = () => {
 
     return (
         <>
-        <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>Back to
-                Home
-        </Button>
+        <NavBar></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
             <Card />
         </Container>
