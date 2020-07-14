@@ -1,0 +1,36 @@
+.title {
+    font-family: "Poppins", Helvetica, sans-serif;
+    font-size: 2rem;
+    text-shadow: 5px 5px 5px rgba(55, 58, 143, 0.6);
+    color: white;
+    margin: 0 1rem;
+}
+
+.subtitle {
+    font-family: "Poppins", Helvetica, sans-serif;
+    color: white;
+    margin: 1rem 2rem;
+    font-size: 1rem;
+}
+.inputBox {
+    margin-left: 30px;
+}
+
+.tagsContainer {
+    background-color: white;
+    font-size: .85rem;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 0 0.5rem 0 2rem;
+    height: 15vh;
+    overflow-y: scroll;
+}
+
+.tagsContainer::-webkit-scrollbar {
+    width: 12px;
+}
+
+.tagsContainer::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(168, 219, 243);
+}
