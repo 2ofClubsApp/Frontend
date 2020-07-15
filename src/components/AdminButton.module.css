@@ -1,0 +1,23 @@
+.adminbtn {
+    color: black;
+    background-color: white;
+    font-size: 2rem;
+    width: 250px;
+    height: 250px;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    margin: 2rem;
+}
+
+.adminbtn:hover {
+    text-decoration: none;
+}
+
+.adminbtn .icon {
+    font-size: 5rem;
+}
