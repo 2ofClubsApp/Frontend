@@ -4,10 +4,9 @@ import '../app.css';
 import Card from "../components/Swipe/Card";
 import {useHistory} from 'react-router-dom'
 import '../app.css';
-import NavBar from "../components/NavBar/NavBar"
-import NavContainer from "./NavContainer"
+import NavBar from "../components/NavBar"
 
-const Explore = () => {
+const ClubsOverviews = () => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -29,11 +28,12 @@ const Explore = () => {
 
     return (
         <>
-            <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-                <Card />
-            </Container>
+        <NavBar></NavBar>
+        <Container className={"d-flex justify-content-center align-items-center mt-5"}>
+            <Card />
+        </Container>
         </>
     )
-};
+}
 
-export default NavContainer(Explore);
+export default Explore

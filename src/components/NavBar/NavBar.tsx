@@ -1,6 +1,6 @@
 import {Button, Navbar, Nav, NavDropdown, Dropdown, NavLink} from "react-bootstrap";
 import React from "react";
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -17,9 +17,8 @@ const NavBar = () => {
 
     return (
         <>
-        <Navbar collapseOnSelect expand="lg" className={"bluebg d-flex justify-content-end"}>
-            <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>2OFCLUBS
-            </Button>
+        <Navbar collapseOnSelect expand="lg" className={"d-flex justify-content- pt-2"} variant="dark">
+            <Link to="/">2OFCLUBS</Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse className="justify-content-end">
                 <Nav>
