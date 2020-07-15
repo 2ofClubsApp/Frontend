@@ -9,19 +9,20 @@ import styles from "./AdminButton.module.css"
 
 library.add(faCog, faScroll)
 
-const AdminButton = () => {
+const AdminButtonsSet = () => {
     
     const history = useHistory();
-    const changeRoute = (path: string) => {
-        history.replace({pathname: path})
-    };
 
+    const changeRoute = (path: string, history: any) => {
+        history.push({pathname: path})
+    };
+    
     return (
         <>
             <Container className={"d-flex justify-content-center align-items-center w-100"}>
                 <Row>
                     <Col xs={12} lg={6}>
-                        <Button className={styles.adminbtn}>
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/requests', history)}> 
                             <FontAwesomeIcon icon={faScroll} className={styles.icon}/>
                             Requests
                         </Button>
@@ -39,4 +40,4 @@ const AdminButton = () => {
         </>
     )
 }
-export default AdminButton
+export default AdminButtonsSet

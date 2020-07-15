@@ -28,7 +28,7 @@ const Explore = () => {
 
     return (
         <>
-            <NavBar></NavBar>
+            <NavBar isSiteAdmin={false}></NavBar>
             <Container className={"d-flex justify-content-center align-items-center mt-5"}>
                 <Card />
             </Container>

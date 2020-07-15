@@ -6,7 +6,7 @@ const CreateClub = () => {
 
     return (
         <>
-        <NavBar></NavBar>
+        <NavBar isSiteAdmin={false}></NavBar>
         <ClubForm title={"Submit for review"}>
 
         </ClubForm>

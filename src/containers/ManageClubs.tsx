@@ -27,9 +27,9 @@ const ManageClubs = () => {
 
     return (
         <>
-        <NavBar></NavBar>
+        <NavBar isSiteAdmin={false}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview></ClubsOverview>
+            <ClubsOverview title={"Your Clubs"} view={true}></ClubsOverview>
         </Container>
         </>
     )

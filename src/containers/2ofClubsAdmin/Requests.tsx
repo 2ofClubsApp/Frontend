@@ -27,9 +27,9 @@ const Requests = () => {
 
     return (
         <>
-        <NavBar></NavBar>
+        <NavBar isSiteAdmin={true}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview></ClubsOverview>
+            <ClubsOverview title={"Incoming Requests"} view={false}></ClubsOverview>
         </Container>
         </>
     )
