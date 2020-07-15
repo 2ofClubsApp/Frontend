@@ -1,6 +1,6 @@
 .container {
     background-color: white;
-    box-shadow: 2px 2px 5px grey;
+    box-shadow: 2px 2px 5px rgb(98, 96, 179);
     border-radius: 1rem;
     padding: 2rem;
 }
@@ -15,7 +15,7 @@
     font-family: "Poppins", Helvetica, sans-serif;
     font-size: 2rem;
     color: #696de9;
-    margin: 0 1rem;
+    margin: 1rem 1rem 1rem;
 }
 
 .subtitle {

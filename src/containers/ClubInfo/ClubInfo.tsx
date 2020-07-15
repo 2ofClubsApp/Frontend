@@ -9,7 +9,7 @@ const ClubInfo = () => {
         <>
             <NavBar></NavBar>
 
-            <ClubForm title={"Save Changes"}>
+            <ClubForm title={"Save Changes"} isClub={true}>
 
             </ClubForm>
         </>

@@ -11,6 +11,7 @@ import Explore from "./containers/Explore";
 import ClubInfo from "./containers/ClubInfo/ClubInfo";
 import CreateClub from "./containers/CreateClub";
 import ManageClubs from "./containers/ManageClubs"
+import UserSettings from "./containers/UserSettings/UserSettings"
 
 // type AppProps = {
 //     system: SystemState
@@ -28,6 +29,7 @@ const App = (props: any) => {
                 <Route exact path={"/settings/info"} component={ClubInfo}/>
                 <Route exact path={"/createclub"} component={CreateClub}/>
                 <Route exact path={"/manageclubs"} component={ManageClubs}/>
+                <Route exact path={"/settings/user"} component={UserSettings}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

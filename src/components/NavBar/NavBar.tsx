@@ -31,7 +31,7 @@ const NavBar = () => {
 
                         <Dropdown.Item href="/createclub">Create a club</Dropdown.Item>
                         <Dropdown.Item href="/manageclubs">Manage your clubs</Dropdown.Item>
-                        <Dropdown.Item href="/">Your settings</Dropdown.Item>
+                        <Dropdown.Item href="/settings/user">Your settings</Dropdown.Item>
                         <Dropdown.Item href="/">Log out</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
