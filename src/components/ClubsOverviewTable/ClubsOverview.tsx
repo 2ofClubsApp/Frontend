@@ -4,11 +4,16 @@ import "./ClubsOverview.css";
 import {Link} from "react-router-dom";
 import ClubListing from "./ClubListing";
 
-const ClubsOverview = () => {
+type ClubsOverviewDefinition = {
+    title: string
+    view: boolean
+}
+
+const ClubsOverview = (props: ClubsOverviewDefinition) => {
     return (
 
         <Container className={"clubsOverviewContainer"}>
-            <h1 className={"title"}>Your Clubs</h1>
+            <h1 className={"title"}>{props.title}</h1>
             <Table responsive hover striped >
                 <thead>
                     <tr className={"d-flex"}>
@@ -19,10 +24,11 @@ const ClubsOverview = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <ClubListing title={"Name"}></ClubListing>
-                    <ClubListing title={"Name"}></ClubListing>
-                    <ClubListing title={"Name"}></ClubListing>
-                    <ClubListing title={"Name"}></ClubListing>
+
+                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
+                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
+                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
+                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
                 </tbody>
                 </Table>
         </Container>

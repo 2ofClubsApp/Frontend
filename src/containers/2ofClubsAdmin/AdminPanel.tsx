@@ -1,12 +1,13 @@
 import React from 'react'
-import {Container, Row, Col, Button} from "react-bootstrap";
-import '../app.css';
-import ClubsOverview from "../components/ClubsOverviewTable/ClubsOverview";
+import {Container} from "react-bootstrap";
+import '../../app.css';
 import {useHistory} from 'react-router-dom'
-import NavBar from "../components/NavBar/NavBar"
+import NavBar from "../../components/NavBar/NavBar"
+import AdminButtonsSet from "../../components/AdminButtonsSet"
 
-const ManageClubs = () => {
+const AdminPanel = () => {
     const history = useHistory();
+    
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
@@ -27,12 +28,12 @@ const ManageClubs = () => {
 
     return (
         <>
-        <NavBar isSiteAdmin={false}></NavBar>
-        <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview title={"Your Clubs"} view={true}></ClubsOverview>
+        <NavBar isSiteAdmin={true}></NavBar>
+        <Container className={"d-flex justify-content-center align-items-center m-auto h-75"}>
+            <AdminButtonsSet></AdminButtonsSet>
         </Container>
         </>
     )
 }
 
-export default ManageClubs
+export default AdminPanel

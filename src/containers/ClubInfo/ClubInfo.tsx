@@ -7,7 +7,7 @@ const ClubInfo = () => {
 
     return (
         <>
-            <NavBar></NavBar>
+            <NavBar isSiteAdmin={false}></NavBar>
 
             <ClubForm title={"Save Changes"} isClub={true}>
 

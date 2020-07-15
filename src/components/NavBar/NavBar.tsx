@@ -8,37 +8,69 @@ import "./NavBar.css"
 
 library.add(faBars)
 
-const NavBar = () => {
+type NavBarDefinition = {
+    isSiteAdmin: boolean
+}
+
+const NavBar = (props: NavBarDefinition) => {
     
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
 
-    return (
-        <>
-        <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content- pt-2"}>
-            <Link to="/">2OFCLUBS</Link>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse className="justify-content-end">
-                <Nav>
-                    <Dropdown alignRight>
-                    <Dropdown.Toggle id="user-dropdown" as={NavLink}>
-                        <FontAwesomeIcon icon={faBars}/>
-                    </Dropdown.Toggle>
+    if (props.isSiteAdmin) {
+        return (
+            <>
+            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2"} variant="dark">
+                <Link to="/">2OFCLUBS</Link>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse className="justify-content-end">
+                    <Nav>
+                        <Dropdown alignRight>
+                        <Dropdown.Toggle id="user-dropdown" as={NavLink}>
+                            <FontAwesomeIcon icon={faBars}/>
+                        </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
+                        <Dropdown.Menu>
 
-                        <Dropdown.Item href="/createclub">Create a club</Dropdown.Item>
-                        <Dropdown.Item href="/manageclubs">Manage your clubs</Dropdown.Item>
-                        <Dropdown.Item href="/settings/user">Your settings</Dropdown.Item>
-                        <Dropdown.Item href="/">Log out</Dropdown.Item>
-                    </Dropdown.Menu>
-                    </Dropdown>
-                </Nav>
-                </Navbar.Collapse>
-        </Navbar>
-        </>
-    )
+                            <Dropdown.Item href="/createclub">Requests</Dropdown.Item>
+                            <Dropdown.Item href="/manageclubs">Settings</Dropdown.Item>
+                            <Dropdown.Item href="/">Log out</Dropdown.Item>
+                        </Dropdown.Menu>
+                        </Dropdown>
+                    </Nav>
+                    </Navbar.Collapse>
+            </Navbar>
+            </>
+        )
+    }
+    else {
+        return (
+            <>
+            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content- pt-2"} variant="dark">
+                <Link to="/">2OFCLUBS</Link>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse className="justify-content-end">
+                    <Nav>
+                        <Dropdown alignRight>
+                        <Dropdown.Toggle id="user-dropdown" as={NavLink}>
+                            <FontAwesomeIcon icon={faBars}/>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+
+                            <Dropdown.Item href="/createclub">Create a club</Dropdown.Item>
+                            <Dropdown.Item href="/manageclubs">Manage your clubs</Dropdown.Item>
+                            <Dropdown.Item href="/settings/user">Your settings</Dropdown.Item>
+                            <Dropdown.Item href="/">Log out</Dropdown.Item>
+                        </Dropdown.Menu>
+                        </Dropdown>
+                    </Nav>
+                    </Navbar.Collapse>
+            </Navbar>
+            </>
+        )
+    }
 }
 export default NavBar
