@@ -51,10 +51,6 @@ const ClubForm = (form: ClubFormDefinition) => {
                             </Form.Control>
                         </Row>
                         <Row>
-                            <Form.Label className={styles.subtitle}>Looking for Help?</Form.Label>
-                            <Form.Check className={styles.subtitle} type={"switch"} id={"helpNeeded"} label={""}/>
-                        </Row>
-                        <Row>
                             <Form.Label className={styles.subtitle}>Events</Form.Label>
                         </Row>
                     </Col>
@@ -89,13 +85,26 @@ const ClubForm = (form: ClubFormDefinition) => {
                 <Row>
                     <Col>
                         <Row>
-                            <Form.Label className={styles.subtitle}>Your Name</Form.Label>
-                            <Form.Control className={styles.inputBox} as={"textarea"} rows={1}/>
+                            <Form.Label className={styles.subtitle}>Username</Form.Label>
+                            <Form.Control readOnly placeholder="JohnSmith" className={styles.inputBox} type="text"/>
                         </Row>
                         <Row>
-                            <Form.Label className={styles.subtitle}>Your Email</Form.Label>
-                            <Form.Control className={styles.inputBox} as={"textarea"} rows={1}/>
+                            <Form.Label className={styles.subtitle}>Email</Form.Label>
+                            <Form.Control readOnly placeholder="example@email.com" className={styles.inputBox} type="email"/>
                         </Row>
+                        <Row>
+                            <Form.Label className={styles.subtitle}>Current Password</Form.Label>
+                            <Form.Control className={styles.inputBox} type="password"/>
+                        </Row>
+                        <Row>
+                            <Form.Label className={styles.subtitle}>New Password</Form.Label>
+                            <Form.Control className={styles.inputBox} type="password"/>
+                        </Row>
+                        <Row>
+                            <Form.Label className={styles.subtitle}>Confirm New Password</Form.Label>
+                            <Form.Control className={styles.inputBox} type="password"/>
+                        </Row>
+                        
                     </Col>
                     <Col className={"ml-5"}>
                         <Form.Label className={styles.subtitle}>Tags</Form.Label>

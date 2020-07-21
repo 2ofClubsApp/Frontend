@@ -34,8 +34,8 @@ const NavBar = (props: NavBarDefinition) => {
 
                         <Dropdown.Menu>
 
-                            <Dropdown.Item href="/createclub">Requests</Dropdown.Item>
-                            <Dropdown.Item href="/manageclubs">Settings</Dropdown.Item>
+                            <Dropdown.Item href="/admin/requests">Requests</Dropdown.Item>
+                            <Dropdown.Item href="/admin/settings">Settings</Dropdown.Item>
                             <Dropdown.Item href="/">Log out</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>

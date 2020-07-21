@@ -1,4 +1,4 @@
-import {Button, Container, Row, Col, Table} from "react-bootstrap";
+import {Button, Container, Row, Col, Table, Form} from "react-bootstrap";
 import React from "react";
 import "./ClubsOverview.css";
 import {Link} from "react-router-dom";
@@ -28,9 +28,8 @@ const ClubListing = (club: clubDefinition) => {
     else {
         return (
             <tr className={"d-flex"}>
-                <td colSpan={3} className={"col-10"}><Link to="/settings/info">{club.title}</Link></td>
-                <td className={"col-1 text-center"}><Button variant="success">Accept</Button></td>
-                <td className={"col-1 text-center"}><Button variant="outline-danger">Decline</Button></td>
+                <td colSpan={3} className={"col-11"}><Link to="/settings/info">{club.title}</Link></td>
+                <td className={"col-1 text-center"}><Form.Check type={"switch"} id={club.title} label={""}/></td>
             </tr>             
         )
     }

@@ -26,9 +26,9 @@ const ClubsOverview = (props: ClubsOverviewDefinition) => {
                 <tbody>
 
                     <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
-                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
-                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
-                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
+                    <ClubListing title={"MCSS"} overviewType={props.view}></ClubListing>
+                    <ClubListing title={"ACS"} overviewType={props.view}></ClubListing>
+                    <ClubListing title={"DSC"} overviewType={props.view}></ClubListing>
                 </tbody>
                 </Table>
         </Container>
