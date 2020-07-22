@@ -3,7 +3,7 @@ import {Container, Row, Col, Button} from "react-bootstrap";
 import ClubsOverview from "../../components/ClubsOverviewTable/ClubsOverview";
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
-import ClubsAdvancedSettingsForm from "../../components/ClubsAdvancedSettingsForm"
+import ClubsAdvancedSettingsForm from "../../components/ClubAdvancedSettings/ClubsAdvancedSettingsForm"
 
 const ManageClubs = () => {
     const history = useHistory();

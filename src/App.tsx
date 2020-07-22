@@ -11,6 +11,7 @@ import Explore from "./containers/Explore";
 import ClubInfo from "./containers/ClubInfo/ClubInfo";
 import CreateClub from "./containers/CreateClub";
 import ManageClubs from "./containers/ManageClubs/ManageClubs"
+import AdvancedSettings from "./containers/ManageClubs/AdvancedSettings"
 import UserSettings from "./containers/UserSettings/UserSettings"
 import AdminPanel from "./containers/2ofClubsAdmin/AdminPanel"
 import Requests from "./containers/2ofClubsAdmin/Requests"
@@ -33,6 +34,7 @@ const App = (props: any) => {
                 <Route exact path={"/settings/info"} component={ClubInfo}/>
                 <Route exact path={"/createclub"} component={CreateClub}/>
                 <Route exact path={"/manageclubs"} component={ManageClubs}/>
+                <Route exact path={"/manageclubs/advancedsettings"} component={AdvancedSettings}/>
                 <Route exact path={"/settings/user"} component={UserSettings}/>
                 <Route exact path={"/admin"} component={AdminPanel}/>
                 <Route exact path={"/admin/requests"} component={Requests}/>

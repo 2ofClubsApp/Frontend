@@ -21,7 +21,7 @@ const ClubListing = (club: clubDefinition) => {
             <tr className={"d-flex"}>
             <td colSpan={3} className={"col-11"}><Link to="/settings/info">{club.title}</Link></td>
 
-            <td className={"col-1 text-center"}><Link to="/settings/info"><FontAwesomeIcon icon={faCog}/></Link></td>
+            <td className={"col-1 text-center"}><Link to="/manageclubs/advancedsettings"><FontAwesomeIcon icon={faCog}/></Link></td>
 
             </tr>           
         )
