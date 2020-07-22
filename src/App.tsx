@@ -10,7 +10,7 @@ import {RootState} from "./store";
 import Explore from "./containers/Explore";
 import ClubInfo from "./containers/ClubInfo/ClubInfo";
 import CreateClub from "./containers/CreateClub";
-import ManageClubs from "./containers/ManageClubs"
+import ManageClubs from "./containers/ManageClubs/ManageClubs"
 import UserSettings from "./containers/UserSettings/UserSettings"
 import AdminPanel from "./containers/2ofClubsAdmin/AdminPanel"
 import Requests from "./containers/2ofClubsAdmin/Requests"

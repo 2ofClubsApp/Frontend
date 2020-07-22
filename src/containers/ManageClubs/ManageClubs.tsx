@@ -1,9 +1,8 @@
 import React from 'react'
 import {Container, Row, Col, Button} from "react-bootstrap";
-import '../app.css';
-import ClubsOverview from "../components/ClubsOverviewTable/ClubsOverview";
+import ClubsOverview from "../../components/ClubsOverviewTable/ClubsOverview";
 import {useHistory} from 'react-router-dom'
-import NavBar from "../components/NavBar/NavBar"
+import NavBar from "../../components/NavBar/NavBar"
 
 const ManageClubs = () => {
     const history = useHistory();
