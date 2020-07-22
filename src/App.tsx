@@ -14,6 +14,8 @@ import ManageClubs from "./containers/ManageClubs"
 import UserSettings from "./containers/UserSettings/UserSettings"
 import AdminPanel from "./containers/2ofClubsAdmin/AdminPanel"
 import Requests from "./containers/2ofClubsAdmin/Requests"
+import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings"
+import ClubApplication from "./containers/2ofClubsAdmin/ClubApplication"
 
 // type AppProps = {
 //     system: SystemState
@@ -32,8 +34,10 @@ const App = (props: any) => {
                 <Route exact path={"/createclub"} component={CreateClub}/>
                 <Route exact path={"/manageclubs"} component={ManageClubs}/>
                 <Route exact path={"/settings/user"} component={UserSettings}/>
-                <Route exact path={"/admin/panel"} component={AdminPanel}/>
+                <Route exact path={"/admin"} component={AdminPanel}/>
                 <Route exact path={"/admin/requests"} component={Requests}/>
+                <Route exact path={"/admin/settings"} component={AdminSettings}/>
+                <Route exact path={"/admin/application"} component={ClubApplication}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

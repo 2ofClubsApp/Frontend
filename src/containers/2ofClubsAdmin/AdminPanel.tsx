@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap";
 import '../../app.css';
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
-import AdminButtonsSet from "../../components/AdminButtonsSet"
+import AdminButtonsSet from "../../components/AdminPanel/AdminButtonsSet"
 
 const AdminPanel = () => {
     const history = useHistory();

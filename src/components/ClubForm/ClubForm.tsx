@@ -26,11 +26,11 @@ const ClubForm = (form: ClubFormDefinition) => {
                     <Col>
                         <Row>
                             <Form.Label className={styles.subtitle}>Club Name</Form.Label>
-                            <Form.Control className={styles.inputBox} as={"textarea"} rows={1}/>
+                            <Form.Control className={styles.inputBox} type="text"/>
                         </Row>
                         <Row>
                             <Form.Label className={styles.subtitle}>Bio</Form.Label>
-                            <Form.Control className={styles.inputBox} as={"textarea"} rows={3}/>
+                            <Form.Control className={styles.inputBox} type="text"/>
                         </Row>
                     </Col>
                     <Col xs={6} md={4}>

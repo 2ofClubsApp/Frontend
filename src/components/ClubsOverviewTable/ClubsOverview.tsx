@@ -24,11 +24,10 @@ const ClubsOverview = (props: ClubsOverviewDefinition) => {
                     </tr>
                 </thead>
                 <tbody>
-
-                    <ClubListing title={"Name"} overviewType={props.view}></ClubListing>
-                    <ClubListing title={"MCSS"} overviewType={props.view}></ClubListing>
-                    <ClubListing title={"ACS"} overviewType={props.view}></ClubListing>
-                    <ClubListing title={"DSC"} overviewType={props.view}></ClubListing>
+                    <ClubListing active={false} title={"Name"} overviewType={props.view}></ClubListing>
+                    <ClubListing active={false} title={"MCSS"} overviewType={props.view}></ClubListing>
+                    <ClubListing active={false} title={"ACS"} overviewType={props.view}></ClubListing>
+                    <ClubListing active={true} title={"DSC"} overviewType={props.view}></ClubListing>
                 </tbody>
                 </Table>
         </Container>

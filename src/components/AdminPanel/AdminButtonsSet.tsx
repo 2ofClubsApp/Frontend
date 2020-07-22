@@ -28,7 +28,7 @@ const AdminButtonsSet = () => {
                         </Button>
                     </Col>
                     <Col xs={12} lg={6}>
-                        <Button className={styles.adminbtn}>
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/settings', history)}>
                             <FontAwesomeIcon icon={faCog} className={styles.icon}/>
                             Settings
                         </Button>

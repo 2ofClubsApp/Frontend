@@ -12,6 +12,7 @@ library.add(faCog, faCoffee)
 type clubDefinition = {
     title: string
     overviewType: boolean
+    active: boolean
 }
 
 const ClubListing = (club: clubDefinition) => {
@@ -26,12 +27,22 @@ const ClubListing = (club: clubDefinition) => {
         )
     }
     else {
-        return (
-            <tr className={"d-flex"}>
-                <td colSpan={3} className={"col-11"}><Link to="/settings/info">{club.title}</Link></td>
-                <td className={"col-1 text-center"}><Form.Check type={"switch"} id={club.title} label={""}/></td>
-            </tr>             
-        )
+        if (club.active) {
+            return (
+                <tr className={"d-flex"}>
+                    <td colSpan={3} className={"col-11"}><Link to="/settings/info">{club.title}</Link></td>
+                    <td className={"col-1 text-center"}><Form.Check type={"switch"} id={club.title} label={""} defaultChecked={true} /></td>
+                </tr>             
+            )
+        }
+        else {
+            return (
+                <tr className={"d-flex"}>
+                    <td colSpan={3} className={"col-11"}><Link to="/admin/application">{club.title}</Link></td>
+                    <td className={"col-1 text-center"}><Form.Check type={"switch"} id={club.title} label={""}/></td>
+                </tr>             
+            )
+        }
     }
 }
 

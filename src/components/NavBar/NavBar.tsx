@@ -33,7 +33,7 @@ const NavBar = (props: NavBarDefinition) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-
+                            <Dropdown.Item href="/admin">Home</Dropdown.Item>
                             <Dropdown.Item href="/admin/requests">Requests</Dropdown.Item>
                             <Dropdown.Item href="/admin/settings">Settings</Dropdown.Item>
                             <Dropdown.Item href="/">Log out</Dropdown.Item>
