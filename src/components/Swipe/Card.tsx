@@ -1,9 +1,13 @@
 import React, {useState, Component} from 'react';
 import data from "./testdata";
-import {Button, Row, Modal, Container} from "react-bootstrap";
-
+import {Button, Col, Row} from "react-bootstrap";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
 
 import "./style.css"
+
+
 type values = {
     i: number,
     x: number,
@@ -67,8 +71,20 @@ export class Card extends Component {
                     <div className="card w-50">
                         <img src={this.state.info.pics[0]} className={"card-img-top"}></img>
                         <div className="card-body pt-1">
-                            <h1 className={"card-title mb-0 mt-0"}>{this.state.info.name}</h1>
-                            <p className={"card-text m-0"}>{this.state.info.tags[0]}, {this.state.info.tags[1]}, {this.state.info.tags[2]}</p>
+                            <Row className={"m-0 mb-0 mt-1"}>
+                                <Col lg={9}>
+                                    <h1 className={"card-title m-0 p-0"}>{this.state.info.name}</h1>
+                                    <span className={"text-muted m-0"}>{this.state.info.tags[0]}, {this.state.info.tags[1]}, {this.state.info.tags[2]}</span>
+                                    
+                                </Col>
+                                <Col lg={3} className={"d-flex align-items-center justify-content-end"}>
+                                    <span><FontAwesomeIcon icon={faUserFriends}/> 5</span>
+                                </Col>
+                            </Row>
+                            <Row className={"m-0"}>
+                                
+                            </Row>
+                            
                             <Row className={"d-flex justify-content-center align-items-center mt-2"}>
                                 <Button className={"mx-3"} style={{borderRadius: "50%", width: "50px", height: "50px"}} onClick={this.skipped}>X</Button>
                                 <Button className={"mx-3"} style={{borderRadius: "50%", width: "50px", height: "50px"}}>i</Button>

@@ -20,7 +20,7 @@ const ClubsAdvancedSettingsForm = (form: advancedSettingsDefinition) => {
                         <Form.Row className="d-flex justify-content-center">
                             <Col sm={12} md={12} lg={5} className="d-flex justify-content-center align-items-center m-2">
                                 <Form.Control placeholder="Username" className={"mr-3 w-75"}/>
-                                <Button variant="primary" type="submit">Add</Button>
+                                <Button variant="primary" type="submit">Invite</Button>
                             </Col>
                         </Form.Row>
 
