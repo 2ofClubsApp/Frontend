@@ -31,6 +31,19 @@ type state = {
     render: boolean
 }
 
+// const findClub = async (values: any) => {
+//     return axios.get("/clubs", JSON.stringify({
+//         "Email": "hacklab@hl.com",
+//         "Bio": "Hacklab is cool",
+//         "Size": 20,
+//         "Name": "Hacklab"
+//     })).then(response => {
+//         console.log(response);
+//     }).catch(err => {
+//         console.log(err + " failed to login");
+//     });
+// };
+
 
 export class Card extends Component {
     i = 0;
