@@ -9,9 +9,9 @@ import {loginSchema} from "../components/Form/Schemas";
 import FormContainer from "../components/Form/FormContainer";
 import {Form} from "react-bootstrap";
 import FormButton from "../components/Form/FormButton";
-import {connect, MapDispatchToProps} from "react-redux";
+import {connect, MapDispatchToProps, useStore} from "react-redux";
 import {RootState} from "../store";
-import {setLogin} from "../store/actions/actions";
+import {setLogin, setToken} from "../store/actions/actions";
 import axios from "../axios";
 
 const Login = (props: any) => {
@@ -51,64 +51,76 @@ const Login = (props: any) => {
             method: 'get', //you can set what request you want to be
             url: `/users/${username}`,
             headers: {
-              Token: token
+                'Authorization': `Bearer ${token}`
             }
           }).then(response => {
-            console.log(response);
+            console.log(response.data);
+            changeRoute("/usersettings");
         }).catch(err => {
             console.log(err + " unable to retrieve student info");
         });
     }
 
-    const createClub = async (values: any, token: string) => {
-        // return axios.post("/clubs", JSON.stringify({
-        //     "Email": "hacklab@hl.com",
-        //     "Bio": "Hacklab is cool",
-        //     "Size": 20,
-        //     "Name": "Hacklab"
-        // })).then(response => {
-        //     console.log(response);
-        // }).catch(err => {
-        //     console.log(err + " failed to login");
-        // });
-        return axios({
-            method: 'post', //you can set what request you want to be
-            url: `/clubs`,
-            headers: {
-              Token: token
-            },
-            data: {
-                Email: "hacklab@hl.com",
-                Bio: "Hacklab",
-                Size: 20,
-                Name: "Hacklab"
+    // const createClub = async (values: any, token: string) => {
+    //     // return axios.post("/clubs", JSON.stringify({
+    //     //     "Email": "hacklab@hl.com",
+    //     //     "Bio": "Hacklab is cool",
+    //     //     "Size": 20,
+    //     //     "Name": "Hacklab"
+    //     // })).then(response => {
+    //     //     console.log(response);
+    //     // }).catch(err => {
+    //     //     console.log(err + " failed to login");
+    //     // });
+    //     return axios({
+    //         method: 'post', //you can set what request you want to be
+    //         url: `/clubs`,
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`;
+    //         },
+    //         data: {
+    //             Email: "hacklab@hl.com",
+    //             Bio: "Hacklab",
+    //             Size: 20,
+    //             Name: "Hacklab"
+    //         }
+    //       }).then(response => {
+    //         console.log("trying to create club");
+    //         console.log(response);
+    //     }).catch(err => {
+    //         console.log(err + " unable to retrieve student info");
+    //     });
+    // };
+
+    type StatusResponse = {
+        data: {
+            Code: number,
+            Message: string,
+            Data: {
+                Token: string
             }
-          }).then(response => {
-            console.log("trying to create club");
-            console.log(response);
-        }).catch(err => {
-            console.log(err + " unable to retrieve student info");
-        });
-    };
-    
-
-
+        }
+    }
 
     const login = async (values: any) => {
         return axios.post("/login", JSON.stringify({
             "Username": values["username"],
             "Password": values["password"],
-        })).then(response => {
-            console.log(response.data);
-            console.log("token got")
-            const token = response.data;
-            return token;
+        })).then((response: StatusResponse) => {
+            console.log("response is " + response);
+            if (response.data.Code === -1){
+                return -1;
+            }
+            else{
+                const token = response.data.Data.Token;
+                return token;
+            }
         }).catch(err => {
             console.log(err + " failed to login");
         });
     };
   
-
+    
     return (
         <div>
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>Back to
@@ -119,11 +131,19 @@ const Login = (props: any) => {
                 onSubmit={ async (values, actions) => {
                     // console.log(values)
                         login(values).then(result => {
+                            console.log("result is "+ result);
                             const token = result;
-                            console.log("token passed in is");
-                            console.log(token);
-                            //getUserInfo(values.username, token);
-                            createClub(values, token);
+                            if (result === -1) {
+                                actions.setErrors({
+                                    username: "Username is incorrect or does not exist",
+                                    password: "Password is incorrect"
+                                });
+                            }
+                            else {
+                                props.setToken(token);
+                                props.onSetLogin(true);
+                                getUserInfo(values.username, token);
+                            }
                         });
                 }}
                 validateOnChange={false}
@@ -156,7 +176,8 @@ const Login = (props: any) => {
 
 const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
     return {
-        onSetLogin: () => dispatch(setLogin(true))
+        onSetLogin: () => dispatch(setLogin(true)),
+        setToken: (token: string) => dispatch(setToken(token))
     }
 }
 const mapStateToProps = (state: RootState) => {
@@ -165,4 +186,4 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(Login)

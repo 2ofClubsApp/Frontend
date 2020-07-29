@@ -7,7 +7,6 @@ import SignUp from "./containers/Signup";
 import Home from "./containers/Home";
 import {connect} from "react-redux";
 import {RootState} from "./store";
-import Explore from "./containers/Explore";
 import ClubInfo from "./containers/ClubInfo/ClubInfo";
 import CreateClub from "./containers/CreateClub";
 import ManageClubs from "./containers/ManageClubs/ManageClubs"
@@ -27,12 +26,12 @@ const App = (props: any) => {
         <div>
             <Switch>
                 <Route exact path={"/"} render={() => {
-                    return (props.isLogged ? <Home/> : <LandingPage/>)}}/>
+                    return (props.isLogged ? <Home /> : <LandingPage />)}}/>
                 <Route exact path={"/login"} component={Login}/>
                 <Route exact path={"/signup"} component={SignUp}/>
-                <Route exact path={"/explore"} component={Explore}/>
                 <Route exact path={"/settings/info"} component={ClubInfo}/>
-                <Route exact path={"/createclub"} component={CreateClub}/>
+                <Route exact path={"/createclub"} render={() => {
+                    return (props.isLogged ? <CreateClub /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/manageclubs"} component={ManageClubs}/>
                 <Route exact path={"/manageclubs/advancedsettings"} component={AdvancedSettings}/>
                 <Route exact path={"/settings/user"} component={UserSettings}/>
@@ -47,8 +46,11 @@ const App = (props: any) => {
 };
 
 const mapStateToProps = (state: RootState) => {
+    console.log("islogged in is " + state.system.isLoggedIn);
+    console.log("token is " + state.system.token);
     return {
-        isLogged: state.system.isLoggedIn
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token
     }
 };
 

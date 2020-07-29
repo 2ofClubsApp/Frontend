@@ -5,7 +5,7 @@ import ClubsOverview from "../../components/ClubsOverviewTable/ClubsOverview";
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 
-const Requests = () => {
+const Requests = (props:any) => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -29,7 +29,7 @@ const Requests = () => {
         <>
         <NavBar isSiteAdmin={true}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview title={"Incoming Requests"} view={false}></ClubsOverview>
+            <ClubsOverview title={"Incoming Requests"} view={false} token={props.token}></ClubsOverview>
         </Container>
         </>
     )

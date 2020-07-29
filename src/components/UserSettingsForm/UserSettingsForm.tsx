@@ -4,11 +4,22 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import formstyles from "../ClubForm/ClubForm.module.css"
 import TagsContainer from "../TagsContainer/TagsContainer"
+import { RootState } from '../../store';
+import { connect } from 'react-redux';
 
 type UserSettingsDefinition = {
     title: string
+    username: string
+    email: string
     children: React.ReactNode
 }
+
+const decode = (state: RootState) => {
+    console.log(state.system.token);
+    const token = state.system.token;
+    return token;
+}
+
 
 const UserSettingsForm = (form: UserSettingsDefinition) => {
     return (
@@ -23,11 +34,11 @@ const UserSettingsForm = (form: UserSettingsDefinition) => {
                 <Col>
                     <Row>
                         <Form.Label className={formstyles.subtitle}>Username</Form.Label>
-                        <Form.Control readOnly placeholder="JohnSmith" className={formstyles.inputBox} type="text"/>
+                        <Form.Control readOnly placeholder={form.username} className={formstyles.inputBox} type="text"/>
                     </Row>
                     <Row>
                         <Form.Label className={formstyles.subtitle}>Email</Form.Label>
-                        <Form.Control readOnly placeholder="example@email.com" className={formstyles.inputBox} type="email"/>
+                        <Form.Control readOnly placeholder={form.email} className={formstyles.inputBox} type="email"/>
                     </Row>
                     <Row>
                         <Form.Label className={formstyles.subtitle}>Current Password</Form.Label>
@@ -64,4 +75,13 @@ const UserSettingsForm = (form: UserSettingsDefinition) => {
     )
 };
 
-export default UserSettingsForm;
+const mapStateToProps = (state: RootState) => {
+    const token = state.system.token;
+    console.log("token in usersettingsform is" + token);
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token
+    }
+}
+
+export default connect(mapStateToProps)(UserSettingsForm);

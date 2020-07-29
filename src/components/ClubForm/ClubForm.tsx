@@ -12,8 +12,6 @@ type ClubFormDefinition = {
 }
 
 const ClubForm = (form: ClubFormDefinition) => {
-
-    if (form.isClub) {
         return (
             <Container className={styles.container}>
                 <Row>
@@ -72,60 +70,6 @@ const ClubForm = (form: ClubFormDefinition) => {
             </Container>
 
         )
-    }
-    else {
-        return (
-            <Container className={styles.container}>
-                <Row>
-                    <Col>
-                        <h1 className={styles.title}>Tell us more about yourself!</h1>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Username</Form.Label>
-                            <Form.Control readOnly placeholder="JohnSmith" className={styles.inputBox} type="text"/>
-                        </Row>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Email</Form.Label>
-                            <Form.Control readOnly placeholder="example@email.com" className={styles.inputBox} type="email"/>
-                        </Row>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Current Password</Form.Label>
-                            <Form.Control className={styles.inputBox} type="password"/>
-                        </Row>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>New Password</Form.Label>
-                            <Form.Control className={styles.inputBox} type="password"/>
-                        </Row>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Confirm New Password</Form.Label>
-                            <Form.Control className={styles.inputBox} type="password"/>
-                        </Row>
-                        
-                    </Col>
-                    <Col className={"ml-5"}>
-                        <Form.Label className={styles.subtitle}>Tags</Form.Label>
-
-                        <TagsContainer>
-
-                        </TagsContainer>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Button className={"float-right mt-5"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
-                            {form.title}
-                        </Button>
-                    </Col>
-                </Row>
-            </Container>
-
-        )
-    }
 };
 
 export default ClubForm;

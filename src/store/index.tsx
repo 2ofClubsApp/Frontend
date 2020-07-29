@@ -17,7 +17,7 @@ const middleware = (store: Object) => (next: (action: SystemActionTypes) => void
 export default function configureStore() {
     const store = createStore(
         rootReducer,
-        applyMiddleware(middleware)
+        //applyMiddleware(middleware)
     );
     return store;
 };

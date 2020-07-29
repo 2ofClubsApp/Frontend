@@ -1,8 +1,9 @@
-import {SystemActionTypes, SET_LOGIN} from "../actions/actionTypes";
+import {SystemActionTypes, SET_LOGIN, SET_TOKEN} from "../actions/actionTypes";
 import {SystemState} from "../types/types";
 
 const initialState: SystemState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    token: ""
 }
 
 const reducer = (state =  initialState, action: SystemActionTypes): SystemState => {
@@ -11,6 +12,11 @@ const reducer = (state =  initialState, action: SystemActionTypes): SystemState 
             return {
                 ...state,
                 isLoggedIn: action.payload.isLoggedIn
+            };
+        case SET_TOKEN:
+            return {
+                ...state,
+                token: action.payload.token
             };
         default:
             return state;
