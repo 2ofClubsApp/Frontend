@@ -13,6 +13,7 @@ type clubDefinition = {
     title: string
     overviewType: boolean
     active: boolean
+    key: number
 }
 
 const ClubListing = (club: clubDefinition) => {

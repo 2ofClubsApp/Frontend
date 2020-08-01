@@ -5,6 +5,9 @@ import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import { connect } from 'react-redux';
 import { RootState } from '../../store';
+import axios from "../../axios";
+import jwt_decode from 'jwt-decode';
+
 
 const ManageClubs = (props: any) => {
     const history = useHistory();
@@ -26,13 +29,20 @@ const ManageClubs = (props: any) => {
         })
     }
 
-    console.log("manageclubs token:" + props.token);
+    const decode = () => {
+        const decoded = jwt_decode(props.token);
+        return decoded;
+    }
 
+    decode();
+    
+    //console.log("manageclubs token:" + props.token);
+//<ClubsOverview title={"Your Clubs"} view={true} token={props.token}></ClubsOverview>
     return (
         <>
         <NavBar isSiteAdmin={false}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview title={"Your Clubs"} view={true} token={props.token}></ClubsOverview>
+            <ClubsOverview username={"cat"} newToken={props.token}/>
         </Container>
         </>
     )

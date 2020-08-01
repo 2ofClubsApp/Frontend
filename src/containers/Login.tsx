@@ -11,8 +11,9 @@ import {Form} from "react-bootstrap";
 import FormButton from "../components/Form/FormButton";
 import {connect, MapDispatchToProps, useStore} from "react-redux";
 import {RootState} from "../store";
-import {setLogin, setToken} from "../store/actions/actions";
+import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
 import axios from "../axios";
+import jwt_decode from 'jwt-decode';
 
 const Login = (props: any) => {
     const history = useHistory();
@@ -54,7 +55,7 @@ const Login = (props: any) => {
                 'Authorization': `Bearer ${token}`
             }
           }).then(response => {
-            console.log(response.data);
+            //console.log(response.data);
             changeRoute("/usersettings");
         }).catch(err => {
             console.log(err + " unable to retrieve student info");
@@ -107,7 +108,7 @@ const Login = (props: any) => {
             "Username": values["username"],
             "Password": values["password"],
         })).then((response: StatusResponse) => {
-            console.log("response is " + response);
+            console.log(JSON.stringify(response.data.Message));
             if (response.data.Code === -1){
                 return -1;
             }
@@ -131,7 +132,6 @@ const Login = (props: any) => {
                 onSubmit={ async (values, actions) => {
                     // console.log(values)
                         login(values).then(result => {
-                            console.log("result is "+ result);
                             const token = result;
                             if (result === -1) {
                                 actions.setErrors({
@@ -139,8 +139,11 @@ const Login = (props: any) => {
                                     password: "Password is incorrect"
                                 });
                             }
-                            else {
+                            else if (typeof token === "string") {
                                 props.setToken(token);
+                                const decoded = jwt_decode(token) as any;
+                                props.setUsername(decoded.sub);
+                                props.setExpiry(decoded.exp);
                                 props.onSetLogin(true);
                                 getUserInfo(values.username, token);
                             }
@@ -177,7 +180,9 @@ const Login = (props: any) => {
 const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
     return {
         onSetLogin: () => dispatch(setLogin(true)),
-        setToken: (token: string) => dispatch(setToken(token))
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
     }
 }
 const mapStateToProps = (state: RootState) => {

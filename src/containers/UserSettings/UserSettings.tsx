@@ -31,12 +31,10 @@ const UserSettings = (props: any) => {
     //     });
     // }
 
-    console.log("props.token is " + props.token);
-
     return (
         <>
         <NavBar isSiteAdmin={false}></NavBar>
-        <UserSettingsForm title={"Save your profile"} username={props.token} email={props.token}>
+        <UserSettingsForm title={"Save your profile"} username={props.username} email={props.token}>
             
         </UserSettingsForm>
         </>
@@ -52,10 +50,11 @@ const UserSettings = (props: any) => {
 
 const mapStateToProps = (state: RootState) => {
     const token = state.system.token;
-    console.log("token in usersettings is" + token);
     return {
         isLogged: state.system.isLoggedIn,
-        token: state.system.token
+        token: state.system.token,
+        username: state.system.username,
+        date: state.system.date
     }
 }
 

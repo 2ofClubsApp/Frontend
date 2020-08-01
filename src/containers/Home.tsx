@@ -38,8 +38,8 @@ const Home = () => {
 }
 
 const mapStateToProps = (state: RootState) => {
-    console.log("islogged in is " + state.system.isLoggedIn);
-    console.log("token is " + state.system.token);
+    // console.log("islogged in is " + state.system.isLoggedIn);
+    // console.log("token is " + state.system.token);
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token

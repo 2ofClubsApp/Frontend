@@ -24,12 +24,12 @@ const Requests = (props:any) => {
             [id]: value
         })
     }
-
+//<ClubsOverview title={"Incoming Requests"} view={false} token={props.token}></ClubsOverview>
     return (
         <>
         <NavBar isSiteAdmin={true}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview title={"Incoming Requests"} view={false} token={props.token}></ClubsOverview>
+            
         </Container>
         </>
     )

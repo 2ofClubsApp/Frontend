@@ -32,7 +32,8 @@ const App = (props: any) => {
                 <Route exact path={"/settings/info"} component={ClubInfo}/>
                 <Route exact path={"/createclub"} render={() => {
                     return (props.isLogged ? <CreateClub /> : <Redirect from={"*"} to={"/"}/>)}}/>
-                <Route exact path={"/manageclubs"} component={ManageClubs}/>
+                <Route exact path={"/manageclubs"} render={() => {
+                    return (props.isLogged ? <ManageClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/manageclubs/advancedsettings"} component={AdvancedSettings}/>
                 <Route exact path={"/settings/user"} component={UserSettings}/>
                 <Route exact path={"/admin"} component={AdminPanel}/>
@@ -46,8 +47,8 @@ const App = (props: any) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-    console.log("islogged in is " + state.system.isLoggedIn);
-    console.log("token is " + state.system.token);
+    // console.log("islogged in is " + state.system.isLoggedIn);
+    // console.log("token is " + state.system.token);
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token
