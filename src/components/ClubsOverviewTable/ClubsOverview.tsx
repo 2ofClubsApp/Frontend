@@ -3,9 +3,11 @@ import React, {useState, useEffect} from "react";
 import "./ClubsOverview.css";
 import ClubListing from "./ClubListing";
 import axios from "../../axios";
+import { RootState } from "../../store";
+import { connect } from "react-redux";
 
 type ClubsOverviewDefinition = {
-    username: string
+    newUsername: string
     newToken: any
 }
 
@@ -16,7 +18,7 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
-                url: `/users/${type.username}`,
+                url: `/users/${type.newUsername}/manages`,
                 headers: {
                 Authorization: `Bearer ${type.newToken}`
                           }
@@ -26,6 +28,8 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
 
         fetchData();
     }, []);
+
+    console.log(data.Manages)
    
     return (
         <Container className={"clubsOverviewContainer"}>
@@ -41,7 +45,7 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
                  </thead>
                  <tbody>
                      {data.Manages.map((item: any) => (
-                         <ClubListing key={item.ID} active={false} title={item.Name} overviewType={true} />
+                         <ClubListing key={item.ID} id={item.ID} active={false} title={item.Name} overviewType={true} />
                      ))}
                  </tbody>
              </Table>
@@ -49,4 +53,14 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
     );
   }
 
-export default ClubsOverview;
+  const mapStateToProps = (state: RootState) => {
+    const token = state.system.token;
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token,
+        username: state.system.username,
+        date: state.system.date
+    }
+}
+
+export default connect(mapStateToProps)(ClubsOverview);

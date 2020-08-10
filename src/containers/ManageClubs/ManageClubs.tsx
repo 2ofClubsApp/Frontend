@@ -42,7 +42,7 @@ const ManageClubs = (props: any) => {
         <>
         <NavBar isSiteAdmin={false}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsOverview username={"cat"} newToken={props.token}/>
+            <ClubsOverview newUsername={props.username} newToken={props.token}/>
         </Container>
         </>
     )
@@ -52,7 +52,8 @@ const mapStateToProps = (state: RootState) => {
     const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
-        token: state.system.token
+        token: state.system.token,
+        username: state.system.username
     }
 }
 

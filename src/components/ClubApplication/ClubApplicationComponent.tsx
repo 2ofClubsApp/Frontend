@@ -3,7 +3,7 @@ import {ToggleButton, Container, Row, Image, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "./ClubApplicationComponent.module.css"
-import TagsContainer from "../TagsContainer/TagsContainer"
+import TagsContainer from "../TagsContainer/TagListing"
 
 type ClubDefinition = {
     username: string
@@ -59,9 +59,12 @@ const ClubApplicationComponent = (club: ClubDefinition, activeText: string) => {
                 <Col className={"ml-5"}>
                     <Form.Label className={styles.subtitle}>Tags</Form.Label>
 
-                    <TagsContainer>
+                    
 
-                    </TagsContainer>
+
+
+
+                    
                 </Col>
             </Row>
             <Row>

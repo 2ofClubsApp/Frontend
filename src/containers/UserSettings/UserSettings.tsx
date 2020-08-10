@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import UserSettingsForm from '../../components/UserSettingsForm/UserSettingsForm';
 import NavBar from "../../components/NavBar/NavBar"
 import {useHistory} from 'react-router-dom'
@@ -14,6 +14,25 @@ const UserSettings = (props: any) => {
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
+
+    const [data, setData] = useState({ Email: "" });
+   
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios({
+                method: 'get', //you can set what request you want to be
+                url: `/users/${props.username}`,
+                headers: {
+                Authorization: `Bearer ${props.token}`
+                          }
+                        })
+            setData(result.data.Data);
+            };
+
+        fetchData();
+    }, []);
+
+    console.log(props.token)
     
     // const getUserInfo = (state: RootState) => {
     //     return axios({
@@ -31,10 +50,12 @@ const UserSettings = (props: any) => {
     //     });
     // }
 
+    console.log(data);
+
     return (
         <>
         <NavBar isSiteAdmin={false}></NavBar>
-        <UserSettingsForm title={"Save your profile"} username={props.username} email={props.token}>
+        <UserSettingsForm title={"Save your profile"} username={props.username} email={data.Email}>
             
         </UserSettingsForm>
         </>

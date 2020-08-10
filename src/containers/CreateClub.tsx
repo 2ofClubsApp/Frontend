@@ -13,12 +13,19 @@ const CreateClub = (props:any) => {
         history.replace({pathname: path})
     };
 
+    const emptyClub = 
+                    { ID: -1, 
+                        Name: '', 
+                        Email: '', 
+                        Bio: '', 
+                        Size: 1, 
+                        Tags: [], 
+                        Hosts: []}
+
     return (
         <>
             <NavBar isSiteAdmin={false}></NavBar>
-            <ClubForm title={"Submit for review"} isClub={true}>
-
-            </ClubForm>
+                <ClubForm title={"Submit for review"} isClub={true} clubObject={emptyClub} token={props.token}/>
         </>
     )
 };
@@ -38,4 +45,14 @@ const CreateClub = (props:any) => {
 // };
 //connect(mapStateToProps, mapDispatchToProps)(
 
-export default CreateClub;
+const mapStateToProps = (state: RootState) => {
+    // console.log("islogged in is " + state.system.isLoggedIn);
+    // console.log("token is " + state.system.token);
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token,
+        username: state.system.username
+    }
+};
+
+export default connect(mapStateToProps, null)(CreateClub);

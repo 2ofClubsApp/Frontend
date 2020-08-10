@@ -4,8 +4,10 @@ import '../../app.css';
 import ClubsOverview from "../../components/ClubsOverviewTable/ClubsOverview";
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
+import { RootState } from '../../store';
+import { connect } from 'react-redux';
 
-const Requests = (props:any) => {
+const ClubRequests = (props:any) => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -24,6 +26,7 @@ const Requests = (props:any) => {
             [id]: value
         })
     }
+    
 //<ClubsOverview title={"Incoming Requests"} view={false} token={props.token}></ClubsOverview>
     return (
         <>
@@ -35,4 +38,15 @@ const Requests = (props:any) => {
     )
 }
 
-export default Requests
+
+const mapStateToProps = (state: RootState) => {
+    const token = state.system.token;
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token,
+        username: state.system.username,
+        date: state.system.date
+    }
+}
+
+export default connect(mapStateToProps)(ClubRequests);

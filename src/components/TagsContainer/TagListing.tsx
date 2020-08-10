@@ -1,16 +1,16 @@
 import {Form} from "react-bootstrap";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../ClubForm/ClubForm.module.css"
 
+
 type FormDefinition = {
-    children: React.ReactNode
+    id: string
+    label: string
 }
 
-const TagsContainer = (form: FormDefinition) => {
-    return (
-    <div className={styles.tagsContainer}>
-        <Form>
-            {["checkbox"].map((type) => (
+
+/*
+{tags.map((value) => (
                 <div key={`default-${type}`} className="mb-3">
                 <Form.Check 
                     type={"checkbox"}
@@ -43,10 +43,20 @@ const TagsContainer = (form: FormDefinition) => {
                     label={"Math"}
                 />
                 </div>
-            ))}
-        </Form>
-        </div>
+            ))}*/
+const TagListing = (input: FormDefinition) => {
+
+    /*{data.map((item: any) => (
+                        <Form.Check 
+                        type={"checkbox"}
+                        id={item}
+                        label={item}
+                    />
+                        ))}*/
+
+    return (
+        <Form.Check type={"checkbox"} key={input.id} label={input.label} checked/>
     )
 }
 
-export default TagsContainer;
+export default TagListing;

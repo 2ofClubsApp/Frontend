@@ -3,7 +3,7 @@ import {ToggleButton, Container, Row, Image, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import formstyles from "../ClubForm/ClubForm.module.css"
-import TagsContainer from "../TagsContainer/TagsContainer"
+import TagsContainer from "../TagsContainer/TagListing"
 import { RootState } from '../../store';
 import { connect } from 'react-redux';
 
@@ -57,9 +57,7 @@ const UserSettingsForm = (form: UserSettingsDefinition) => {
                 <Col className={"ml-5"}>
                     <Form.Label className={formstyles.subtitle}>Tags</Form.Label>
 
-                    <TagsContainer>
-
-                    </TagsContainer>
+                    Tags container here
                 </Col>
             </Row>
 

@@ -2,7 +2,7 @@ import React from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
 import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import '../app.css';
 import {Formik} from "formik";
 import {loginSchema} from "../components/Form/Schemas";
@@ -15,7 +15,7 @@ import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actio
 import axios from "../axios";
 import jwt_decode from 'jwt-decode';
 
-const Login = (props: any) => {
+const AdminLogin = (props: any) => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -114,8 +114,10 @@ const Login = (props: any) => {
             }
             else{
                 const token = response.data.Data.Token;
+                changeRoute("/admin");
                 return token;
             }
+            
         }).catch(err => {
             console.log(err + " failed to login");
         });
@@ -127,14 +129,14 @@ const Login = (props: any) => {
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>Back to
                 Home
             </Button>
-            <Button variant="outline-light" className="float-right m-2 text-uppercase" onClick={() => changeRoute('/adminlogin')}>Login as Admin
+            <Button variant="outline-light" className="float-right m-2 text-uppercase" onClick={() => changeRoute('/login')}>Login as User
             </Button>
             <Formik
                 validationSchema={loginSchema}
                 onSubmit={ async (values, actions) => {
-                    if(values["username"] === "admin") {
+                    if(values["username"] !== "admin") {
                         actions.setErrors({
-                            username: "Please login through the admin page"
+                            username: "Please login through the user page"
                         })
                     }
                     else {
@@ -173,7 +175,7 @@ const Login = (props: any) => {
                                        values={values} placeholder={label.placeholder} type={label.type}/>)
                     });
                     return (
-                        <FormContainer title={"Login"}>
+                        <FormContainer title={"Admin Login"}>
                             <Form noValidate onSubmit={handleSubmit}>
                                 {formLabels}
                                 <FormButton name={"Login"}/>
@@ -200,4 +202,4 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(AdminLogin)
