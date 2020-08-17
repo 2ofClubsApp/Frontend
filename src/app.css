@@ -117,3 +117,7 @@ hr.rounded {
     background-color: rgba(6, 7, 75, 0.596);
     background-blend-mode: screen;
 }
+
+.passwordLink {
+    color:red;
+}

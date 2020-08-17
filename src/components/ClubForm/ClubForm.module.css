@@ -45,14 +45,10 @@
 }
 
 .ErrorModal{
-    width: 25%;
+    width: 20%;
     height: 25%;
     max-height: none!important;
     max-width: none!important;
-}
-
-.ErrorModalContent {
-    
 }
 /* 
 @media (min-width: 576px) {

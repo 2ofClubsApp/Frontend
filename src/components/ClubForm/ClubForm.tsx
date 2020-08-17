@@ -16,61 +16,6 @@ type ClubFormDefinition = {
     token: string,
     clubObject: Club
 }
-/*
-                <Row>
-                    <Col>
-                        <h1 className={styles.title}>Tell us more about your club!</h1>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Club Name</Form.Label>
-                            <Form.Control className={styles.inputBox} type="text"/>
-                        </Row>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Bio</Form.Label>
-                            <Form.Control className={styles.inputBox} type="text"/>
-                        </Row>
-                    </Col>
-                    <Col xs={6} md={4}>
-                        <Image className={"float-right"} style={{margin: "10px"}}
-                            src={process.env.PUBLIC_URL + "/banana.jpg"} rounded/>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Club Size</Form.Label>
-                            <Form.Control size={"sm"} className={styles.inputBox} as={"select"}>
-                                <option>Less than 10 Members</option>
-                                <option>10-19 Members</option>
-                                <option>20-39 Members</option>
-                                <option>30+ Members</option>
-                            </Form.Control>
-                        </Row>
-                        <Row>
-                            <Form.Label className={styles.subtitle}>Events</Form.Label>
-                        </Row>
-                    </Col>
-                    <Col className={"ml-5"}>
-                        <Form.Label className={styles.subtitle}>Tags</Form.Label>
-
-                        <TagsContainer>
-
-                        </TagsContainer>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Button className={"float-right mt-5"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
-                            {form.title}
-                        </Button>
-                    </Col>
-                </Row>
-*/
 
 type Club = {
     ID: number,
@@ -351,12 +296,7 @@ function ClubForm(input: ClubFormDefinition) {
                         update(values)
                         .then((result: any) => {
                             console.log(result)
-                            if (result.Code !== 1){
-                                handleShow(result)
-                            }
-                            else {
-                                handleShow(result)
-                            }                        
+                            handleShow(result);                 
                         });
                     }   
                     }

@@ -34,7 +34,6 @@ const ClubInfo = (props:any) => {
     return (
         <>
             <NavBar isSiteAdmin={false}></NavBar>
-            {data.ID}
             <ClubForm title={"Save Changes"} clubObject={data} isClub={true} token={props.token} />
         </>
     )

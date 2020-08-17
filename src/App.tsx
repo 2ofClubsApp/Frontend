@@ -17,6 +17,7 @@ import ClubRequests from "./containers/2ofClubsAdmin/ClubRequests"
 import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings"
 import ClubApplication from "./containers/2ofClubsAdmin/ClubApplication"
 import AdminLogin from './containers/AdminLogin';
+import ResetPassword from './containers/ResetPassword/ResetPassword';
 
 // type AppProps = {
 //     system: SystemState
@@ -43,6 +44,8 @@ const App = (props: any) => {
                 <Route exact path={"/admin/clubrequests"} component={ClubRequests}/>
                 <Route exact path={"/admin/settings"} component={AdminSettings}/>
                 <Route exact path={"/admin/application"} component={ClubApplication}/>
+                <Route exact path={"/resetpassword"} render={() => {
+                    return (<ResetPassword/>)}}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

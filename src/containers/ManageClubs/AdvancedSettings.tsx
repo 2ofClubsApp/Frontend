@@ -5,7 +5,7 @@ import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import ClubsAdvancedSettingsForm from "../../components/ClubAdvancedSettings/ClubsAdvancedSettingsForm"
 
-const ManageClubs = () => {
+const AdvancedSettings = () => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -35,4 +35,4 @@ const ManageClubs = () => {
     )
 }
 
-export default ManageClubs
+export default AdvancedSettings

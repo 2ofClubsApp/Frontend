@@ -6,44 +6,11 @@ import styles from "../ClubForm/ClubForm.module.css"
 type FormDefinition = {
     id: string
     label: string
+    checked: boolean
+    myVar: string[]
+    setMyVar: any;
 }
 
-
-/*
-{tags.map((value) => (
-                <div key={`default-${type}`} className="mb-3">
-                <Form.Check 
-                    type={"checkbox"}
-                    id={"0"}
-                    label={"Art"}
-                />
-                <Form.Check 
-                    type={"checkbox"}
-                    id={"1"}
-                    label={"Computer science"}
-                />
-                <Form.Check 
-                    type={"checkbox"}
-                    id={"2"}
-                    label={"Math"}
-                />
-                <Form.Check 
-                    type={"checkbox"}
-                    id={"3"}
-                    label={"Art"}
-                />
-                <Form.Check 
-                    type={"checkbox"}
-                    id={"4"}
-                    label={"Computer science"}
-                />
-                <Form.Check 
-                    type={"checkbox"}
-                    id={"5"}
-                    label={"Math"}
-                />
-                </div>
-            ))}*/
 const TagListing = (input: FormDefinition) => {
 
     /*{data.map((item: any) => (
@@ -53,9 +20,27 @@ const TagListing = (input: FormDefinition) => {
                         label={item}
                     />
                         ))}*/
+    const [check, setCheck] = useState(false);
 
+    const handleClick = (e: any) => {
+        const checked = e.target.checked;
+        setCheck(!check);
+        
+        if (checked) {
+            const newTagsList = input.myVar.concat(input.id);
+            input.setMyVar(newTagsList);
+        }
+        else {
+            const newTagsList = input.myVar.filter(item => item !== input.id);
+            input.setMyVar(newTagsList);
+        }
+
+        console.log("after setting var" + input.myVar)
+    };
+
+    
     return (
-        <Form.Check type={"checkbox"} key={input.id} label={input.label} checked/>
+        <Form.Check type={"checkbox"} key={input.id} id={input.id} label={input.label} checked={input.checked} onChange={handleClick}/>
     )
 }
 

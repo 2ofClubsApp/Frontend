@@ -104,9 +104,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                     .then((response:StatusResponse) => { console.log(response.data)})
     };
 
-
     return (
-
         <Container className={styles.container}>
                 <Row>
                     <Col>
@@ -144,7 +142,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                                 values.tag = ""
                                             }
                                             })
-                                        
+                                        return false;
                                         }
                                     }
                                     initialValues={{
@@ -186,16 +184,18 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                     )}
                                     </Formik>
                                 </Col>
-                                <Col sm={12} md={12} lg={3} className="d-flex justify-content-center m-2">
+                                <Col sm={12} md={12} lg={6} className="d-flex justify-content-center m-2">
                                     <Form onSubmit={async (values: any) => {
                                         uploadTag(values)}}>
-                                        <input
+                                        <Form.Row>
+                                            <input
                                             type="file"
                                             id="file"
                                             aria-describedby="file"
                                             onChange={onChangeHandler}
                                             />
-                                        <Button variant="primary" type="submit">Add</Button>
+                                            <Button variant="primary" type="submit">Add</Button>
+                                        </Form.Row>
                                     </Form>
                                 
                                     
@@ -204,7 +204,10 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
 
                             <span className={styles.subtitle}>Existing Tags</span>
                             <div className={styles.tagsContainer}>
-                                {data.Tags.map((item: any) => (<TagListing key={item} id={item} label={item}/>))}
+                                <Form>
+                                    {data.Tags.map((item: any) => (<TagListing key={item} id={item} label={item} checked={true} myVar={["None"]} setMyVar={null}/>))}
+                                    <Button type="submit">Save</Button>
+                                </Form>
                             </div>
                     </Col>
                 </Row>

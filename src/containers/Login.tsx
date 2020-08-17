@@ -2,7 +2,7 @@ import React from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
 import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import '../app.css';
 import {Formik} from "formik";
 import {loginSchema} from "../components/Form/Schemas";
@@ -14,6 +14,7 @@ import {RootState} from "../store";
 import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
 import axios from "../axios";
 import jwt_decode from 'jwt-decode';
+import ResetPasswordLink from "../components/ResetPassword/ResetPasswordLink"
 
 const Login = (props: any) => {
     const history = useHistory();
@@ -24,28 +25,6 @@ const Login = (props: any) => {
         username: "",
         password: "",
     });
-
-    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     const value = event.target.value
-    //     const id = event.target.id
-    //     setState({
-    //         ...state,
-    //         [id]: value
-    //     })
-    // }
-
-    // const validatelogin = async (values: any) => {
-    //     return axios.get(`/users/${}`, JSON.stringify({
-    //         "Username": values["username"],
-    //         "Password": values["password"],
-    //     })).then(response => {
-    //         console.log(response.data);
-    //         const token = response.data
-    //         return token;
-    //     }).catch(err => {
-    //         console.log(err + "Unable to get student ;.;");
-    //     });
-    // };
 
     const getUserInfo = async (username: string, token: any) => {
         return axios({
@@ -61,37 +40,6 @@ const Login = (props: any) => {
             console.log(err + " unable to retrieve student info");
         });
     }
-
-    // const createClub = async (values: any, token: string) => {
-    //     // return axios.post("/clubs", JSON.stringify({
-    //     //     "Email": "hacklab@hl.com",
-    //     //     "Bio": "Hacklab is cool",
-    //     //     "Size": 20,
-    //     //     "Name": "Hacklab"
-    //     // })).then(response => {
-    //     //     console.log(response);
-    //     // }).catch(err => {
-    //     //     console.log(err + " failed to login");
-    //     // });
-    //     return axios({
-    //         method: 'post', //you can set what request you want to be
-    //         url: `/clubs`,
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`;
-    //         },
-    //         data: {
-    //             Email: "hacklab@hl.com",
-    //             Bio: "Hacklab",
-    //             Size: 20,
-    //             Name: "Hacklab"
-    //         }
-    //       }).then(response => {
-    //         console.log("trying to create club");
-    //         console.log(response);
-    //     }).catch(err => {
-    //         console.log(err + " unable to retrieve student info");
-    //     });
-    // };
 
     type StatusResponse = {
         data: {
@@ -178,6 +126,11 @@ const Login = (props: any) => {
                                 {formLabels}
                                 <FormButton name={"Login"}/>
                             </Form>
+
+                            <hr />
+
+                            <ResetPasswordLink />
+
                         </FormContainer>
                     );
                 }}
