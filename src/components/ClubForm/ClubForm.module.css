@@ -15,11 +15,11 @@
 .subtitle {
     font-family: "Poppins", Helvetica, sans-serif;
     color: #696de9;
-    margin: 1rem 2rem;
     font-size: 1rem;
 }
-.inputBox {
-    margin-left: 30px;
+
+.pl5px {
+    padding-left: 5px;
 }
 
 .tagsContainer {
@@ -28,7 +28,6 @@
     padding: 1rem;
     border: 1px solid #ced4da;
     border-radius: 5px;
-    margin: 0 0.5rem 0 2rem;
     height: 15vh;
     overflow-y: scroll;
 }

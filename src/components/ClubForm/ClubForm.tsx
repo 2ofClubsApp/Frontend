@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import {ToggleButton, Container, Row, Image, Form, Modal} from "react-bootstrap";
+import {Container, Row, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "./ClubForm.module.css"
-import TagsContainer from "../TagsContainer/TagListing"
 import {Formik} from "formik";
 import * as yup from "yup";
 import axios from "../../axios";
+import TagListing from '../TagsContainer/TagListing';
 
 
 type ClubFormDefinition = {
@@ -15,19 +15,22 @@ type ClubFormDefinition = {
     isClub: boolean,
     token: string,
     clubObject: Club
+    clubID: number
 }
 
 type Club = {
-    ID: number,
-    Name: string,
-    Email: string,
-    Bio: string,
-    Size: number,
-    Tags: string[],
-    Hosts: string[]
+    id: number,
+    name: string,
+    email: string,
+    bio: string,
+    size: number,
+    tags: string[],
+    hosts: string[]
 }
 
 function ClubForm(input: ClubFormDefinition) {
+
+    console.log("club is is "+ input.clubID);
     
     const schema = yup.object({
         clubName: yup.string()
@@ -77,13 +80,9 @@ function ClubForm(input: ClubFormDefinition) {
     };
 
     const update = async (values: any) => {
-        console.log(values["clubEmail"]);
-        console.log(values["clubName"]);
-        console.log(values["bio"]);
-        console.log(typeof values["size"]);
         return axios({
             method: 'post', //you can set what request you want to be
-            url: `/clubs/${input.clubObject.ID}`,
+            url: `/clubs/${input.clubObject.id}`,
             headers: {
                 Authorization: `Bearer ${input.token}`
             },
@@ -101,20 +100,38 @@ function ClubForm(input: ClubFormDefinition) {
         });
     };
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = (result: DataResponse) => {
-        if (result.Code === 1){
-            setPopupMsg({header: "Yay!", body: "Club was successfully updated!"})
-        }
-        else {
-            setPopupMsg({header: "Whoops!", body:`An error occurred please try again later or contact an administrator {"\n"} (Error code ${result.Code}: ${result.Message})`})
-        }
-        setShow(true);
+    const updateClubTags = async (values: any) => {
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/clubs/${input.clubObject.id}/tags`,
+            headers: {
+                Authorization: `Bearer ${input.token}`
+            },
+            data: {
+                "Tags": clubData
+            }
+            }).then((response: StatusResponse) => {
+                console.log(JSON.stringify(response.data.Message));
+                return (response.data)
+        }).catch(err => {
+            console.log(err + " submission failed");
+        });
     };
 
-    const [popupMsg, setPopupMsg] = useState({header: "", body: ""})
+    // const [show, setShow] = useState(false);
+
+    // const handleClose = () => setShow(false);
+    // const handleShow = (result: DataResponse) => {
+    //     if (result.Code === 1){
+    //         setPopupMsg({header: "Yay!", body: "Club was successfully updated!"})
+    //     }
+    //     else {
+    //         setPopupMsg({header: "Whoops!", body:`An error occurred please try again later or contact an administrator {"\n"} (Error code ${result.Code}: ${result.Message})`})
+    //     }
+    //     setShow(true);
+    // };
+
+    // const [popupMsg, setPopupMsg] = useState({header: "", body: ""})
 
 
     // const get = async (values: any) => {
@@ -137,8 +154,62 @@ function ClubForm(input: ClubFormDefinition) {
     //     });
     // };
 
+    console.log(input.clubObject);
+    const [data, setData] = useState({ Tags: ["No tags yet!"] });
+    const [clubData, setClubData] = useState(["No tags yet!"]);
+    const [saved, setSaved] = useState(false);
 
-    if (input.clubObject.ID == -1) {
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios({
+                method: 'get', //you can set what request you want to be
+                url: `/tags`})
+            if (result.data.data.tags === null) {
+                const tags = {Tags: ["No tags yet!"]}
+                setData(tags);
+            }
+            else {
+                setData(result.data.data);
+            }
+        };
+
+        fetchData();
+    }, []);
+    
+   
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios({
+                method: 'get', //you can set what request you want to be
+                url: `/clubs/${input.clubID}`,
+                headers: {
+                    Authorization: `Bearer ${input.token}`
+                },
+            })
+            setClubData(result.data.data.tags);
+        };
+        if (input.clubID !== -1) {
+            fetchData();
+        }
+    }, [input.clubID, input.token]);
+    
+
+    const renderTags = () => {
+        console.log(data)
+        return data.Tags.map((item: string) => (<TagListing key={item} id={item} label={item} checked={clubData.includes(item)} myVar={clubData} setMyVar={setClubData}/>))
+    }
+
+    const savedMessage = () => {
+        if (saved) {
+            return "Saved!";
+        }
+        else {
+            return "";
+        }
+    }
+
+
+    if (input.clubID === -1) {
         return (
             <Container className={styles.container}>
                 <Row>
@@ -177,7 +248,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Club Name"
                                 name="clubName"
-                                value={values.clubName}
+                                value={values.clubName || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.clubName}
                             />
@@ -209,7 +280,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Club Email"
                                 name="clubEmail"
-                                value={values.clubEmail}
+                                value={values.clubEmail || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.clubEmail}
                             />
@@ -229,7 +300,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 as="textarea"
                                 rows={3}
                                 name="bio"
-                                value={values.bio}
+                                value={values.bio || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.bio}
                             />
@@ -244,7 +315,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Size"
                                 name="size"
-                                value={values.size}
+                                value={values.size || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.size}
                             />
@@ -272,18 +343,6 @@ function ClubForm(input: ClubFormDefinition) {
         // const name = data["Name"]
         return (
             <Container className={styles.container}>
-                <Modal show={show} onHide={handleClose} dialogClassName={styles.ErrorModal}>
-                    <Modal.Header className="d-flex justify-content-center">
-                    <Modal.Title className="text-center">{popupMsg.header}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="text-center">{popupMsg.body}</Modal.Body>
-                    <Modal.Footer className="d-flex justify-content-center">
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
-
                 <Row>
                     <Col>
                     <h1 className={styles.title}>Tell us more about your club!</h1>
@@ -295,16 +354,17 @@ function ClubForm(input: ClubFormDefinition) {
                         console.log("submitting")
                         update(values)
                         .then((result: any) => {
-                            console.log(result)
-                            handleShow(result);                 
+                            console.log(result)               
                         });
+                        updateClubTags(values);
+                        setSaved(true);
                     }   
                     }
                     initialValues={{
-                        clubName: `${input.clubObject.Name}`,
-                        clubEmail: `${input.clubObject.Email}`,
-                        bio: `${input.clubObject.Bio}`,
-                        size: `${input.clubObject.Size}`,
+                        clubName: `${input.clubObject.name}`,
+                        clubEmail: `${input.clubObject.email}`,
+                        bio: `${input.clubObject.bio}`,
+                        size: `${input.clubObject.size}`,
                         image: '',
                     }}
                     enableReinitialize={true}
@@ -327,7 +387,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Club Name"
                                 name="clubName"
-                                value={input.clubObject.Name || ""}
+                                value={input.clubObject.name || ""}
                                 onChange={handleChange}
                                 isInvalid={!!errors.clubName}
                                 disabled
@@ -339,7 +399,7 @@ function ClubForm(input: ClubFormDefinition) {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                            <Form.Group as={Col} md="6" controlId="clubImage">
+                        <Form.Group as={Col} md="6" controlId="clubImage" className={"pl-5"}>
                             <Form.Label className={styles.subtitle}>Club Image</Form.Label>
                             <Form.File
                                 className={styles.inputBox}
@@ -361,7 +421,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Club Email"
                                 name="clubEmail"
-                                value={input.clubObject.Email || ""}
+                                value={input.clubObject.email || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.clubEmail}
                                 disabled
@@ -370,25 +430,29 @@ function ClubForm(input: ClubFormDefinition) {
                             <Form.Control.Feedback type="invalid" className={styles.inputBox}>
                                 {errors.clubEmail}
                             </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-                            <Form.Group as={Col} md="6" controlId="bio">
-                            <Form.Label className={styles.subtitle}>Bio</Form.Label>
+                    
+                            <Form.Label className={styles.subtitle + " mt-3"}>Bio</Form.Label>
                             <Form.Control
                                 className={styles.inputBox}
                                 required
                                 as="textarea"
                                 rows={3}
                                 name="bio"
-                                defaultValue={input.clubObject.Bio || ""}
+                                defaultValue={input.clubObject.bio || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.bio}
                             />
                             <Form.Control.Feedback type="invalid" className={styles.inputBox}>{errors.bio}</Form.Control.Feedback>
                             </Form.Group>
+
+                            <Form.Group as={Col} md={6} className={"pl-5"}>
+                                <Form.Label className={styles.subtitle}>Tags</Form.Label>
+                                <div className={styles.tagsContainer}>
+                                    {renderTags()}
+                                </div>
+                            </Form.Group>
                         </Form.Row>
+
                         <Form.Row>
                             <Form.Group as={Col} md="6" controlId="validationFormik03">
                             <Form.Label className={styles.subtitle}>Size of Club</Form.Label>
@@ -397,7 +461,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Size"
                                 name="size"
-                                defaultValue={input.clubObject.Size || ""}
+                                value={input.clubObject.size || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.size}
                             />
@@ -407,7 +471,8 @@ function ClubForm(input: ClubFormDefinition) {
                             </Form.Control.Feedback>
                             </Form.Group>
                         </Form.Row>
-                        <Form.Row className="d-flex justify-content-end">
+                        <Form.Row className="d-flex justify-content-end align-items-center">
+                            <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
                             <Button type="submit" className={"float-right"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
                                 Save settings
                             </Button>

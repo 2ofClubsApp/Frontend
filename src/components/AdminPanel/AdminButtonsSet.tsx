@@ -1,6 +1,6 @@
 import {Button, Row, Col, Container} from "react-bootstrap";
 import React from "react";
-import {useHistory, Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faScroll } from '@fortawesome/free-solid-svg-icons'
@@ -49,7 +49,6 @@ const AdminButtonsSet = (props:any) => {
     )
 }
 const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

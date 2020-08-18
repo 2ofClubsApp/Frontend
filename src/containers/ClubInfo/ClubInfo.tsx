@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import ClubForm from "../../components/ClubForm/ClubForm"
 import NavBar from "../../components/NavBar/NavBar"
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from "../../axios";
 import { connect } from 'react-redux';
 import { RootState } from '../../store';
@@ -14,32 +14,34 @@ const ClubInfo = (props:any) => {
 
     let { id } = useParams();
 
-    const [data, setData] = useState({ ID: -1, Name: '', Email: '', Bio: '', Size: 1, Tags: [], Hosts: []});
+    const [data, setData] = useState({ id: -1, name: '', email: '', bio: '', size: 1, tags: [], hosts: []});
    
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios({
+            await axios({
                 method: 'get', //you can set what request you want to be
                 url: `/clubs/${id}`,
                 headers: {
                 Authorization: `Bearer ${props.token}`
                           }
                         })
-            setData(result.data.Data);
+                .then ((result: any) => {
+                    console.log("clubinfo " + JSON.stringify(result.data.data));
+                    setData(result.data.data);
+                })
             };
 
         fetchData();
-    }, []);
+    }, [id, props.token]);
     
     return (
         <>
             <NavBar isSiteAdmin={false}></NavBar>
-            <ClubForm title={"Save Changes"} clubObject={data} isClub={true} token={props.token} />
+            <ClubForm title={"Save Changes"} clubObject={data} clubID={id} isClub={true} token={props.token} />
         </>
     )
 };
 const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

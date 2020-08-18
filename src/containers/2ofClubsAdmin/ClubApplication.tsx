@@ -1,7 +1,5 @@
 import React from 'react'
-import {ToggleButton, Container, Row, Image, Form} from "react-bootstrap";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import {Container} from "react-bootstrap";
 import NavBar from "../../components/NavBar/NavBar"
 import ClubApplicationContainer from "../../components/ClubApplication/ClubApplicationComponent"
 

@@ -2,19 +2,19 @@ import React from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
 import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
-import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import '../app.css';
 import {Formik} from "formik";
 import {loginSchema} from "../components/Form/Schemas";
 import FormContainer from "../components/Form/FormContainer";
 import {Form} from "react-bootstrap";
 import FormButton from "../components/Form/FormButton";
-import {connect, MapDispatchToProps, useStore} from "react-redux";
-import {RootState} from "../store";
+import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
 import axios from "../axios";
 import jwt_decode from 'jwt-decode';
 import ResetPasswordLink from "../components/ResetPassword/ResetPasswordLink"
+import {StatusResponse} from "../types/DataResponses"
 
 const Login = (props: any) => {
     const history = useHistory();
@@ -41,27 +41,17 @@ const Login = (props: any) => {
         });
     }
 
-    type StatusResponse = {
-        data: {
-            Code: number,
-            Message: string,
-            Data: {
-                Token: string
-            }
-        }
-    }
-
     const login = async (values: any) => {
         return axios.post("/login", JSON.stringify({
             "Username": values["username"],
             "Password": values["password"],
         })).then((response: StatusResponse) => {
-            console.log(JSON.stringify(response.data.Message));
-            if (response.data.Code === -1){
+            console.log(JSON.stringify(response.data.message));
+            if (response.data.code === -1){
                 return -1;
             }
             else{
-                const token = response.data.Data.Token;
+                const token = response.data.data.Token;
                 return token;
             }
         }).catch(err => {
@@ -145,11 +135,6 @@ const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
         setToken: (token: string) => dispatch(setToken(token)),
         setUsername: (username: string) => dispatch(setUsername(username)),
         setExpiry: (date: number) => dispatch(setExpiry(date))
-    }
-}
-const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn
     }
 }
 

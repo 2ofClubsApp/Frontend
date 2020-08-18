@@ -1,4 +1,4 @@
-import {Button, Container, Row, Col, Table, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import React from "react";
 import "./ClubsOverview.css";
 import {Link} from "react-router-dom";
@@ -27,7 +27,7 @@ const ClubListing = (club: clubDefinition) => {
             <tr className={"d-flex"}>
             <td colSpan={3} className={"col-11"} key={club.id}><Link to={`/settings/info/${club.id}`}>{club.title}</Link></td>
 
-            <td className={"col-1 text-center"}><Link to="/manageclubs/advancedsettings"><FontAwesomeIcon icon={faCog}/></Link></td>
+            <td className={"col-1 text-center"}><Link to={`/manageclubs/advancedsettings/${club.id}`}><FontAwesomeIcon icon={faCog}/></Link></td>
 
             </tr>           
         )
@@ -53,7 +53,6 @@ const ClubListing = (club: clubDefinition) => {
 }
 
 const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

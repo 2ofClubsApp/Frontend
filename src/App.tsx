@@ -28,7 +28,7 @@ const App = (props: any) => {
         <div>
             <Switch>
                 <Route exact path={"/"} render={() => {
-                    return ((props.isLogged && props.username !== "admin") ? <Home /> : ((props.username == "admin") ? <AdminPanel /> : <LandingPage />))}}/>
+                    return ((props.isLogged && props.username !== "admin") ? <Home /> : ((props.username === "admin") ? <AdminPanel /> : <LandingPage />))}}/>
                 <Route exact path={"/login"} component={Login}/>
                 <Route exact path={"/adminlogin"} component={AdminLogin}/>
                 <Route exact path={"/signup"} component={SignUp}/>
@@ -37,7 +37,8 @@ const App = (props: any) => {
                 <Route exact path={"/createclub"} component={CreateClub}/>
                 <Route exact path={"/manageclubs"} render={() => {
                     return (props.isLogged ? <ManageClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
-                <Route exact path={"/manageclubs/advancedsettings"} component={AdvancedSettings}/>
+                <Route exact path={"/manageclubs/advancedsettings/:id"} render={() => {
+                    return (props.isLogged ? <AdvancedSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/settings/user"} render={() => {
                     return (props.isLogged ? <UserSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin"} component={AdminPanel}/>

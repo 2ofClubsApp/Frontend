@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Row, Col, Button} from "react-bootstrap";
+import {Container, Button} from "react-bootstrap";
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import ResetPasswordForm from '../../components/ResetPassword/ResetPasswordForm';
@@ -11,20 +11,7 @@ const ResetPassword = (props: any) => {
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
-
-    const [state, setState] = React.useState({
-        username: "",
-        password: "",
-    });
-
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value
-        const id = event.target.id
-        setState({
-            ...state,
-            [id]: value
-        })
-    }
+    
     console.log(props.isLoggedIn);
     if (props.isLoggedIn) {
         return (
@@ -51,7 +38,6 @@ const ResetPassword = (props: any) => {
 }
 
 const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

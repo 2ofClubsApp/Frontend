@@ -1,31 +1,30 @@
 import React from 'react'
 import ClubForm from '../components/ClubForm/ClubForm';
 import NavBar from "../components/NavBar/NavBar"
-import {useHistory} from 'react-router-dom'
-import { connect, MapDispatchToProps } from 'react-redux';
-import { setLogin, setToken } from '../store/actions/actions';
+//import {useHistory} from 'react-router-dom'
+import { connect} from 'react-redux';
 import { RootState } from '../store';
 
 const CreateClub = (props:any) => {
-    const history = useHistory();
+    // const history = useHistory();
     
-    const changeRoute = (path: string) => {
-        history.replace({pathname: path})
-    };
+    // const changeRoute = (path: string) => {
+    //     history.replace({pathname: path})
+    // };
 
-    const emptyClub = 
-                    { ID: -1, 
-                        Name: '', 
-                        Email: '', 
-                        Bio: '', 
-                        Size: 1, 
-                        Tags: [], 
-                        Hosts: []}
+    const emptyClub = { 
+                    id: -1, 
+                    name: '', 
+                    email: '', 
+                    bio: '', 
+                    size: 1, 
+                    tags: [], 
+                    hosts: []}
 
     return (
         <>
             <NavBar isSiteAdmin={false}></NavBar>
-                <ClubForm title={"Submit for review"} isClub={true} clubObject={emptyClub} token={props.token}/>
+                <ClubForm title={"Submit for review"} isClub={true} clubObject={emptyClub} clubID={-1} token={props.token}/>
         </>
     )
 };

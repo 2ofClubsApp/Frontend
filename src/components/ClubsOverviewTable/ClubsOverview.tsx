@@ -23,11 +23,12 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
                 Authorization: `Bearer ${type.newToken}`
                           }
                         })
-            setData(result.data.Data);
+            console.log(result);
+            setData(result.data.data);
             };
 
         fetchData();
-    }, []);
+    }, [type.newUsername, type.newToken]);
 
     console.log(data.Manages)
    
@@ -45,7 +46,7 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
                  </thead>
                  <tbody>
                      {data.Manages.map((item: any) => (
-                         <ClubListing key={item.ID} id={item.ID} active={false} title={item.Name} overviewType={true} />
+                         <ClubListing key={item.id} id={item.id} active={false} title={item.name} overviewType={true} />
                      ))}
                  </tbody>
              </Table>
@@ -54,7 +55,6 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
   }
 
   const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

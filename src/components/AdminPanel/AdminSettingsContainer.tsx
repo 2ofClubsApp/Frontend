@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect} from 'react'
 import {Container, Row, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -7,24 +7,13 @@ import TagListing from "../TagsContainer/TagListing"
 import {Formik} from "formik";
 import * as yup from "yup";
 import axios from "../../axios";
-import { RootState } from '../../store';
-import { connect } from 'react-redux';
-
-
+import {StatusResponse} from "../../types/DataResponses"
 
 type AdminSettingsDefinition = {
     inputToken: string
 }
 
 const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
-
-    type StatusResponse = {
-        data: {
-            Code: number,
-            Message: string,
-            Data: {}
-        }
-    }
 
     type dataResponse = {
         Code: number,
@@ -35,19 +24,19 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
     const [data, setData] = useState({ Tags: ["No tags yet!"] });
     const [fileData, setFile] = useState<any>({file: null});
 
-    const newFileData = new FormData();
+    // const newFileData = new FormData();
    
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
                 url: `/tags`})
-            if (result.data.Data.Tags === null) {
+            if (result.data.data.Tags === null) {
                 const tags = {Tags: ["No tags yet!"]}
                 setData(tags);
             }
             else {
-                setData(result.data.Data);
+                setData(result.data.data);
             }
             };
 
@@ -65,7 +54,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                 "Name": values["tag"],
             }
             }).then((response: StatusResponse) => {
-                console.log(JSON.stringify(response.data.Message));
+                console.log(JSON.stringify(response.data.message));
                 return response.data
         }).catch(err => {
             console.log(err + " failed to submit tag");
@@ -81,12 +70,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
         //image: yup.string().required(),
     });
 
-    const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
-
-    const fileUploadSchema = yup.mixed()
-    .test('fileType', "Your Error Message", value => SUPPORTED_FORMATS.includes(value.type) )
-
-    const file: string[] = [];
+    // const file: string[] = [];
 
     const onChangeHandler = (e: any) => {
         const file = e.target.files[0];
@@ -97,12 +81,14 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
     const uploadTag = async (values: any) => {
         console.log("uploading file called " + fileData.file);
         const formData = new FormData();
-        const blob = fileData.file;
         formData.append("file", fileData.file);
         console.log(formData);
         return axios.post(`/upload/tags`, formData, {headers: {Authorization: `Bearer ${input.inputToken}`}})
                     .then((response:StatusResponse) => { console.log(response.data)})
     };
+
+    console.log(input.inputToken);
+
 
     return (
         <Container className={styles.container}>
@@ -142,7 +128,6 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                                 values.tag = ""
                                             }
                                             })
-                                        return false;
                                         }
                                     }
                                     initialValues={{
@@ -185,8 +170,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                     </Formik>
                                 </Col>
                                 <Col sm={12} md={12} lg={6} className="d-flex justify-content-center m-2">
-                                    <Form onSubmit={async (values: any) => {
-                                        uploadTag(values)}}>
+                                    <Form onSubmit={(e: any) => e.preventDefault()}>
                                         <Form.Row>
                                             <input
                                             type="file"
@@ -194,7 +178,8 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                             aria-describedby="file"
                                             onChange={onChangeHandler}
                                             />
-                                            <Button variant="primary" type="submit">Add</Button>
+                                            <Button variant="primary" type="submit" onClick={async (values: any) => {
+                                            uploadTag(values)}}>Add</Button>
                                         </Form.Row>
                                     </Form>
                                 
@@ -203,12 +188,14 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                             </Row>
 
                             <span className={styles.subtitle}>Existing Tags</span>
-                            <div className={styles.tagsContainer}>
+                            
                                 <Form>
-                                    {data.Tags.map((item: any) => (<TagListing key={item} id={item} label={item} checked={true} myVar={["None"]} setMyVar={null}/>))}
+                                    <div className={styles.tagsContainer}>
+                                        {data.Tags.map((item: any) => (<TagListing key={item} id={item} label={item} checked={true} myVar={["None"]} setMyVar={null}/>))}
+                                    </div>
                                     <Button type="submit">Save</Button>
                                 </Form>
-                            </div>
+                            
                     </Col>
                 </Row>
         </Container>

@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react'
-import {ToggleButton, Container, Row, Image, Form, Modal} from "react-bootstrap";
+import {Container, Row, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "../ClubForm/ClubForm.module.css"
-import TagsContainer from "../TagsContainer/TagListing"
 import { RootState } from '../../store';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from "yup";
 import axios from "../../axios";
-import { Link } from 'react-router-dom';
 import ResetPasswordLink from '../ResetPassword/ResetPasswordLink';
 import TagListing from '../TagsContainer/TagListing';
 
@@ -19,12 +17,6 @@ type UserSettingsDefinition = {
     email: string
     children: React.ReactNode
     newToken: string
-}
-
-const decode = (state: RootState) => {
-    console.log(state.system.token);
-    const token = state.system.token;
-    return token;
 }
 
 const UserSettingsForm = (input: UserSettingsDefinition) => {
@@ -49,8 +41,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         email: yup.string()
         .email('Invalid email')
         .required('A club email is required'),
-        password: yup.string()
-        .required(),
+        password: yup.string(),
         //image: yup.string().required(),
         newPassword: yup.string(),
         confirmNewPassword: yup.string()
@@ -98,42 +89,28 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         });
     };
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = (result: DataResponse) => {
-        if (result.Code === 1){
-            setPopupMsg({header: "Yay!", body: "Password was successfully changed!"})
-        }
-        else {
-            setPopupMsg({header: "Whoops!", body:`An error occurred please try again later or contact an administrator (Error code ${result.Code}: ${result.Message})`})
-        }
-        setShow(true);
-    };
-
-    const [popupMsg, setPopupMsg] = useState({header: "", body: ""})
-
-    const checkPasswords = (password1: string, password2: string) => {
-        if (password1 === password2) {
-            return 1;
-        }
-        return -1;
-    }
+    // const checkPasswords = (password1: string, password2: string) => {
+    //     if (password1 === password2) {
+    //         return 1;
+    //     }
+    //     return -1;
+    // }
     
     const [data, setData] = useState({ Tags: ["No tags yet!"] });
     const [userData, setUserData] = useState(["None"]);
+    const [saved, setSaved] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
                 url: `/tags`})
-            if (result.data.Data.Tags === null) {
+            if (result.data.data.Tags === null) {
                 const tags = {Tags: ["No tags yet!"]}
                 setData(tags);
             }
             else {
-                setData(result.data.Data);
+                setData(result.data.data);
             }
         };
 
@@ -149,10 +126,10 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                     Authorization: `Bearer ${input.newToken}`
                 },
             })
-            setUserData(result.data.Data.Tags);
+            setUserData(result.data.data.Tags);
         };
         fetchData();
-    }, []);
+    }, [input.newToken, input.username]);
 
     
 
@@ -162,20 +139,17 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         
     }
 
+    const savedMessage = () => {
+        if (saved) {
+            return "Saved!";
+        }
+        else {
+            return "";
+        }
+    }
+
     return (
         <Container className={styles.container}>
-                <Modal show={show} onHide={handleClose} dialogClassName={styles.ErrorModal}>
-                    <Modal.Header className="d-flex justify-content-center">
-                    <Modal.Title className="text-center">{popupMsg.header}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="text-center">{popupMsg.body}</Modal.Body>
-                    <Modal.Footer className="d-flex justify-content-center">
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
-
                 <Row>
                     <Col>
                     <h1 className={styles.title}>Tell us more about you!</h1>
@@ -187,6 +161,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                         console.log("submitting");
                         console.log(userData);
                         updateUserTags(values);
+                        setSaved(true);
                         //const check = checkPasswords(values.newPassword, values.confirmNewPassword);
                         // if (check === 1) {
                         //     changePassword(values)
@@ -232,112 +207,113 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                         errors,
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                        <Form.Row>
-                        <Form.Group as={Col} md="6" controlId="validationFormik02">
-                            <Form.Label className={styles.subtitle}>Username</Form.Label>
-                            <Form.Control
-                                className={styles.inputBox}
-                                type="text"
-                                placeholder="Username"
-                                name="username"
-                                value={input.username || ""}
-                                onChange={handleChange}
-                                isInvalid={!!errors.username}
-                                disabled
-                                
-                            />
+                            <Form.Row>
+                                <Form.Group as={Col} md={6}>
+                                    <Form.Label className={styles.subtitle}>Username</Form.Label>
+                                    <Form.Control
+                                        className={styles.inputBox}
+                                        type="text"
+                                        placeholder="Username"
+                                        name="username"
+                                        value={input.username || ""}
+                                        onChange={handleChange}
+                                        isInvalid={!!errors.username}
+                                        disabled
+                                        id="userValidationFormikUsername"
+                                    />
 
-                            <Form.Control.Feedback type="invalid" className={styles.inputBox}>
-                                {errors.username}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                                    <Form.Control.Feedback type="invalid" className={styles.inputBox}>
+                                        {errors.username}
+                                    </Form.Control.Feedback>
 
-                            <Form.Group as={Col} md="6">
-                            <Form.Label className={styles.subtitle}>Tags</Form.Label>
-                            <div className={styles.tagsContainer}>
-                                {renderTags()}
-                            </div>
-                            </Form.Group>
-                        </Form.Row>
+                                    <Form.Label className={styles.subtitle + " mt-4"}>Email</Form.Label>
+                                    <Form.Control
+                                        className={styles.inputBox}
+                                        type="text"
+                                        placeholder="Email"
+                                        name="email"
+                                        value={input.email || ""}
+                                        onChange={handleChange}
+                                        isInvalid={!!errors.email}
+                                        disabled
+                                        id="userValidationFormikEmail"
+                                    />
 
-                        <Form.Row>
-                            <Form.Group as={Col} md="6" controlId="validationFormik03">
-                            <Form.Label className={styles.subtitle}>Email</Form.Label>
-                            <Form.Control
-                                className={styles.inputBox}
-                                type="text"
-                                placeholder="Email"
-                                name="email"
-                                value={input.email || ""}
-                                onChange={handleChange}
-                                isInvalid={!!errors.email}
-                                disabled
-                            />
+                                    <Form.Control.Feedback type="invalid" className={styles.inputBox}>
+                                        {errors.email}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                            <Form.Control.Feedback type="invalid" className={styles.inputBox}>
-                                {errors.email}
-                            </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
+                                <Form.Group as={Col} md={6} className={"pl-5"}>
+                                    <Form.Label className={styles.subtitle}>Tags</Form.Label>
+                                    <div className={styles.tagsContainer}>
+                                        {renderTags()}
+                                    </div>
+                                </Form.Group>
+                            </Form.Row>
+                        
+                            <Form.Row>
+                                <Form.Group as={Col} md="6" controlId="bio">
+                                    <Form.Row className={"d-flex align-items-center justify-content-between " + styles.pl5px}>
+                                        <Form.Label className={styles.subtitle}>Current Password</Form.Label>
+                                        <div><ResetPasswordLink /></div>
 
-                        <Form.Row>
-                            <Form.Group as={Col} md="6" controlId="bio">
-                                <Form.Row className={"d-flex align-items-center justify-content-between"}>
-                                    <Form.Label className={styles.subtitle}>Password</Form.Label>
-                                    <div className={"float-right"}><ResetPasswordLink /></div>
+                                    </Form.Row>
+                                <Form.Control
+                                    className={styles.inputBox}
+                                    required
+                                    type="password"
+                                    placeholder=""
+                                    name="password"
+                                    defaultValue={""}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.password}
+                                />
+                                <Form.Control.Feedback type="invalid" className={styles.inputBox}>{errors.password}</Form.Control.Feedback>
 
-                                </Form.Row>
-                            <Form.Control
-                                className={styles.inputBox}
-                                required
-                                type="password"
-                                placeholder=""
-                                name="password"
-                                defaultValue={""}
-                                onChange={handleChange}
-                                isInvalid={!!errors.password}
-                            />
-                            <Form.Control.Feedback type="invalid" className={styles.inputBox}>{errors.password}</Form.Control.Feedback>
+                                </Form.Group>
+                            </Form.Row>
 
-                            </Form.Group>
-                        </Form.Row>
-                        <Form.Row>
-                            <Form.Group as={Col} md="6" controlId="validationFormik04">
-                            <Form.Label className={styles.subtitle}>New Password</Form.Label>
-                            <Form.Control
-                                className={styles.inputBox}
-                                type="password"
-                                placeholder=""
-                                name="newPassword"
-                                defaultValue={""}
-                                onChange={handleChange}
-                                isInvalid={!!errors.newPassword}
-                            />
+                            <Form.Row>
+                                <Form.Group as={Col} md="6" controlId="userValidationFormik02">
+                                <Form.Label className={styles.subtitle}>New Password</Form.Label>
+                                <Form.Control
+                                    className={styles.inputBox}
+                                    type="password"
+                                    placeholder=""
+                                    name="newPassword"
+                                    defaultValue={""}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.newPassword}
+                                />
 
-                            <Form.Control.Feedback type="invalid" className={styles.inputBox}>
-                                {errors.newPassword}
-                            </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
-                        <Form.Row>
-                            <Form.Group as={Col} md="6" controlId="validationFormik05">
-                            <Form.Label className={styles.subtitle}>Confirm New Password</Form.Label>
-                            <Form.Control
-                                className={styles.inputBox}
-                                type="password"
-                                placeholder=""
-                                name="confirmNewPassword"
-                                defaultValue={""}
-                                onChange={handleChange}
-                                isInvalid={!!errors.confirmNewPassword}
-                            />
+                                <Form.Control.Feedback type="invalid" className={styles.inputBox}>
+                                    {errors.newPassword}
+                                </Form.Control.Feedback>
+                                </Form.Group>
+                            </Form.Row>
+                        
+                            <Form.Row>
+                                <Form.Group as={Col} md="6" controlId="userValidationFormik03">
+                                <Form.Label className={styles.subtitle}>Re-type New Password</Form.Label>
+                                <Form.Control
+                                    className={styles.inputBox}
+                                    type="password"
+                                    placeholder=""
+                                    name="confirmNewPassword"
+                                    defaultValue={""}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.confirmNewPassword}
+                                />
 
-                            <Form.Control.Feedback type="invalid" className={styles.inputBox}>
-                                {errors.confirmNewPassword}
-                            </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
-                        <Form.Row className="d-flex justify-content-end">
+                                <Form.Control.Feedback type="invalid" className={styles.inputBox}>
+                                    {errors.confirmNewPassword}
+                                </Form.Control.Feedback>
+                                </Form.Group>
+                            </Form.Row>
+                        
+                        <Form.Row className="d-flex justify-content-end align-items-center">
+                            <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
                             <Button type="submit" className={"float-right"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
                                 Save settings
                             </Button>

@@ -1,27 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {ToggleButton, Container, Row, Image, Form, Modal} from "react-bootstrap";
+import React from 'react'
 import styles from "./ResetPasswordLink.module.css"
-import TagsContainer from "../TagsContainer/TagListing"
-import {Formik} from "formik";
-import * as yup from "yup";
-import axios from "../../axios";
-import {resetPasswordSchema} from "../Form/Schemas";
-import {FormInfo, passLabel, userLabel} from "../../types/FormInfo";
-import Label from "../Form/Label";
-import FormContainer from "../Form/FormContainer";
-import FormButton from "../Form/FormButton";
-import {useHistory, Link} from "react-router-dom";
+//import {useHistory, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const ResetPasswordLink = () => {
-    const history = useHistory();
-    const changeRoute = (path: string) => {
-        history.replace({pathname: path})
-    };
-
-    const [state] = React.useState({
-        username: "",
-        password: "",
-    });
+    // const history = useHistory();
+    // const changeRoute = (path: string) => {
+    //     history.replace({pathname: path})
+    // };
 
     return (
         <div className={styles.passwordLinkDiv}>

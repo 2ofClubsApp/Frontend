@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import UserSettingsForm from '../../components/UserSettingsForm/UserSettingsForm';
 import NavBar from "../../components/NavBar/NavBar"
-import {useHistory} from 'react-router-dom'
+// import {useHistory} from 'react-router-dom'
 import axios from "../../axios";
 import { RootState } from '../../store';
-import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import jwt_decode from 'jwt-decode';
 
 const UserSettings = (props: any) => {
-    const history = useHistory();
+    // const history = useHistory();
     
-    const changeRoute = (path: string) => {
-        history.replace({pathname: path})
-    };
+    // const changeRoute = (path: string) => {
+    //     history.replace({pathname: path})
+    // };
 
-    const [data, setData] = useState({ Email: "" });
+    const [data, setData] = useState({ email: "" });
    
     useEffect(() => {
         const fetchData = async () => {
@@ -26,11 +24,11 @@ const UserSettings = (props: any) => {
                 Authorization: `Bearer ${props.token}`
                           }
                         })
-            setData(result.data.Data);
+            setData(result.data.data);
             };
 
         fetchData();
-    }, []);
+    }, [props.username, props.token]);
 
     console.log(props.token)
     
@@ -55,7 +53,7 @@ const UserSettings = (props: any) => {
     return (
         <>
         <NavBar isSiteAdmin={false}></NavBar>
-        <UserSettingsForm title={"Save your profile"} username={props.username} email={data.Email} newToken={props.token}>
+        <UserSettingsForm title={"Save your profile"} username={props.username} email={data.email} newToken={props.token}>
             
         </UserSettingsForm>
         </>
@@ -70,7 +68,6 @@ const UserSettings = (props: any) => {
 // }
 
 const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,
