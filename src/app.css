@@ -87,7 +87,7 @@ hr.rounded {
     margin: 10rem auto;
     padding: 2rem 0;
     border-radius: 25px;
-    box-shadow: 0 0 .5rem black;
+    box-shadow: 2px 2px 5px rgb(98, 96, 179);
     color: #686ee8;
 }
 

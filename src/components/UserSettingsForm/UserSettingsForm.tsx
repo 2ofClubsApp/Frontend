@@ -56,23 +56,24 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         //   }),
     });
 
-    // const changePassword = async (values: any) => {
-    //     return axios({
-    //         method: 'post', //you can set what request you want to be
-    //         url: `/resetpassword/${input.username}/${input.newToken}`,
-    //         headers: {
-    //             Authorization: `Bearer ${input.newToken}`
-    //         },
-    //         data: {
-    //             "Password": values.newPassword
-    //         }
-    //         }).then((response: StatusResponse) => {
-    //             console.log(JSON.stringify(response.data.Message));
-    //             return (response.data)
-    //     }).catch(err => {
-    //         console.log(err + " submission failed");
-    //     });
-    // };
+    const changePassword = async (values: any) => {
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/users/${input.username}`,
+            headers: {
+                Authorization: `Bearer ${input.newToken}`
+            },
+            data: {
+                "OldPassword": values.password,
+                "NewPassword": values.newPassword
+            }
+            }).then((response: StatusResponse) => {
+                console.log(JSON.stringify(response.data.Message));
+                return (response.data)
+        }).catch(err => {
+            console.log(err + " submission failed");
+        });
+    };
 
     const updateUserTags = async (values: any) => {
         return axios({
@@ -91,12 +92,12 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         });
     };
 
-    // const checkPasswords = (password1: string, password2: string) => {
-    //     if (password1 === password2) {
-    //         return 1;
-    //     }
-    //     return -1;
-    // }
+    const checkPasswords = (password1: string, password2: string) => {
+        if (password1 === password2) {
+            return 1;
+        }
+        return -1;
+    }
     
     const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
     const [userData, setUserData] = useState(["None"]);
@@ -165,30 +166,28 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                     onSubmit={(values, actions) => {
                         updateUserTags(values);
                         setSaved(true);
-                        //const check = checkPasswords(values.newPassword, values.confirmNewPassword);
-                        // if (check === 1) {
-                        //     changePassword(values)
-                        //     .then( (result: any) => {
-                        //         console.log(result);
-                        //         handleShow(result);
-                        //     } )
-                        // }
-                        // else {
-                        //     actions.setErrors({
-                        //         newPassword: "Passwords do not match",
-                        //         confirmNewPassword: "Passwords do not match"
-                        //     })
-                        // }
-                        // changePassword(values)
-                        // .then((result: any) => {
-                        //     console.log(result)
-                        //     if (result.Code !== 1){
-                        //         handleShow(result)
-                        //     }
-                        //     else {
-                        //         handleShow(result)
-                        //     }                        
-                        // });
+                        const check = checkPasswords(values.newPassword, values.confirmNewPassword);
+                        if (check === 1) {
+                            changePassword(values)
+                            .then( (result: any) => {
+                                console.log(result.message)
+                                if (result.code === -1) {
+                                    actions.setErrors({password: `Password is incorrect`});
+                                }
+                                else{
+                                    actions.setErrors({password: ""});
+                                    values.password = "";
+                                    values.newPassword = "";
+                                }
+                                
+                            } )
+                        }
+                        else {
+                            actions.setErrors({
+                                newPassword: "Passwords do not match",
+                                confirmNewPassword: "Passwords do not match"
+                            })
+                        }
                     }   
                     }
                     initialValues={{

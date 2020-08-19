@@ -28,7 +28,6 @@ const TagListing = (input: FormDefinition) => {
                     />
                         ))}*/
     const [check, setCheck] = useState(false);
-    const [switchCheck, setSwitchCheck] = useState(true);
 
 
     if (!input.admin) {
@@ -52,7 +51,6 @@ const TagListing = (input: FormDefinition) => {
     else {
         const handleClick = (e: any) => {
             const checked = e.target.checked;
-            setSwitchCheck(!check);
             
             if (checked) {
                 const newTagsList = input.myVar.concat(input.label);

@@ -50,12 +50,12 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios({
+            await axios({
                 method: 'get', //you can set what request you want to be
                 url: `/tags`})
             .then ( (result: any) => {
                 setData(result.data.data);
-                }
+            }
             )
         };
 
@@ -198,7 +198,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                                         setUserData(tagNamesArray);
                                                     }
                                                     else{
-                                                        return ["None"]
+                                                        return ["None"];
                                                     }
                                                     };
                                         

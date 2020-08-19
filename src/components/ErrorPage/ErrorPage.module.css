@@ -1,0 +1,25 @@
+.errorContainer {
+    border-radius: 50px;
+    width: 50%;
+    height: 50%;
+}
+
+.title {
+    font-size: 5rem;
+    font-family: "Poppins", Helvetica, sans-serif;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgb(98, 96, 179);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-family: "Poppins", Helvetica, sans-serif;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgb(98, 96, 179);
+}
+
+hr.white {
+    border: 1px solid white;
+    border-radius: 1px;
+    width: 50%;
+}

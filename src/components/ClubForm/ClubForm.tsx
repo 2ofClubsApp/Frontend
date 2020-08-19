@@ -72,7 +72,7 @@ function ClubForm(input: ClubFormDefinition) {
                 "Size": values["size"]
             }
             }).then((response: StatusResponse) => {
-                console.log(JSON.stringify(response.data.Message));
+                
         }).catch(err => {
             console.log(err + " submission failed");
         });
@@ -99,7 +99,6 @@ function ClubForm(input: ClubFormDefinition) {
     };
 
     const updateClubTags = async (values: any) => {
-        console.log("club Data is "+ clubData);
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/clubs/${input.clubObject.id}/tags`,
@@ -107,7 +106,7 @@ function ClubForm(input: ClubFormDefinition) {
                 Authorization: `Bearer ${input.token}`
             },
             data: {
-                "tags": clubData
+                "Tags": clubData
             }
             }).then((response: StatusResponse) => {
                 return (response.data)

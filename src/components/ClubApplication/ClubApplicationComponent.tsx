@@ -1,9 +1,8 @@
 import React from 'react'
-import {ToggleButton, Container, Row, Image, Form} from "react-bootstrap";
+import { Container, Row, Image, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "./ClubApplicationComponent.module.css"
-import TagsContainer from "../TagsContainer/TagListing"
 
 type ClubDefinition = {
     username: string

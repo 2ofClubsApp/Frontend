@@ -5,6 +5,8 @@ import {useParams} from "react-router-dom";
 import axios from "../../axios";
 import { connect } from 'react-redux';
 import { RootState } from '../../store';
+import {Container} from "react-bootstrap";
+import ErrorPage from '../../components/ErrorPage/ErrorPage';
 
 type clubFormDefinition = {
     clubID: number
@@ -26,19 +28,36 @@ const ClubInfo = (props:any) => {
                           }
                         })
                 .then ((result: any) => {
-                    setData(result.data.data);
+                    if (result.data.code !== -1) {
+                        setData(result.data.data);
+                    }
                 })
             };
 
         fetchData();
     }, [id, props.token]);
+
+    if (data.id === -1) {
+        return (
+            <>
+                <NavBar isSiteAdmin={false}></NavBar>
+                <ErrorPage/>
+                
+            </>
+        )
+        
+    }
+    else{
+        return (
+            <>
+                <NavBar isSiteAdmin={false}></NavBar>
+                <ClubForm title={"Save Changes"} clubObject={data} clubID={id} isClub={true} token={props.token} />
+            </>
+        
+        )
+    }
     
-    return (
-        <>
-            <NavBar isSiteAdmin={false}></NavBar>
-            <ClubForm title={"Save Changes"} clubObject={data} clubID={id} isClub={true} token={props.token} />
-        </>
-    )
+    
 };
 const mapStateToProps = (state: RootState) => {
     return {

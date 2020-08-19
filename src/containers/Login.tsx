@@ -45,8 +45,7 @@ const Login = (props: any) => {
         return axios.post("/login", JSON.stringify({
             "Username": values["username"],
             "Password": values["password"],
-        })).then((response: StatusResponse) => {
-            console.log(JSON.stringify(response.data.message));
+        })).then((response: any) => {
             if (response.data.code === -1){
                 return -1;
             }
@@ -56,6 +55,7 @@ const Login = (props: any) => {
             }
         }).catch(err => {
             console.log(err + " failed to login");
+            return -1;
         });
     };
   
@@ -79,6 +79,7 @@ const Login = (props: any) => {
                     // console.log(values)
                         login(values).then(result => {
                             const token = result;
+                            console.log(result);
                             if (result === -1) {
                                 actions.setErrors({
                                     username: "Username is incorrect or does not exist",
