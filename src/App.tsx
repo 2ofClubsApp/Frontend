@@ -33,7 +33,7 @@ const App = (props: any) => {
                 <Route exact path={"/adminlogin"} component={AdminLogin}/>
                 <Route exact path={"/signup"} component={SignUp}/>
                 <Route exact path={"/settings/info/:id"} render={() => {
-                    return (props.isLogged ? <ClubInfo /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged ? <ClubInfo /> : <ClubInfo />)}}/>
                 <Route exact path={"/createclub"} component={CreateClub}/>
                 <Route exact path={"/manageclubs"} render={() => {
                     return (props.isLogged ? <ManageClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>

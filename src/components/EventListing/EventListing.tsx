@@ -1,0 +1,44 @@
+import {Form} from "react-bootstrap";
+import React from "react";
+import "../ClubsOverviewTable/ClubsOverview.css";
+import {Link} from "react-router-dom";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import "../NavBar/NavBar"
+import { RootState } from "../../store";
+import { connect } from "react-redux";
+
+library.add(faCog, faCoffee)
+
+type clubDefinition = {
+    title: string
+    overviewType: boolean
+    active: boolean
+    id: number
+}
+
+
+
+const EventListing = (club: clubDefinition) => {
+
+    return (
+        <tr className={"d-flex"} key={club.id}>
+            <td colSpan={3} className={"col-11"} key={club.id}><Link to={`/settings/info/${club.id}`}>{club.title}</Link></td>
+
+            <td className={"col-1 text-center"}><Link to={`/manageclubs/advancedsettings/${club.id}`}><FontAwesomeIcon icon={faCog}/></Link></td>
+
+        </tr>           
+    )
+}
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token,
+        username: state.system.username,
+        date: state.system.date
+    }
+}
+
+export default connect(mapStateToProps)(EventListing);

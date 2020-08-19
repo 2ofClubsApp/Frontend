@@ -8,6 +8,8 @@ import * as yup from "yup";
 import axios from "../../axios";
 import TagListing from '../TagsContainer/TagListing';
 import {tag} from "../../types/DataResponses"
+import EventsOverview from '../EventListing/EventsOverview';
+import EventForm from '../EventListing/EventForm';
 
 
 type ClubFormDefinition = {
@@ -30,6 +32,7 @@ type Club = {
 }
 
 function ClubForm(input: ClubFormDefinition) {
+    console.log("in club form token is "+input.token)
     
     const schema = yup.object({
         clubName: yup.string()
@@ -206,6 +209,27 @@ function ClubForm(input: ClubFormDefinition) {
         }
     }
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [eventsData, setEventsData] = useState([{"id": -1, "name": "N/A", "description": "", "location": "", "fee": 1}]);
+   
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios({
+                method: 'get', //you can set what request you want to be
+                url: `/clubs/${input.clubID}/events`,
+            }).then((result: any) => {
+                setEventsData(result.data.data.Hosts);
+                console.log(result.data.data.Hosts);
+            }
+            )
+        };
+
+        fetchData();
+    }, [input.clubID]);
 
     if (input.clubID === -1) {
         return (
@@ -340,7 +364,10 @@ function ClubForm(input: ClubFormDefinition) {
         // EDITING CLUB HERE
         // const name = data["Name"]
         return (
+            <>
+            <EventForm show={show} onHide={handleClose} newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData}/>
             <Container className={styles.container}>
+                
                 <Row>
                     <Col>
                     <h1 className={styles.title}>Tell us more about your club!</h1>
@@ -468,6 +495,18 @@ function ClubForm(input: ClubFormDefinition) {
                                 {errors.size}
                             </Form.Control.Feedback>
                             </Form.Group>
+
+                            <Form.Group as={Col} md="6" controlId="events" className={"pl-5"}>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <Form.Label className={styles.subtitle}>Events</Form.Label>
+                                <Button onClick={handleShow}>+</Button>
+                            </div>
+                            
+                            <EventsOverview newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData}/>
+                            </Form.Group>
+                            
+                            
+
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-end align-items-center">
                             <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
@@ -480,7 +519,7 @@ function ClubForm(input: ClubFormDefinition) {
                     )}
                     </Formik>
             </Container>
-
+            </>
         )
     }
 };

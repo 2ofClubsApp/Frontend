@@ -42,7 +42,6 @@ const ClubInfo = (props:any) => {
             <>
                 <NavBar isSiteAdmin={false}></NavBar>
                 <ErrorPage/>
-                
             </>
         )
         

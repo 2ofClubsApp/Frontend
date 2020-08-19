@@ -11,6 +11,7 @@ import axios from "../../axios";
 import ResetPasswordLink from '../ResetPassword/ResetPasswordLink';
 import TagListing from '../TagsContainer/TagListing';
 import {tag} from "../../types/DataResponses"
+import EventsOverview from '../EventListing/EventsOverview';
 
 type UserSettingsDefinition = {
     title: string
