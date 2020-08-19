@@ -23,14 +23,12 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
                 Authorization: `Bearer ${type.newToken}`
                           }
                         })
-            console.log(result);
             setData(result.data.data);
             };
 
         fetchData();
     }, [type.newUsername, type.newToken]);
 
-    console.log(data.Manages)
    
     return (
         <Container className={"clubsOverviewContainer"}>

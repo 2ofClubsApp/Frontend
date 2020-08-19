@@ -7,6 +7,7 @@ import {Formik} from "formik";
 import * as yup from "yup";
 import axios from "../../axios";
 import TagListing from '../TagsContainer/TagListing';
+import {tag} from "../../types/DataResponses"
 
 
 type ClubFormDefinition = {
@@ -29,8 +30,6 @@ type Club = {
 }
 
 function ClubForm(input: ClubFormDefinition) {
-
-    console.log("club is is "+ input.clubID);
     
     const schema = yup.object({
         clubName: yup.string()
@@ -93,7 +92,6 @@ function ClubForm(input: ClubFormDefinition) {
                 "Size": parseInt(values["size"])
             }
             }).then((response: StatusResponse) => {
-                console.log(JSON.stringify(response.data.Message));
                 return (response.data)
         }).catch(err => {
             console.log(err + " submission failed");
@@ -101,6 +99,7 @@ function ClubForm(input: ClubFormDefinition) {
     };
 
     const updateClubTags = async (values: any) => {
+        console.log("club Data is "+ clubData);
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/clubs/${input.clubObject.id}/tags`,
@@ -108,10 +107,9 @@ function ClubForm(input: ClubFormDefinition) {
                 Authorization: `Bearer ${input.token}`
             },
             data: {
-                "Tags": clubData
+                "tags": clubData
             }
             }).then((response: StatusResponse) => {
-                console.log(JSON.stringify(response.data.Message));
                 return (response.data)
         }).catch(err => {
             console.log(err + " submission failed");
@@ -154,28 +152,23 @@ function ClubForm(input: ClubFormDefinition) {
     //     });
     // };
 
-    console.log(input.clubObject);
-    const [data, setData] = useState({ Tags: ["No tags yet!"] });
-    const [clubData, setClubData] = useState(["No tags yet!"]);
+    const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
+    const [clubData, setClubData] = useState(["None"]);
     const [saved, setSaved] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
-                url: `/tags`})
-            if (result.data.data.tags === null) {
-                const tags = {Tags: ["No tags yet!"]}
-                setData(tags);
-            }
-            else {
+                url: `/tags/active`})
+            .then ( (result: any) => {
                 setData(result.data.data);
-            }
+                }
+            )
         };
 
         fetchData();
     }, []);
-    
    
     useEffect(() => {
         const fetchData = async () => {
@@ -186,7 +179,14 @@ function ClubForm(input: ClubFormDefinition) {
                     Authorization: `Bearer ${input.token}`
                 },
             })
-            setClubData(result.data.data.tags);
+            const tagsArray = result.data.data.tags;
+            if (tagsArray !== []){
+                const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                setClubData(tagNamesArray);
+            }
+            else{
+                return ["None"]
+            }
         };
         if (input.clubID !== -1) {
             fetchData();
@@ -195,8 +195,7 @@ function ClubForm(input: ClubFormDefinition) {
     
 
     const renderTags = () => {
-        console.log(data)
-        return data.Tags.map((item: string) => (<TagListing key={item} id={item} label={item} checked={clubData.includes(item)} myVar={clubData} setMyVar={setClubData}/>))
+        return data.map((item: any) => (<TagListing admin={false} key={item.name} id={item.id} label={item.name} checked={clubData.includes(item.name)} myVar={clubData} setMyVar={setClubData} myVar2={["N/A"]} setMyVar2={null} />))
     }
 
     const savedMessage = () => {
@@ -326,7 +325,7 @@ function ClubForm(input: ClubFormDefinition) {
                             </Form.Group>
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-end">
-                            <Button type="submit" className={"float-right"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
+                            <Button type="submit" className={"float-right " + styles.btnpurple}>
                                 Submit request for review
                             </Button>
                         </Form.Row>
@@ -473,7 +472,7 @@ function ClubForm(input: ClubFormDefinition) {
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-end align-items-center">
                             <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
-                            <Button type="submit" className={"float-right"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
+                            <Button type="submit" className={"float-right "+ styles.btnpurple}>
                                 Save settings
                             </Button>
                         </Form.Row>

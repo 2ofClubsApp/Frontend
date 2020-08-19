@@ -15,3 +15,9 @@ export type Status = {
     message: string,
     data: {}
 }
+
+export type tag = {
+    id: number,
+    name: string,
+    isActive: boolean
+}

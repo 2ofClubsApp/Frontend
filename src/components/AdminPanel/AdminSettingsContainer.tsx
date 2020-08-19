@@ -7,7 +7,7 @@ import TagListing from "../TagsContainer/TagListing"
 import {Formik} from "formik";
 import * as yup from "yup";
 import axios from "../../axios";
-import {StatusResponse} from "../../types/DataResponses"
+import {StatusResponse, tag} from "../../types/DataResponses"
 
 type AdminSettingsDefinition = {
     inputToken: string
@@ -21,27 +21,69 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
         Data: {}
     }
 
-    const [data, setData] = useState({ Tags: ["No tags yet!"] });
+    // const [data, setData] = useState({ Tags: ["No tags yet!"] });
     const [fileData, setFile] = useState<any>({file: null});
 
     // const newFileData = new FormData();
    
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const result = await axios({
+    //             method: 'get', //you can set what request you want to be
+    //             url: `/tags`})
+    //         if (result.data.data.Tags === null) {
+    //             const tags = {Tags: ["No tags yet!"]}
+    //             setData(tags);
+    //         }
+    //         else {
+    //             setData(result.data.data);
+    //         }
+    //         };
+
+    //     fetchData();
+    // }, []);
+
+    const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
+    const [userData, setUserData] = useState(["None"]);
+    const [saved, setSaved] = useState(false);
+    const [toggledTags, setToggledTags] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
                 url: `/tags`})
-            if (result.data.data.Tags === null) {
-                const tags = {Tags: ["No tags yet!"]}
-                setData(tags);
-            }
-            else {
+            .then ( (result: any) => {
                 setData(result.data.data);
-            }
-            };
+                }
+            )
+        };
 
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios({
+                method: 'get', //you can set what request you want to be
+                url: `/tags/active`,
+            })
+            const tagsArray = result.data.data;
+            if (tagsArray !== []){
+                const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                setUserData(tagNamesArray);
+            }
+            else{
+                return ["None"]
+            }
+            
+        };
+        fetchData();
+    }, []);
+
+    const renderTags = () => {
+        return data.map((item: any) => (<TagListing admin={true} key={item.name} id={item.id} label={item.name} checked={userData.includes(item.name)} myVar={userData} setMyVar={setUserData} myVar2={toggledTags} setMyVar2={setToggledTags} />))
+    }
     
     const createTag = async (values: any) => {
         return axios({
@@ -53,8 +95,11 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
             data: {
                 "Name": values["tag"],
             }
-            }).then((response: StatusResponse) => {
-                console.log(JSON.stringify(response.data.message));
+            }).then((response: any) => {
+                console.log(JSON.stringify(response));
+                if (response.data.code === 1) {
+                    setSaved(true);
+                }
                 return response.data
         }).catch(err => {
             console.log(err + " failed to submit tag");
@@ -87,8 +132,35 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                     .then((response:StatusResponse) => { console.log(response.data)})
     };
 
-    console.log(input.inputToken);
+    const toggleTags = () => {
+        console.log("toggling" + toggledTags);
+        toggledTags.map((item: string) => toggleTag(item));
+        setSaved(true);
+    }
 
+    const toggleTag = async (tagName: string) => {
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/toggle/tags/${tagName}`,
+            headers: {
+                Authorization: `Bearer ${input.inputToken}`
+            },
+            }).then((response: any) => {
+                console.log(JSON.stringify(response));
+                return response.data
+        }).catch(err => {
+            console.log(err + " failed to submit tag");
+        });
+    };
+
+    const savedMessage = () => {
+        if (saved) {
+            return "Saved!";
+        }
+        else {
+            return "";
+        }
+    }
 
     return (
         <Container className={styles.container}>
@@ -105,7 +177,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                     onSubmit={async (values, actions) => {
                                         console.log(values.tag);
                                         createTag(values).then((result: any) => {
-                                            if (result.Code === -1) {
+                                            if (result.code === -1) {
                                                 actions.setErrors({
                                                     tag: `${result.Message}`
                                                 });
@@ -115,17 +187,26 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                                     const result = await axios({
                                                         method: 'get', //you can set what request you want to be
                                                         url: `/tags`})
-                                                    if (result.data.Data.Tags === null) {
-                                                        const tags = {Tags: ["No tags yet!"]}
-                                                        setData(tags);
+                                                    setData(result.data.data);
+                                                    const result2 = await axios({
+                                                        method: 'get', //you can set what request you want to be
+                                                        url: `/tags/active`,
+                                                    })
+                                                    const tagsArray = result2.data.data;
+                                                    if (tagsArray !== []){
+                                                        const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                                                        setUserData(tagNamesArray);
                                                     }
-                                                    else {
-                                                        setData(result.data.Data);
+                                                    else{
+                                                        return ["None"]
                                                     }
                                                     };
                                         
                                                 fetchData();
                                                 values.tag = ""
+                                                actions.setErrors({
+                                                    tag: ``
+                                                });
                                             }
                                             })
                                         }
@@ -160,7 +241,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                                     </Form.Control.Feedback>
                                                 </Form.Group>
                                                 <Form.Group as={Col} md="2" controlId="submitButton">
-                                                    <Button variant="primary" type="submit">Add</Button>
+                                                    <Button className={styles.btnpurple} type="submit">Add</Button>
                                                 </Form.Group>
                                                 
                                             </Form.Row>
@@ -178,7 +259,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                             aria-describedby="file"
                                             onChange={onChangeHandler}
                                             />
-                                            <Button variant="primary" type="submit" onClick={async (values: any) => {
+                                            <Button className={styles.btnpurple} type="submit" onClick={async (values: any) => {
                                             uploadTag(values)}}>Add</Button>
                                         </Form.Row>
                                     </Form>
@@ -189,11 +270,14 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
 
                             <span className={styles.subtitle}>Existing Tags</span>
                             
-                                <Form>
+                                <Form onSubmit={(e:any) => e.preventDefault()}>
                                     <div className={styles.tagsContainer}>
-                                        {data.Tags.map((item: any) => (<TagListing key={item} id={item} label={item} checked={true} myVar={["None"]} setMyVar={null}/>))}
+                                        {renderTags()}
                                     </div>
-                                    <Button type="submit">Save</Button>
+                                    <div className={"d-flex justify-content-end align-items-center mt-2 mr-2"}>
+                                        <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
+                                        <Button type="submit" className={styles.btnpurple} onClick={async () => {toggleTags()}}>Update Tags</Button>
+                                    </div>
                                 </Form>
                             
                     </Col>

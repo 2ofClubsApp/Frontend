@@ -101,20 +101,21 @@ hr.rounded {
 
 .form button {
     border-radius: 10px;
-    background-color: #686ee8;
     border: none;
 }
 
-.form button:hover{
+/*.form button:hover{
     background-color: #979cf8;
-}
+} */
 
 .btn-grad {
+    color: #fff;
     background-image: linear-gradient(90deg, rgba(104,110,232,1) 0%, rgba(106,201,224,1) 100%);
+    border: none;
+    text-transform: uppercase;
 }
 
 .btn-grad:hover { 
-    background-color: rgba(6, 7, 75, 0.596);
     background-blend-mode: screen;
 }
 

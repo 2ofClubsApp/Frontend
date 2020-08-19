@@ -10,6 +10,7 @@ import * as yup from "yup";
 import axios from "../../axios";
 import ResetPasswordLink from '../ResetPassword/ResetPasswordLink';
 import TagListing from '../TagsContainer/TagListing';
+import {tag} from "../../types/DataResponses"
 
 type UserSettingsDefinition = {
     title: string
@@ -34,6 +35,8 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         Message: string,
         Data: {}
     }
+
+   
 
     const schema = yup.object({
         username: yup.string()
@@ -82,7 +85,6 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                 "Tags": userData
             }
             }).then((response: StatusResponse) => {
-                console.log(JSON.stringify(response.data.Message));
                 return (response.data)
         }).catch(err => {
             console.log(err + " submission failed");
@@ -96,7 +98,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
     //     return -1;
     // }
     
-    const [data, setData] = useState({ Tags: ["No tags yet!"] });
+    const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
     const [userData, setUserData] = useState(["None"]);
     const [saved, setSaved] = useState(false);
 
@@ -104,14 +106,11 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
-                url: `/tags`})
-            if (result.data.data.Tags === null) {
-                const tags = {Tags: ["No tags yet!"]}
-                setData(tags);
-            }
-            else {
+                url: `/tags/active`})
+            .then ( (result: any) => {
                 setData(result.data.data);
-            }
+                }
+            )
         };
 
         fetchData();
@@ -126,7 +125,15 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                     Authorization: `Bearer ${input.newToken}`
                 },
             })
-            setUserData(result.data.data.Tags);
+            const tagsArray = result.data.data.tags;
+            if (tagsArray !== []){
+                const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                setUserData(tagNamesArray);
+            }
+            else{
+                return ["None"]
+            }
+            
         };
         fetchData();
     }, [input.newToken, input.username]);
@@ -134,9 +141,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
     
 
     const renderTags = () => {
-        
-        return data.Tags.map((item: string) => (<TagListing key={item} id={item} label={item} checked={userData.includes(item)} myVar={userData} setMyVar={setUserData}/>))
-        
+        return data.map((item: any) => (<TagListing admin={false} key={item.name} id={item.id} label={item.name} checked={userData.includes(item.name)} myVar={userData} setMyVar={setUserData} myVar2={["N/A"]} setMyVar2={null}/>))
     }
 
     const savedMessage = () => {
@@ -158,8 +163,6 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                 <Formik
                     validationSchema={schema}
                     onSubmit={(values, actions) => {
-                        console.log("submitting");
-                        console.log(userData);
                         updateUserTags(values);
                         setSaved(true);
                         //const check = checkPasswords(values.newPassword, values.confirmNewPassword);
@@ -314,7 +317,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                         
                         <Form.Row className="d-flex justify-content-end align-items-center">
                             <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
-                            <Button type="submit" className={"float-right"} style={{color:"#fff", backgroundColor:"#696de9", border:"none", textTransform:"uppercase"}}>
+                            <Button type="submit" className={"float-right " + styles.btnpurple}>
                                 Save settings
                             </Button>
                         </Form.Row>
@@ -327,8 +330,6 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-    const token = state.system.token;
-    console.log("token in usersettingsform is" + token);
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token

@@ -6,7 +6,16 @@ type FormDefinition = {
     label: string
     checked: boolean
     myVar: string[]
-    setMyVar: any;
+    setMyVar: any
+    myVar2: string[]
+    setMyVar2: any
+    admin: boolean
+}
+
+type tag = {
+    id: number,
+    name: string,
+    isActive: boolean
 }
 
 const TagListing = (input: FormDefinition) => {
@@ -19,26 +28,54 @@ const TagListing = (input: FormDefinition) => {
                     />
                         ))}*/
     const [check, setCheck] = useState(false);
+    const [switchCheck, setSwitchCheck] = useState(true);
 
-    const handleClick = (e: any) => {
-        const checked = e.target.checked;
-        setCheck(!check);
+
+    if (!input.admin) {
+        const handleClick = (e: any) => {
+            const checked = e.target.checked;
+            setCheck(!check);
+            
+            if (checked) {
+                const newTagsList = input.myVar.concat(input.label);
+                input.setMyVar(newTagsList);
+            }
+            else {
+                const newTagsList = input.myVar.filter(item => item !== input.label);
+                input.setMyVar(newTagsList);
+            }
+        };
+        return (
+            <Form.Check type={"checkbox"} key={input.id} id={input.id} label={input.label} checked={input.checked} onChange={handleClick}/>
+        )
+    }
+    else {
+        const handleClick = (e: any) => {
+            const checked = e.target.checked;
+            setSwitchCheck(!check);
+            
+            if (checked) {
+                const newTagsList = input.myVar.concat(input.label);
+                input.setMyVar(newTagsList);
+                const toggledTagsList = input.myVar2.concat(input.label);
+                input.setMyVar2(toggledTagsList);
+                console.log("toggled Tags List is now " + toggledTagsList);
+                console.log(input.label + "on")
+            }
+            else {
+                const newTagsList = input.myVar.filter(item => item !== input.label);
+                input.setMyVar(newTagsList);
+                const toggledTagsList = input.myVar2.concat(input.label);
+                input.setMyVar2(toggledTagsList);
+                console.log("toggled Tags List is now " + toggledTagsList);
+                console.log(input.label + "off")
+            }
+        };
         
-        if (checked) {
-            const newTagsList = input.myVar.concat(input.id);
-            console.log(input.id);
-            input.setMyVar(newTagsList);
-        }
-        else {
-            const newTagsList = input.myVar.filter(item => item !== input.id);
-            input.setMyVar(newTagsList);
-        }
-    };
-
-    
-    return (
-        <Form.Check type={"checkbox"} key={input.id} id={input.id} label={input.label} checked={input.checked} onChange={handleClick}/>
-    )
+        return (
+            <Form.Check type={"switch"} key={input.id} id={input.id} label={input.label} checked={input.checked} onChange={handleClick}/>
+        )
+    }
 }
 
 export default TagListing;

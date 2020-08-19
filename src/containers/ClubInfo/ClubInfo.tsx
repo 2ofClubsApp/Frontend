@@ -26,7 +26,6 @@ const ClubInfo = (props:any) => {
                           }
                         })
                 .then ((result: any) => {
-                    console.log("clubinfo " + JSON.stringify(result.data.data));
                     setData(result.data.data);
                 })
             };

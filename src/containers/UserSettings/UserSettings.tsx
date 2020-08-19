@@ -13,7 +13,7 @@ const UserSettings = (props: any) => {
     //     history.replace({pathname: path})
     // };
 
-    const [data, setData] = useState({ email: "" });
+    const [data, setData] = useState("");
    
     useEffect(() => {
         const fetchData = async () => {
@@ -24,13 +24,15 @@ const UserSettings = (props: any) => {
                 Authorization: `Bearer ${props.token}`
                           }
                         })
-            setData(result.data.data);
+            .then((result: any) => {
+                setData(result.data.data.email);
+            })
+            
             };
 
         fetchData();
     }, [props.username, props.token]);
 
-    console.log(props.token)
     
     // const getUserInfo = (state: RootState) => {
     //     return axios({
@@ -48,12 +50,10 @@ const UserSettings = (props: any) => {
     //     });
     // }
 
-    console.log(data);
-
     return (
         <>
         <NavBar isSiteAdmin={false}></NavBar>
-        <UserSettingsForm title={"Save your profile"} username={props.username} email={data.email} newToken={props.token}>
+        <UserSettingsForm title={"Save your profile"} username={props.username} email={data} newToken={props.token}>
             
         </UserSettingsForm>
         </>
