@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Container, Row, Form} from "react-bootstrap";
+import {Container, Row, Modal, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "./ClubForm.module.css"
@@ -32,7 +32,6 @@ type Club = {
 }
 
 function ClubForm(input: ClubFormDefinition) {
-    console.log("in club form token is "+input.token)
     
     const schema = yup.object({
         clubName: yup.string()
@@ -118,6 +117,20 @@ function ClubForm(input: ClubFormDefinition) {
         });
     };
 
+    const deleteEvent = async (clubID: number, eventID: number) => {
+        return axios({
+            method: 'delete', //you can set what request you want to be
+            url: `/clubs/${clubID}/events/${eventID}`,
+            headers: {
+                Authorization: `Bearer ${input.token}`
+            },
+            }).then((response: StatusResponse) => {
+                return (response.data)
+        }).catch(err => {
+            console.log(err + " submission failed");
+        });
+    };
+
     // const [show, setShow] = useState(false);
 
     // const handleClose = () => setShow(false);
@@ -132,27 +145,6 @@ function ClubForm(input: ClubFormDefinition) {
     // };
 
     // const [popupMsg, setPopupMsg] = useState({header: "", body: ""})
-
-
-    // const get = async (values: any) => {
-    //     return axios({
-    //         method: 'get', //you can set what request you want to be
-    //         url: `/clubs/${input.clubID}`,
-    //         headers: {
-    //             Authorization: `Bearer ${input.token}`
-    //         },
-    //         data: {
-    //             "Name": values["clubName"],
-    //             "Email": values["clubEmail"],
-    //             "Bio": values["bio"],
-    //             "Size": values["size"]
-    //         }
-    //         }).then((response: StatusResponse) => {
-    //             console.log(JSON.stringify(response.data.Message));
-    //     }).catch(err => {
-    //         console.log(err + " submission failed");
-    //     });
-    // };
 
     const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
     const [clubData, setClubData] = useState(["None"]);
@@ -209,10 +201,10 @@ function ClubForm(input: ClubFormDefinition) {
         }
     }
 
-    const [show, setShow] = useState(false);
+    const [showEventForm, setShowEventForm] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleCloseEventForm = () => setShowEventForm(false);
+    const handleShowEventForm = () => setShowEventForm(true);
 
     const [eventsData, setEventsData] = useState([{"id": -1, "name": "N/A", "description": "", "location": "", "fee": 1}]);
    
@@ -230,6 +222,39 @@ function ClubForm(input: ClubFormDefinition) {
 
         fetchData();
     }, [input.clubID]);
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
+    const [clubID, setClubID] = useState(-1);
+    const [eventID, setEventID] = useState(-1);
+
+    const deletePopup = (clubID: number, eventID: number) => {
+        setClubID(clubID);
+        setEventID(eventID);
+        handleShow();        
+    }
+
+    const deleteConfirmed = () => {
+        const result = deleteEvent(clubID, eventID).then( () => {
+            const fetchData = async () => {
+                const result = await axios({
+                    method: 'get', //you can set what request you want to be
+                    url: `/clubs/${input.clubID}/events`,
+                }).then((result: any) => {
+                    setEventsData(result.data.data.Hosts);
+                    console.log(result.data.data.Hosts);
+                }
+                )
+            };
+    
+            fetchData();
+            }
+        );
+    }
 
     if (input.clubID === -1) {
         return (
@@ -337,7 +362,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Size"
                                 name="size"
-                                value={values.size || ''}
+                                defaultValue={values.size || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.size}
                             />
@@ -365,7 +390,18 @@ function ClubForm(input: ClubFormDefinition) {
         // const name = data["Name"]
         return (
             <>
-            <EventForm show={show} onHide={handleClose} newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData}/>
+            <Modal show={show} onHide={handleClose} dialogClassName="w-25" centered={true}>
+                <Modal.Body>Are you sure you want to delete this event?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={() => {deleteConfirmed(); handleClose()}}>
+                        Delete Event
+                    </Button>
+                    <Button variant="light" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <EventForm show={showEventForm} onHide={handleCloseEventForm} newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData}/>
             <Container className={styles.container}>
                 
                 <Row>
@@ -376,7 +412,6 @@ function ClubForm(input: ClubFormDefinition) {
                 <Formik
                     validationSchema={schema}
                     onSubmit={(values) => {
-                        console.log("submitting")
                         update(values)
                         .then((result: any) => {
                             console.log(result)               
@@ -486,7 +521,7 @@ function ClubForm(input: ClubFormDefinition) {
                                 type="text"
                                 placeholder="Size"
                                 name="size"
-                                value={input.clubObject.size || ''}
+                                defaultValue={input.clubObject.size || ''}
                                 onChange={handleChange}
                                 isInvalid={!!errors.size}
                             />
@@ -495,18 +530,16 @@ function ClubForm(input: ClubFormDefinition) {
                                 {errors.size}
                             </Form.Control.Feedback>
                             </Form.Group>
-
-                            <Form.Group as={Col} md="6" controlId="events" className={"pl-5"}>
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <Form.Label className={styles.subtitle}>Events</Form.Label>
-                                <Button onClick={handleShow}>+</Button>
-                            </div>
-                            
-                            <EventsOverview newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData}/>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} md="6" controlId="events" className={"mt-2"}>
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <Form.Label className={styles.subtitle}>Events</Form.Label>
+                                    <Button onClick={handleShowEventForm}>+</Button>
+                                </div>
+                                
+                                <EventsOverview newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData} deleteCommand={deletePopup}/>
                             </Form.Group>
-                            
-                            
-
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-end align-items-center">
                             <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>

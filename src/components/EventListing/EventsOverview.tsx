@@ -12,6 +12,7 @@ type EventsOverviewDefinition = {
     clubID: number
     myVar: event[]
     setMyVar: any
+    deleteCommand: any
 }
 
 type event = {
@@ -23,7 +24,6 @@ type event = {
 }
 
 function EventsOverview(input: EventsOverviewDefinition) {
-   
     return (
         <div className={styles.eventsContainer}>
              <Table hover striped>
@@ -37,7 +37,7 @@ function EventsOverview(input: EventsOverviewDefinition) {
                  </thead>
                  <tbody>
                      {input.myVar.map((item: any) => (
-                         <EventListing key={item.id} id={item.id} active={false} title={item.name} overviewType={true} />
+                         <EventListing key={item.id} clubID={input.clubID} eventID={item.id} active={false} title={item.name} overviewType={true} deleteCommand={input.deleteCommand}/>
                      ))}
                  </tbody>
              </Table>

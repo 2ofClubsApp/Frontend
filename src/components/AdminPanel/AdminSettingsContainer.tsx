@@ -129,7 +129,31 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
         formData.append("file", fileData.file);
         console.log(formData);
         return axios.post(`/upload/tags`, formData, {headers: {Authorization: `Bearer ${input.inputToken}`}})
-                    .then((response:StatusResponse) => { console.log(response.data)})
+                    .then((response:StatusResponse) => { 
+                        console.log(response.data)
+                        const fetchData = async () => {
+                            const result = await axios({
+                                method: 'get', //you can set what request you want to be
+                                url: `/tags`}).then((result: any) => {
+                                    console.log(result.data.data);
+                                    setData(result.data.data);})
+                            const result2 = await axios({
+                                method: 'get', //you can set what request you want to be
+                                url: `/tags/active`,
+                            }).then((result2: any) => {
+                                const tagsArray = result2.data.data;
+                                if (tagsArray !== []){
+                                    const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                                    setUserData(tagNamesArray);
+                                    setToggledTags([])
+                                }
+                                else{
+                                    return ["None"];
+                                }})
+                            };
+                
+                        fetchData();
+                    })
     };
 
     const toggleTags = () => {
@@ -175,7 +199,6 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                 <Formik
                                     validationSchema={schema}
                                     onSubmit={async (values, actions) => {
-                                        console.log(values.tag);
                                         createTag(values).then((result: any) => {
                                             if (result.code === -1) {
                                                 actions.setErrors({
@@ -186,20 +209,21 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                                 const fetchData = async () => {
                                                     const result = await axios({
                                                         method: 'get', //you can set what request you want to be
-                                                        url: `/tags`})
-                                                    setData(result.data.data);
+                                                        url: `/tags`}).then((result: any) => {
+                                                            console.log(result.data.data);
+                                                            setData(result.data.data);})
                                                     const result2 = await axios({
                                                         method: 'get', //you can set what request you want to be
                                                         url: `/tags/active`,
-                                                    })
-                                                    const tagsArray = result2.data.data;
-                                                    if (tagsArray !== []){
-                                                        const tagNamesArray = tagsArray.map((item: tag) => item.name);
-                                                        setUserData(tagNamesArray);
-                                                    }
-                                                    else{
-                                                        return ["None"];
-                                                    }
+                                                    }).then((result2: any) => {
+                                                        const tagsArray = result2.data.data;
+                                                        if (tagsArray !== []){
+                                                            const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                                                            setUserData(tagNamesArray);
+                                                        }
+                                                        else{
+                                                            return ["None"];
+                                                        }})
                                                     };
                                         
                                                 fetchData();

@@ -79,7 +79,6 @@ const Login = (props: any) => {
                     // console.log(values)
                         login(values).then(result => {
                             const token = result;
-                            console.log(result);
                             if (result === -1) {
                                 actions.setErrors({
                                     username: "Username is incorrect or does not exist",

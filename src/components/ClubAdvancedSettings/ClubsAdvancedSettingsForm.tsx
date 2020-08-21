@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Container, Row, Form, Table} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -40,6 +40,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         //image: yup.string().required(),
     });
 
+    const [invited, setInvited] = useState("");
     const addManager = async (values: any) => {
         return axios({
             method: 'post', //you can set what request you want to be
@@ -49,6 +50,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
             },
             }).then((response: StatusResponse) => {
                 console.log(JSON.stringify(response.data.message));
+                setInvited(response.data.message);
                 return response.data
         }).catch(err => {
             console.log(err + " failed to add user");
@@ -95,6 +97,9 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                                                 isInvalid={!!errors.username}/>
                                             <Button variant="primary" type="submit">Invite</Button>
                                         </Col>
+                                    </Form.Row>
+                                    <Form.Row className={"d-flex justify-content-center"}>
+                                        <span className={styles.subtitle + " m-0 mb-2"}>{invited}</span>
                                     </Form.Row>
                                     
                                 </Form>

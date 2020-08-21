@@ -45,7 +45,6 @@ const EventForm = (input: clubDefinition) => {
         fee: yup.number()
     });
 
-    console.log("in event form token is "+input.newToken)
 
     const createEvent = async (values: any) => {
         return axios({

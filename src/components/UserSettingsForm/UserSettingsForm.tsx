@@ -167,27 +167,30 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                     onSubmit={(values, actions) => {
                         updateUserTags(values);
                         setSaved(true);
-                        const check = checkPasswords(values.newPassword, values.confirmNewPassword);
-                        if (check === 1) {
-                            changePassword(values)
-                            .then( (result: any) => {
-                                console.log(result.message)
-                                if (result.code === -1) {
-                                    actions.setErrors({password: `Password is incorrect`});
-                                }
-                                else{
-                                    actions.setErrors({password: ""});
-                                    values.password = "";
-                                    values.newPassword = "";
-                                }
-                                
-                            } )
-                        }
-                        else {
-                            actions.setErrors({
-                                newPassword: "Passwords do not match",
-                                confirmNewPassword: "Passwords do not match"
-                            })
+                        console.log("new password is " + values.password)
+                        if (values.password) {
+                            const check = checkPasswords(values.newPassword, values.confirmNewPassword);
+                            if (check === 1) {
+                                changePassword(values)
+                                .then( (result: any) => {
+                                    console.log(result.message)
+                                    if (result.code === -1) {
+                                        actions.setErrors({password: `Password is incorrect`});
+                                    }
+                                    else{
+                                        actions.setErrors({password: ""});
+                                        values.password = "";
+                                        values.newPassword = "";
+                                    }
+                                    
+                                } )
+                            }
+                            else {
+                                actions.setErrors({
+                                    newPassword: "Passwords do not match",
+                                    confirmNewPassword: "Passwords do not match"
+                                })
+                            }
                         }
                     }   
                     }
