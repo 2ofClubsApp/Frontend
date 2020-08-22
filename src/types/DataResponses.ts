@@ -1,5 +1,3 @@
-import * as React from "react";
-
 export type StatusResponse = {
     data: {
         code: number,
@@ -20,4 +18,19 @@ export type tag = {
     id: number,
     name: string,
     isActive: boolean
+}
+
+export type eventGET = {
+    id: number,
+    name: string,
+    description: string,
+    location: string,
+    fee: number
+}
+
+export type eventPOST = {
+    name: string,
+    description: string,
+    location: string,
+    fee: number
 }

@@ -12,6 +12,7 @@ import styles from "../ClubForm/ClubForm.module.css"
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "../../axios";
+import { eventPOST } from "../../types/DataResponses";
 
 library.add(faCog, faCoffee)
 
@@ -20,17 +21,9 @@ type clubDefinition = {
     onHide: any,
     newToken: string
     clubID: number
-    myVar: event[]
+    myVar: eventPOST[]
     setMyVar: any
 }
-
-type event = {
-    "name": string,
-    "description": string,
-    "location": string,
-    "fee": number
-}
-
 
 const EventForm = (input: clubDefinition) => {
 

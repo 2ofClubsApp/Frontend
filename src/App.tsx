@@ -18,6 +18,8 @@ import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings"
 import ClubApplication from "./containers/2ofClubsAdmin/ClubApplication"
 import AdminLogin from './containers/AdminLogin';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
+import ExploreAllEvents from './containers/ExploreEvents/ExploreAllEvents';
+import YourEvents from './containers/ExploreEvents/YourEvents';
 
 // type AppProps = {
 //     system: SystemState
@@ -47,6 +49,10 @@ const App = (props: any) => {
                 <Route exact path={"/admin/application"} component={ClubApplication}/>
                 <Route exact path={"/resetpassword"} render={() => {
                     return (<ResetPassword/>)}}/>
+                <Route exact path={"/explore/events"} render={() => {
+                    return (props.isLogged ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                <Route exact path={"/explore/yourevents"} render={() => {
+                return (props.isLogged ? <YourEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

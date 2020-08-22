@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
 import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
@@ -7,7 +7,7 @@ import '../app.css';
 import {Formik} from "formik";
 import {loginSchema} from "../components/Form/Schemas";
 import FormContainer from "../components/Form/FormContainer";
-import {Form} from "react-bootstrap";
+import {Form, Modal} from "react-bootstrap";
 import FormButton from "../components/Form/FormButton";
 import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
@@ -46,6 +46,10 @@ const Login = (props: any) => {
             "Username": values["username"],
             "Password": values["password"],
         })).then((response: any) => {
+            console.log(response);
+            if (response.data.message === "Sorry, your account has not been approved yet") {
+                return -2;
+            }
             if (response.data.code === -1){
                 return -1;
             }
@@ -58,10 +62,24 @@ const Login = (props: any) => {
             return -1;
         });
     };
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
   
-    
     return (
         <div>
+            <Modal show={show} onHide={handleClose} dialogClassName={"w-25"} centered={true}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body className="text-center">This account has not been approved yet! Check back later!</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Okay
+                </Button>
+                </Modal.Footer>
+            </Modal>
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>Back to
                 Home
             </Button>
@@ -84,6 +102,9 @@ const Login = (props: any) => {
                                     username: "Username is incorrect or does not exist",
                                     password: "Password is incorrect"
                                 });
+                            }
+                            else if (result === -2) {
+                                handleShow();
                             }
                             else if (typeof token === "string") {
                                 props.setToken(token);

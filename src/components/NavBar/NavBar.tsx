@@ -61,6 +61,8 @@ const NavBar = (props: NavBarDefinition) => {
                         <Dropdown.Menu>
 
                             <Dropdown.Item onSelect={() => changeRoute("/createclub")}>Create a club</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/events")}>Explore Events</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/yourevents")}>Explore Your Events</Dropdown.Item>
                             <Dropdown.Item onSelect={() => changeRoute("/manageclubs")}>Manage your clubs</Dropdown.Item>
                             <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Your settings</Dropdown.Item>
                             <Dropdown.Item href="/">Log out</Dropdown.Item>

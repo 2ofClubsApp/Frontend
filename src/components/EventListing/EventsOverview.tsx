@@ -6,21 +6,14 @@ import axios from "../../axios";
 import { RootState } from "../../store";
 import { connect } from "react-redux";
 import styles from "../ClubForm/ClubForm.module.css"
+import { eventGET } from "../../types/DataResponses";
 
 type EventsOverviewDefinition = {
     newToken: any
     clubID: number
-    myVar: event[]
+    myVar: eventGET[]
     setMyVar: any
     deleteCommand: any
-}
-
-type event = {
-    "id": number,
-    "name": string,
-    "description": string,
-    "location": string,
-    "fee": number
 }
 
 function EventsOverview(input: EventsOverviewDefinition) {
