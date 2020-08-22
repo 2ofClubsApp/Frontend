@@ -85,7 +85,7 @@ const EventCard = (input: EventCardDefinition) => {
         return (!show) ? (
             <Row className="mt-5 w-100 d-flex" style={{color: '#6367e0'}}> 
                 <Col md={6}><FontAwesomeIcon icon={faMapMarkerAlt}/> {input.eventObject.location}</Col> 
-                <Col md={6}><FontAwesomeIcon icon={faDollarSign}/> {input.eventObject.fee}</Col> 
+                <Col md={6}><FontAwesomeIcon icon={faDollarSign}/> {input.eventObject.fee.toFixed(2)}</Col> 
             </Row>) : (<></>);
     }
 

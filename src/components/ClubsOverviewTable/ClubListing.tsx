@@ -1,12 +1,13 @@
 import {Form} from "react-bootstrap";
 import React from "react";
 import "./ClubsOverview.css";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from "../../store";
 import { connect } from "react-redux";
+import styles from "./ClubListing.module.css"
 
 library.add(faCog, faCoffee)
 
@@ -22,9 +23,9 @@ const ClubListing = (club: clubListingDefinition) => {
     if (club.overviewType) {
         return (
             <tr className={"d-flex"}>
-            <td colSpan={3} className={"col-11"} key={club.id}><Link to={`/settings/info/${club.id}`}>{club.title}</Link></td>
+            <td colSpan={3} className={"col-11"} key={club.id}><NavLink to={`/settings/info/${club.id}`} className={styles.clubLink}>{club.title}</NavLink></td>
 
-            <td className={"col-1 text-center"}><Link to={`/manageclubs/advancedsettings/${club.id}`}><FontAwesomeIcon icon={faCog}/></Link></td>
+            <td className={"col-1 text-center"}><NavLink to={`/manageclubs/advancedsettings/${club.id}`} className={styles.clubLink}><FontAwesomeIcon icon={faCog}/></NavLink></td>
 
             </tr>           
         )
@@ -33,7 +34,7 @@ const ClubListing = (club: clubListingDefinition) => {
         if (club.active) {
             return (
                 <tr className={"d-flex"}>
-                    <td colSpan={3} className={"col-11"}><Link to="/settings/info">{club.title}</Link></td>
+                    <td colSpan={3} className={"col-11"}><NavLink to="/settings/info">{club.title}</NavLink></td>
                     <td className={"col-1 text-center"}><Form.Check type={"switch"} id={club.title} label={""} defaultChecked={true} /></td>
                 </tr>             
             )

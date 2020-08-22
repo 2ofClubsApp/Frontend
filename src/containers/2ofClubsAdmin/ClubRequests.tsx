@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Row, Col, Button} from "react-bootstrap";
 import '../../app.css';
-import ClubsOverview from "../../components/ClubsOverviewTable/ClubsOverview";
+import ClubListingTable from "../../components/ClubsOverviewTable/ClubListingTable";
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import { RootState } from '../../store';
@@ -32,7 +32,7 @@ const ClubRequests = (props:any) => {
         <>
         <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            
+            <ClubListingTable newUsername={props.username} newToken={props.token} />
         </Container>
         </>
     )

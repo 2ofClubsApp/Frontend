@@ -6,12 +6,12 @@ import axios from "../../axios";
 import { RootState } from "../../store";
 import { connect } from "react-redux";
 
-type ClubsOverviewDefinition = {
+type ClubListingsTableOverviewDefinition = {
     newUsername: string;
     newToken: string;
 }
 
-function ClubsOverview(input: ClubsOverviewDefinition) {
+function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
     const [data, setData] = useState({ manages: [] });
    
     useEffect(() => {
@@ -61,4 +61,4 @@ function ClubsOverview(input: ClubsOverviewDefinition) {
     }
 }
 
-export default connect(mapStateToProps)(ClubsOverview);
+export default connect(mapStateToProps)(ClubListingTable);

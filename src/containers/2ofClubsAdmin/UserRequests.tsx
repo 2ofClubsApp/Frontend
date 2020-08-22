@@ -1,14 +1,15 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
-import ClubsRequestsTable from "../../components/ClubsOverviewTable/ClubListingTable";
+import ClubsOverview from "../../components/ClubsOverviewTable/ClubListingTable";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import { connect } from 'react-redux';
 import { RootState } from '../../store';
 import jwt_decode from 'jwt-decode';
+import UserRequestsTable from '../../components/UserRequestsTable/UserRequestsTable';
 
 
-const ManageClubs = (props: any) => {
+const UserRequests = (props: any) => {
     // const history = useHistory();
     // const changeRoute = (path: string) => {
     //     history.replace({pathname: path})
@@ -34,14 +35,16 @@ const ManageClubs = (props: any) => {
     }
 
     decode();
+
+    console.log("user requests " + props.token)
     
     //console.log("manageclubs token:" + props.token);
 //<ClubsOverview title={"Your Clubs"} view={true} token={props.token}></ClubsOverview>
     return (
         <>
-        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+        <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsRequestsTable newUsername={props.username} newToken={props.token}/>
+            <UserRequestsTable newUsername={props.username} newToken={props.token}/>
         </Container>
         </>
     )
@@ -55,4 +58,4 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(ManageClubs);
+export default connect(mapStateToProps)(UserRequests);

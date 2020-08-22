@@ -29,6 +29,7 @@ const EventForm = (input: eventFormDefinition) => {
         .max(150, 'Bios can be a maximum of 150 characters'),
         //image: yup.string().required(),
         fee: yup.number()
+        .min(0)
     });
 
 
