@@ -7,27 +7,27 @@ import { RootState } from "../../store";
 import { connect } from "react-redux";
 
 type ClubsOverviewDefinition = {
-    newUsername: string
-    newToken: any
+    newUsername: string;
+    newToken: string;
 }
 
-function ClubsOverview(type: ClubsOverviewDefinition) {
-    const [data, setData] = useState({ Manages: [] });
+function ClubsOverview(input: ClubsOverviewDefinition) {
+    const [data, setData] = useState({ manages: [] });
    
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
-                url: `/users/${type.newUsername}/manages`,
+                url: `/users/${input.newUsername}/manages`,
                 headers: {
-                Authorization: `Bearer ${type.newToken}`
+                Authorization: `Bearer ${input.newToken}`
                           }
                         })
             setData(result.data.data);
             };
 
         fetchData();
-    }, [type.newUsername, type.newToken]);
+    }, [input.newUsername, input.newToken]);
 
    
     return (
@@ -43,7 +43,7 @@ function ClubsOverview(type: ClubsOverviewDefinition) {
                  </tr>
                  </thead>
                  <tbody>
-                     {data.Manages.map((item: any) => (
+                     {data.manages.map((item: any) => (
                          <ClubListing key={item.id} id={item.id} active={false} title={item.name} overviewType={true} />
                      ))}
                  </tbody>

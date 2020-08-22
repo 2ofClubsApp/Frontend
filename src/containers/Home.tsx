@@ -7,7 +7,7 @@ import NavBar from "../components/NavBar/NavBar"
 import { RootState } from '../store';
 import { connect } from 'react-redux';
 
-const Home = () => {
+const Home = (props: any) => {
     // const history = useHistory();
     // const changeRoute = (path: string) => {
     //     history.replace({pathname: path})
@@ -29,7 +29,7 @@ const Home = () => {
 
     return (
         <>
-           <NavBar isSiteAdmin={false}></NavBar>
+           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
             <Container className={"d-flex justify-content-center align-items-center mt-5"}>
                 <Card />
             </Container>
@@ -42,7 +42,8 @@ const mapStateToProps = (state: RootState) => {
     // console.log("token is " + state.system.token);
     return {
         isLogged: state.system.isLoggedIn,
-        token: state.system.token
+        token: state.system.token,
+        username: state.system.username
     }
 };
 

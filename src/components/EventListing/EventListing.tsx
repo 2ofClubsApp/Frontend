@@ -1,17 +1,15 @@
 import {Dropdown} from "react-bootstrap";
 import React from "react";
 import styles from "../ClubForm/ClubForm.module.css"
-import {Link} from "react-router-dom";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons'
-import "../NavBar/NavBar"
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { RootState } from "../../store";
 import { connect } from "react-redux";
 
-library.add(faCog, faCoffee)
+library.add(faCog)
 
-type clubDefinition = {
+type EventListingDefinition = {
     title: string
     overviewType: boolean
     active: boolean
@@ -20,7 +18,7 @@ type clubDefinition = {
     deleteCommand: any
 }
 
-const EventListing = (input: clubDefinition) => {
+const EventListing = (input: EventListingDefinition) => {
 
     const eventListingDelete = () => {
         input.deleteCommand(input.clubID, input.eventID)

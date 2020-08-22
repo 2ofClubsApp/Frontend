@@ -12,7 +12,7 @@ import { eventGET } from '../../types/DataResponses';
 const YourEvents = (props: any) => {
 
     let [counter, setCounter] = useState(0);
-    const [allEventRows, setAllEventRows] = useState([<></>]);
+    const [allEventRows, setAllEventRows] = useState([<h1 key="error"></h1>]);
 
     useEffect(() => {
         let eventRows:JSX.Element[] = [];
@@ -62,7 +62,7 @@ const YourEvents = (props: any) => {
 
     return (
         <>
-           <NavBar isSiteAdmin={false}></NavBar>
+           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
             <Container className={"w-100"}>
                 {allEventRows}
             </Container>

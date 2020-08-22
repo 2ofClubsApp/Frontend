@@ -42,23 +42,27 @@ const Login = (props: any) => {
     }
 
     const login = async (values: any) => {
-        return axios.post("/login", JSON.stringify({
-            "Username": values["username"],
-            "Password": values["password"],
-        })).then((response: any) => {
-            console.log(response);
-            if (response.data.message === "Sorry, your account has not been approved yet") {
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/login`,
+            data: {
+                "username": values["username"],
+                "password": values["password"]
+            }
+        })
+          .then((response: any) => {
+            const token = response.data.data.Token;
+            return token;
+        })
+        .catch(err => {
+            console.log(err + " failed to login");
+            console.log(err.response);
+            if (err.response.data.message === "sorry, your account has not been approved yet") {
                 return -2;
             }
-            if (response.data.code === -1){
+            else if (err.response.data.message === "username or password is incorrect"){
                 return -1;
             }
-            else{
-                const token = response.data.data.Token;
-                return token;
-            }
-        }).catch(err => {
-            console.log(err + " failed to login");
             return -1;
         });
     };

@@ -1,11 +1,6 @@
 import {Form, Modal, Button, Col} from "react-bootstrap";
 import React from "react";
 import "../ClubsOverviewTable/ClubsOverview.css";
-import {Link} from "react-router-dom";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons'
-import "../NavBar/NavBar"
 import { RootState } from "../../store";
 import { connect } from "react-redux";
 import styles from "../ClubForm/ClubForm.module.css"
@@ -14,9 +9,7 @@ import * as yup from "yup";
 import axios from "../../axios";
 import { eventPOST } from "../../types/DataResponses";
 
-library.add(faCog, faCoffee)
-
-type clubDefinition = {
+type eventFormDefinition = {
     show: any,
     onHide: any,
     newToken: string
@@ -25,7 +18,7 @@ type clubDefinition = {
     setMyVar: any
 }
 
-const EventForm = (input: clubDefinition) => {
+const EventForm = (input: eventFormDefinition) => {
 
     const schema = yup.object({
         eventName: yup.string()
@@ -77,8 +70,8 @@ const EventForm = (input: clubDefinition) => {
                                     method: 'get', //you can set what request you want to be
                                     url: `/clubs/${input.clubID}/events`,
                                 }).then((result: any) => {
-                                    input.setMyVar(result.data.data.Hosts);
-                                    console.log(result.data.data.Hosts);
+                                    input.setMyVar(result.data.data.hosts);
+                                    console.log(result.data.data.hosts);
                                 }
                                 )
                             };

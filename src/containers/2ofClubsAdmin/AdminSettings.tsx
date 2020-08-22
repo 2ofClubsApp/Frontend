@@ -6,11 +6,6 @@ import AdminSettingsContainer from "../../components/AdminPanel/AdminSettingsCon
 import { RootState } from '../../store';
 import { connect } from 'react-redux';
 
-type AdminSettingsDefinition = {
-    title: string
-    children: React.ReactNode
-}
-
 const AdminSettings = (props: any) => {
     // const history = useHistory();
     // const changeRoute = (path: string) => {
@@ -19,7 +14,7 @@ const AdminSettings = (props: any) => {
 
     return (
         <>
-        <NavBar isSiteAdmin={true}></NavBar>
+        <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
             <AdminSettingsContainer inputToken={props.token}></AdminSettingsContainer>
         </Container>

@@ -52,7 +52,7 @@ const UserSettings = (props: any) => {
 
     return (
         <>
-        <NavBar isSiteAdmin={false}></NavBar>
+        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
         <UserSettingsForm title={"Save your profile"} username={props.username} email={data} newToken={props.token}>
             
         </UserSettingsForm>

@@ -16,7 +16,7 @@ const ResetPassword = (props: any) => {
     if (props.isLoggedIn) {
         return (
             <>
-            <NavBar isSiteAdmin={false}></NavBar>
+            <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
             <Container className={"d-flex justify-content-center align-items-center mt-5"}>
                 <ResetPasswordForm></ResetPasswordForm>
             </Container>

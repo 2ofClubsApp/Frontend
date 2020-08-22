@@ -60,13 +60,13 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
     const changePassword = async (values: any) => {
         return axios({
             method: 'post', //you can set what request you want to be
-            url: `/users/${input.username}`,
+            url: `/changePassword/users/${input.username}`,
             headers: {
                 Authorization: `Bearer ${input.newToken}`
             },
             data: {
-                "OldPassword": values.password,
-                "NewPassword": values.newPassword
+                "oldPassword": values.password,
+                "newPassword": values.newPassword
             }
             }).then((response: StatusResponse) => {
                 console.log(JSON.stringify(response.data.Message));

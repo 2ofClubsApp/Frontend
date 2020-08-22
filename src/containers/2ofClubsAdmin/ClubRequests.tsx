@@ -30,7 +30,7 @@ const ClubRequests = (props:any) => {
 //<ClubsOverview title={"Incoming Requests"} view={false} token={props.token}></ClubsOverview>
     return (
         <>
-        <NavBar isSiteAdmin={true}></NavBar>
+        <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
             
         </Container>

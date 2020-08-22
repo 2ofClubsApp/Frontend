@@ -23,30 +23,13 @@ const CreateClub = (props:any) => {
 
     return (
         <>
-            <NavBar isSiteAdmin={false}></NavBar>
+            <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
                 <ClubForm title={"Submit for review"} isClub={true} clubObject={emptyClub} clubID={-1} token={props.token}/>
         </>
     )
 };
 
-// const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
-//     return {
-//         onSetLogin: () => dispatch(setLogin(true)),
-//         setToken: (token: string) => dispatch(setToken(token))
-//     }
-// }
-
-// const mapStateToProps = (state: RootState) => {
-//     return {
-//         isLogged: state.system.isLoggedIn,
-//         token: state.system.token
-//     };
-// };
-//connect(mapStateToProps, mapDispatchToProps)(
-
 const mapStateToProps = (state: RootState) => {
-    // console.log("islogged in is " + state.system.isLoggedIn);
-    // console.log("token is " + state.system.token);
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

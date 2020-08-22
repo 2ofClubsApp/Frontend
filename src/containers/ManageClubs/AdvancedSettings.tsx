@@ -47,7 +47,7 @@ const AdvancedSettings = (props: any) => {
     
     return (
         <>
-        <NavBar isSiteAdmin={false}></NavBar>
+        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
             <ClubsAdvancedSettingsForm newToken={props.token} clubID={id} clubName={data.name}></ClubsAdvancedSettingsForm>
         </Container>

@@ -2,25 +2,22 @@ import {Form} from "react-bootstrap";
 import React from "react";
 import "./ClubsOverview.css";
 import {Link} from "react-router-dom";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons'
-import "../NavBar/NavBar"
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from "../../store";
 import { connect } from "react-redux";
 
 library.add(faCog, faCoffee)
 
-type clubDefinition = {
+type clubListingDefinition = {
     title: string
     overviewType: boolean
     active: boolean
     id: number
 }
 
-
-
-const ClubListing = (club: clubDefinition) => {
+const ClubListing = (club: clubListingDefinition) => {
 
     if (club.overviewType) {
         return (
