@@ -1,4 +1,4 @@
-import {Button, Navbar, Nav, NavDropdown, Dropdown, NavLink} from "react-bootstrap";
+import { Navbar, Nav, Dropdown, NavLink} from "react-bootstrap";
 import React from "react";
 import {useHistory, Link} from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -33,9 +33,9 @@ const NavBar = (props: NavBarDefinition) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item href="/admin">Home</Dropdown.Item>
-                            <Dropdown.Item href="/admin/requests">Requests</Dropdown.Item>
-                            <Dropdown.Item href="/admin/settings">Settings</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/admin")}>Home</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/admin/requests")}>Requests</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/admin/settings")}>Settings</Dropdown.Item>
                             <Dropdown.Item href="/">Log out</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
@@ -60,9 +60,11 @@ const NavBar = (props: NavBarDefinition) => {
 
                         <Dropdown.Menu>
 
-                            <Dropdown.Item href="/createclub">Create a club</Dropdown.Item>
-                            <Dropdown.Item href="/manageclubs">Manage your clubs</Dropdown.Item>
-                            <Dropdown.Item href="/settings/user">Your settings</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/createclub")}>Create a club</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/events")}>Explore Events</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/yourevents")}>Explore Your Events</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/manageclubs")}>Manage your clubs</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Your settings</Dropdown.Item>
                             <Dropdown.Item href="/">Log out</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>

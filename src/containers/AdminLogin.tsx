@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from "react-bootstrap/Button";
 import Label from "../components/Form/Label";
 import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
@@ -7,16 +7,15 @@ import '../app.css';
 import {Formik} from "formik";
 import {loginSchema} from "../components/Form/Schemas";
 import FormContainer from "../components/Form/FormContainer";
-import {Form, Modal} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import FormButton from "../components/Form/FormButton";
 import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
 import axios from "../axios";
 import jwt_decode from 'jwt-decode';
-import ResetPasswordLink from "../components/ResetPassword/ResetPasswordLink"
 import {StatusResponse} from "../types/DataResponses"
 
-const Login = (props: any) => {
+const AdminLogin = (props: any) => {
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
@@ -25,6 +24,28 @@ const Login = (props: any) => {
         username: "",
         password: "",
     });
+
+    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     const value = event.target.value
+    //     const id = event.target.id
+    //     setState({
+    //         ...state,
+    //         [id]: value
+    //     })
+    // }
+
+    // const validatelogin = async (values: any) => {
+    //     return axios.get(`/users/${}`, JSON.stringify({
+    //         "Username": values["username"],
+    //         "Password": values["password"],
+    //     })).then(response => {
+    //         console.log(response.data);
+    //         const token = response.data
+    //         return token;
+    //     }).catch(err => {
+    //         console.log(err + "Unable to get student ;.;");
+    //     });
+    // };
 
     const getUserInfo = async (username: string, token: any) => {
         return axios({
@@ -41,56 +62,71 @@ const Login = (props: any) => {
         });
     }
 
+    // const createClub = async (values: any, token: string) => {
+    //     // return axios.post("/clubs", JSON.stringify({
+    //     //     "Email": "hacklab@hl.com",
+    //     //     "Bio": "Hacklab is cool",
+    //     //     "Size": 20,
+    //     //     "Name": "Hacklab"
+    //     // })).then(response => {
+    //     //     console.log(response);
+    //     // }).catch(err => {
+    //     //     console.log(err + " failed to login");
+    //     // });
+    //     return axios({
+    //         method: 'post', //you can set what request you want to be
+    //         url: `/clubs`,
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`;
+    //         },
+    //         data: {
+    //             Email: "hacklab@hl.com",
+    //             Bio: "Hacklab",
+    //             Size: 20,
+    //             Name: "Hacklab"
+    //         }
+    //       }).then(response => {
+    //         console.log("trying to create club");
+    //         console.log(response);
+    //     }).catch(err => {
+    //         console.log(err + " unable to retrieve student info");
+    //     });
+    // };
+
     const login = async (values: any) => {
         return axios.post("/login", JSON.stringify({
             "Username": values["username"],
             "Password": values["password"],
-        })).then((response: any) => {
-            console.log(response);
-            if (response.data.message === "Sorry, your account has not been approved yet") {
-                return -2;
-            }
+        })).then((response: StatusResponse) => {
+            console.log(JSON.stringify(response.data.message));
             if (response.data.code === -1){
                 return -1;
             }
             else{
                 const token = response.data.data.Token;
+                changeRoute("/admin");
                 return token;
             }
+            
         }).catch(err => {
             console.log(err + " failed to login");
-            return -1;
         });
     };
-
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
   
+    
     return (
         <div>
-            <Modal show={show} onHide={handleClose} dialogClassName={"w-25"} centered={true}>
-                <Modal.Header closeButton>
-                </Modal.Header>
-                <Modal.Body className="text-center">This account has not been approved yet! Check back later!</Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Okay
-                </Button>
-                </Modal.Footer>
-            </Modal>
             <Button variant="outline-light" className="m-2 text-uppercase" onClick={() => changeRoute('/')}>Back to
                 Home
             </Button>
-            <Button variant="outline-light" className="float-right m-2 text-uppercase" onClick={() => changeRoute('/adminlogin')}>Login as Admin
+            <Button variant="outline-light" className="float-right m-2 text-uppercase" onClick={() => changeRoute('/login')}>Login as User
             </Button>
             <Formik
                 validationSchema={loginSchema}
                 onSubmit={ async (values, actions) => {
-                    if(values["username"] === "admin") {
+                    if(values["username"] !== "admin") {
                         actions.setErrors({
-                            username: "Please login through the admin page"
+                            username: "Please login through the user page"
                         })
                     }
                     else {
@@ -102,9 +138,6 @@ const Login = (props: any) => {
                                     username: "Username is incorrect or does not exist",
                                     password: "Password is incorrect"
                                 });
-                            }
-                            else if (result === -2) {
-                                handleShow();
                             }
                             else if (typeof token === "string") {
                                 props.setToken(token);
@@ -132,16 +165,11 @@ const Login = (props: any) => {
                                        values={values} placeholder={label.placeholder} type={label.type}/>)
                     });
                     return (
-                        <FormContainer title={"Login"}>
+                        <FormContainer title={"Admin Login"}>
                             <Form noValidate onSubmit={handleSubmit}>
                                 {formLabels}
                                 <FormButton name={"Login"}/>
                             </Form>
-
-                            <hr />
-
-                            <ResetPasswordLink />
-
                         </FormContainer>
                     );
                 }}
@@ -159,4 +187,4 @@ const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(AdminLogin)

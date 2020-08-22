@@ -56,13 +56,6 @@ export const LandingPage = () => {
                         </Button>
                     </Col>
                 </Row>
-                <Row>
-                    <Col xs className="text-center">
-                        <h3 className="landing-text" onClick={() => changeRoute('/explore', history)}>
-                            CONTINUE WITHOUT ACCOUNT
-                        </h3>
-                    </Col>
-                </Row>
             </Container>
         </Jumbotron>
     );

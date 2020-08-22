@@ -5,6 +5,9 @@ import Card from "../components/Swipe/Card";
 import {useHistory} from 'react-router-dom'
 import '../app.css';
 import NavBar from "../components/NavBar/NavBar"
+import reducer from "../store/reducers"
+import { connect } from 'react-redux';
+import { RootState } from '../store';
 
 const Explore = () => {
     const history = useHistory();
@@ -28,12 +31,20 @@ const Explore = () => {
 
     return (
         <>
-            <NavBar isSiteAdmin={false}></NavBar>
+           <NavBar isSiteAdmin={false}></NavBar>
             <Container className={"d-flex justify-content-center align-items-center mt-5"}>
                 <Card />
             </Container>
-        </>
+        </> 
     )
 }
+const mapStateToProps = (state: RootState) => {
+    console.log("islogged in is " + state.system.isLoggedIn);
+    console.log("token is " + state.system.token);
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token
+    }
+};
 
-export default Explore
+export default connect(mapStateToProps, null)(Explore)

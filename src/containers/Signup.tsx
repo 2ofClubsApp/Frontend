@@ -34,23 +34,46 @@ const SignUp = () => {
     //     })
     // }
 
-    const signup = (values: any) => {
-        axios.post("/signup", JSON.stringify({
+    const signup = async (values: any) => {
+        return axios.post("/signup", JSON.stringify({
             "IsStudent": true,
             "Username": values["username"],
             "Password": values["password"],
             "Email": values["email"],
         })).then(response => {
-            console.log(response);
-            redirect("/login");
+            console.log(response.data);
+            if (response.data.Code === -1){ 
+                const username = response.data.Data.Username;
+                const email = response.data.Data.Email;
+                const usernameresponse = (username === "") ? true : false;
+                const emailresponse = (email === "") ? true : false;
+                
+                if (usernameresponse && emailresponse){
+                    return 0;
+                }
+                else if (usernameresponse) {
+                    return -1;
+                }
+                else if (emailresponse) {
+                    return -2;
+                }
+                else {
+                    return -3;
+                }
+            }
+            else {
+                redirect("/login");
+                return 0;
+            }
         }).catch(err => {
             console.log(err + "Unable to get student ;.;");
-        })
+        });
     };
-    const isValidInfo = async (endpoint: "usernames" | "emails", value: string) => {
+
+    /*const isValidInfo = async (endpoint: "usernames" | "emails", value: string) => {
         const response = await axios.get(`/signup/${endpoint}/${value}`);
         return response.data === "" ? true : false
-    };
+    };*/
 
     return (
         <div className={"bubblebackground"}>
@@ -61,12 +84,28 @@ const SignUp = () => {
                 validationSchema={signUpSchema}
                 // setSubmitting is already set to false when onSubmit is async
                 onSubmit={async (values, actions) => {
-                    const username = await isValidInfo("usernames", values.username)
+                    signup(values).then(result => {
+                        if (result === -3) {
+                            actions.setErrors({
+                                username: "Username is already taken",
+                                email: "Email is already taken"
+                            });
+                        }
+                        else if (result < 0) {
+                            actions.setErrors({
+                                username: (result === -1) ? "" : "Username is already taken",
+                                email: (result === -2) ? "" : "Email is already taken"
+                            });
+                        }
+                    });
+                    
+
+                    /*const username = await isValidInfo("usernames", values.username)
                     const email = await isValidInfo("emails", values.email)
                     username && email ? await signup(values) : actions.setErrors({
                         username: username ? "" : "Username is already taken",
                         email: email ? "" : "Email is already taken"
-                    });
+                    });*/
                 }}
                 validateOnChange={false}
                 validateOnBlur={false}

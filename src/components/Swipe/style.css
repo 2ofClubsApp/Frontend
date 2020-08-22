@@ -12,17 +12,13 @@
 
 @media (min-width: 576px) {
     .modal-dialog {
-        margin-top: 115px;
-        max-width: 540px;
-        max-height: 76%;
-        height: 100%;
-        border-radius: 50px;
-        
+        max-width: none!important;
+        max-height: none!important; 
     }
 
     .modal-content {
         height: 100%;
-        border-radius: 50px;
+        border-radius: 25px;
     }
     
 }
