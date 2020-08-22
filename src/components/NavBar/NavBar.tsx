@@ -46,22 +46,12 @@ const NavBar = (input: NavBarDefinition, props: any) => {
         return (
             <>
             <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2"} variant="dark">
-                <h1 className={styles.logo}><RouterNavLink exact to="/" activeClassName={styles.logo}>2ofClubs</RouterNavLink></h1>
+                <h1 className={styles.logo}><RouterNavLink exact to="/" className={styles.logo}>2ofClubs</RouterNavLink></h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
-                        <Dropdown alignRight>
-                        <Dropdown.Toggle id="user-dropdown" as={NavLink}>
-                            <FontAwesomeIcon icon={faBars}/>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            <Dropdown.Item onSelect={() => changeRoute("/admin")}>Home</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/admin/requests")}>Requests</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/admin/settings")}>Settings</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => {logout(); changeRoute("/")}}>Log out</Dropdown.Item>
-                        </Dropdown.Menu>
-                        </Dropdown>
+                        <NavLink className={styles.navbarLink} onClick={() => changeRoute("/admin")}>Home</NavLink>
+                        <NavLink className={styles.navbarLink} onClick={() => {logout(); changeRoute("/")}}>Logout</NavLink>
                     </Nav>
                     </Navbar.Collapse>
             </Navbar>
@@ -95,22 +85,6 @@ const NavBar = (input: NavBarDefinition, props: any) => {
         )
     }
 }
-
-{/* <Dropdown alignRight>
-                        <Dropdown.Toggle id="user-dropdown" as={NavLink}>
-                            <FontAwesomeIcon icon={faBars}/>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-
-                            <Dropdown.Item onSelect={() => changeRoute("/createclub")}>Create a club</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("")}>Explore Events</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/explore/yourevents")}>Explore Your Events</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("")}>Manage your clubs</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Your settings</Dropdown.Item>
-                            <Dropdown.Item href="/">Log out</Dropdown.Item>
-                        </Dropdown.Menu>
-                        </Dropdown> */}
 
 const mapStateToProps = (state: RootState) => {
     return {

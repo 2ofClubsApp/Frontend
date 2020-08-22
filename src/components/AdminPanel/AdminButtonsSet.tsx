@@ -28,13 +28,13 @@ const AdminButtonsSet = (input:AdminButtonsSetDefinition, props:any) => {
             <Container className={"d-flex justify-content-center align-items-center w-100"}>
                 <Row>
                     <Col xs={12} lg={4}>
-                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/clubrequests')}> 
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/requests/clubs')}> 
                             <FontAwesomeIcon icon={faScroll} className={styles.icon}/>
                             Club Requests
                         </Button>
                     </Col>
                     <Col xs={12} lg={4}>
-                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/userrequests')}> 
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/requests/users')}> 
                             <FontAwesomeIcon icon={faUsers} className={styles.icon}/>
                             User Requests
                         </Button>

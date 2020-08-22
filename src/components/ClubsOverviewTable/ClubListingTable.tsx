@@ -1,4 +1,4 @@
-import {Container, Table} from "react-bootstrap";
+import {Container, Table, Row, Button} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
 import "./ClubsOverview.css";
 import ClubListing from "./ClubListing";
@@ -32,22 +32,26 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
    
     return (
         <Container className={"clubsOverviewContainer"}>
-             <h1 className={"title"}>Your Clubs</h1>
-             <Table responsive hover striped>
-                 <thead>
-                 <tr className={"d-flex"}>
-                     <td colSpan={3} className={"col-11"}>
-                         <b>Club Name</b>
-                     </td>
-                     <td className={"col-1"}><b>Manage</b></td>
-                 </tr>
-                 </thead>
-                 <tbody>
-                     {data.manages.map((item: any) => (
-                         <ClubListing key={item.id} id={item.id} active={false} title={item.name} overviewType={true} />
-                     ))}
-                 </tbody>
-             </Table>
+            <Row className={"d-flex justify-content-between align-items-end ml-2 mr-2 mt-5 mb-3 row"}>
+                <h1 className={"title m-0"}>Your Clubs</h1>
+                <Button className="btnpurple h-50">Create a Club</Button>
+            </Row>
+             
+            <Table responsive hover striped>
+                <thead>
+                <tr className={"d-flex"}>
+                    <td colSpan={3} className={"col-11"}>
+                        <b>Club Name</b>
+                    </td>
+                    <td className={"col-1"}><b>Manage</b></td>
+                </tr>
+                </thead>
+                <tbody>
+                    {data.manages.map((item: any) => (
+                        <ClubListing key={item.id} id={item.id} active={false} title={item.name} overviewType={true} />
+                    ))}
+                </tbody>
+            </Table>
          </Container>
     );
   }
