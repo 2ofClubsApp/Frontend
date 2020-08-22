@@ -30,7 +30,7 @@ const ExploreAllEvents = (props: any) => {
     // }
 
     let [counter, setCounter] = useState(0);
-    const [eventCardRows, setEventCardRows] = useState([<></>]);
+    const [eventCardRows, setEventCardRows] = useState([<h1 key="error"></h1>]);
     const [attendingEvents, setAttendingEvents] = useState([{id: -1, name: "", description: "", location: "", fee: 0}]);
     const [events, setEvents] = useState([-1]);
     let eventRows:JSX.Element[] = [];
@@ -59,7 +59,7 @@ const ExploreAllEvents = (props: any) => {
                 method: 'get', //you can set what request you want to be
                 url: `/events`,
                 }).then((result: any) => {
-                    let allEvents = result.data.data.Events;
+                    let allEvents = result.data.data.events;
                     let numOfRows = ( (allEvents.length%3 === 0) ? (allEvents.length/3) : (allEvents.length/3) + 1);
 
                     for (let i = 0; i < numOfRows; i++) {
@@ -95,7 +95,7 @@ const ExploreAllEvents = (props: any) => {
 
     return (
         <>
-           <NavBar isSiteAdmin={false}></NavBar>
+           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
             <Container className={"w-100"}>
                 {eventCardRows}
             </Container>

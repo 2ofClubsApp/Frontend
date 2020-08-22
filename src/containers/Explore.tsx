@@ -1,37 +1,17 @@
 import React from 'react'
-import {Container, Row, Col, Button} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import '../app.css';
 import Card from "../components/Swipe/Card";
-import {useHistory} from 'react-router-dom'
 import '../app.css';
 import NavBar from "../components/NavBar/NavBar"
-import reducer from "../store/reducers"
 import { connect } from 'react-redux';
 import { RootState } from '../store';
 
-const Explore = () => {
-    const history = useHistory();
-    const changeRoute = (path: string) => {
-        history.replace({pathname: path})
-    };
-
-    const [state, setState] = React.useState({
-        username: "",
-        password: "",
-    });
-
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value
-        const id = event.target.id
-        setState({
-            ...state,
-            [id]: value
-        })
-    }
+const Explore = (props: any) => {
 
     return (
         <>
-           <NavBar isSiteAdmin={false}></NavBar>
+           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
             <Container className={"d-flex justify-content-center align-items-center mt-5"}>
                 <Card />
             </Container>
@@ -39,12 +19,11 @@ const Explore = () => {
     )
 }
 const mapStateToProps = (state: RootState) => {
-    console.log("islogged in is " + state.system.isLoggedIn);
-    console.log("token is " + state.system.token);
     return {
         isLogged: state.system.isLoggedIn,
-        token: state.system.token
+        token: state.system.token,
+        username: state.system.username
     }
 };
 
-export default connect(mapStateToProps, null)(Explore)
+export default connect(mapStateToProps)(Explore)

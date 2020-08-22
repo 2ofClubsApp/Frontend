@@ -5,21 +5,41 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import "./NavBar.css"
+import axios from "../../axios";
+import { RootState } from "../../store";
+import { connect } from "react-redux";
 
 library.add(faBars)
 
 type NavBarDefinition = {
     isSiteAdmin: boolean
+    userUsername: string
+    userToken: string
 }
 
-const NavBar = (props: NavBarDefinition) => {
+const NavBar = (input: NavBarDefinition, props: any) => {
     
     const history = useHistory();
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
 
-    if (props.isSiteAdmin) {
+    const logout = async () => {
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/logout/${input.userUsername}`,
+            headers: {
+                Authorization: `Bearer ${input.userToken}`
+            },
+            }).then((response: any) => {
+                console.log(response.data)
+                return (response.data)
+        }).catch(err => {
+            console.log(err + " failed to logout");
+        });
+    };
+
+    if (input.isSiteAdmin) {
         return (
             <>
             <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2"} variant="dark">
@@ -36,7 +56,7 @@ const NavBar = (props: NavBarDefinition) => {
                             <Dropdown.Item onSelect={() => changeRoute("/admin")}>Home</Dropdown.Item>
                             <Dropdown.Item onSelect={() => changeRoute("/admin/requests")}>Requests</Dropdown.Item>
                             <Dropdown.Item onSelect={() => changeRoute("/admin/settings")}>Settings</Dropdown.Item>
-                            <Dropdown.Item href="/">Log out</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => {logout(); changeRoute("/")}}>Log out</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
                     </Nav>
@@ -75,4 +95,13 @@ const NavBar = (props: NavBarDefinition) => {
         )
     }
 }
-export default NavBar
+const mapStateToProps = (state: RootState) => {
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token,
+        username: state.system.username,
+        date: state.system.date
+    }
+}
+
+export default connect(mapStateToProps)(NavBar);

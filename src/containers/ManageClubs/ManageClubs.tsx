@@ -39,7 +39,7 @@ const ManageClubs = (props: any) => {
 //<ClubsOverview title={"Your Clubs"} view={true} token={props.token}></ClubsOverview>
     return (
         <>
-        <NavBar isSiteAdmin={false}></NavBar>
+        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
             <ClubsOverview newUsername={props.username} newToken={props.token}/>
         </Container>

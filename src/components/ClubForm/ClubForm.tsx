@@ -214,8 +214,8 @@ function ClubForm(input: ClubFormDefinition) {
                 method: 'get', //you can set what request you want to be
                 url: `/clubs/${input.clubID}/events`,
             }).then((result: any) => {
-                setEventsData(result.data.data.Hosts);
-                console.log(result.data.data.Hosts);
+                setEventsData(result.data.data.hosts);
+                console.log(result.data.data.hosts);
             }
             )
         };
@@ -245,8 +245,8 @@ function ClubForm(input: ClubFormDefinition) {
                     method: 'get', //you can set what request you want to be
                     url: `/clubs/${input.clubID}/events`,
                 }).then((result: any) => {
-                    setEventsData(result.data.data.Hosts);
-                    console.log(result.data.data.Hosts);
+                    setEventsData(result.data.data.hosts);
+                    console.log(result.data.data.hosts);
                 }
                 )
             };

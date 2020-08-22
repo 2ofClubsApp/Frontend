@@ -40,7 +40,7 @@ const ClubInfo = (props:any) => {
     if (data.id === -1) {
         return (
             <>
-                <NavBar isSiteAdmin={false}></NavBar>
+                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
                 <ErrorPage/>
             </>
         )
@@ -49,7 +49,7 @@ const ClubInfo = (props:any) => {
     else{
         return (
             <>
-                <NavBar isSiteAdmin={false}></NavBar>
+                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
                 <ClubForm title={"Save Changes"} clubObject={data} clubID={id} isClub={true} token={props.token} />
             </>
         
