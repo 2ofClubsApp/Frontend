@@ -45,8 +45,9 @@ const App = (props: any) => {
                 <Route exact path={"/settings/user"} render={() => {
                     return (props.isLogged ? <UserSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin"} component={AdminPanel}/>
-                <Route exact path={"/admin/clubrequests"} component={ClubRequests}/>
-                <Route exact path={"/admin/userrequests"} render={() => {
+                <Route exact path={"/admin/requests/clubs"} render={() => {
+                    return (props.isLogged ? <ClubRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                <Route exact path={"/admin/requests/users"} render={() => {
                     return (props.isLogged ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/settings"} component={AdminSettings}/>
                 <Route exact path={"/admin/application"} component={ClubApplication}/>
