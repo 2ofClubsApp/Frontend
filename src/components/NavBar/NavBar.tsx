@@ -1,13 +1,15 @@
-import { Navbar, Nav, Dropdown, NavLink} from "react-bootstrap";
+import { Navbar, Nav, Dropdown, NavLink, NavDropdown} from "react-bootstrap";
 import React from "react";
-import {useHistory, Link} from 'react-router-dom'
+import {useHistory } from 'react-router-dom'
+import { NavLink as RouterNavLink} from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import "./NavBar.css"
+import styles from "./NavBar.module.css"
 import axios from "../../axios";
 import { RootState } from "../../store";
 import { connect } from "react-redux";
+import {setLogin, setToken, setUsername, setExpiry} from "../../store/actions/actions";
 
 library.add(faBars)
 
@@ -20,6 +22,7 @@ type NavBarDefinition = {
 const NavBar = (input: NavBarDefinition, props: any) => {
     
     const history = useHistory();
+
     const changeRoute = (path: string) => {
         history.replace({pathname: path})
     };
@@ -43,7 +46,7 @@ const NavBar = (input: NavBarDefinition, props: any) => {
         return (
             <>
             <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2"} variant="dark">
-                <Link to="/">2OFCLUBS</Link>
+                <h1 className={styles.logo}><RouterNavLink exact to="/" activeClassName={styles.logo}>2ofClubs</RouterNavLink></h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
@@ -68,24 +71,21 @@ const NavBar = (input: NavBarDefinition, props: any) => {
     else {
         return (
             <>
-            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content- pt-2"} variant="dark">
-                <Link to="/">2OFCLUBS</Link>
+            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content- pt-2"}>
+                <h1 className={styles.logo}><RouterNavLink exact to="/" className={styles.logo}>2ofClubs</RouterNavLink></h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>
+                        <NavLink className={styles.navbarLink} onClick={() => changeRoute("/manageclubs")}>Clubs</NavLink>
+                        <NavLink className={styles.navbarLink} onClick={() => changeRoute("/explore/events")}>Events</NavLink>
                         <Dropdown alignRight>
-                        <Dropdown.Toggle id="user-dropdown" as={NavLink}>
-                            <FontAwesomeIcon icon={faBars}/>
+                        <Dropdown.Toggle id="user-dropdown" as={NavLink} className={styles.navbarLink}>
+                            {input.userUsername}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-
-                            <Dropdown.Item onSelect={() => changeRoute("/createclub")}>Create a club</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/explore/events")}>Explore Events</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/explore/yourevents")}>Explore Your Events</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/manageclubs")}>Manage your clubs</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Your settings</Dropdown.Item>
-                            <Dropdown.Item href="/">Log out</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Settings</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => {logout(); setToken(""); setLogin(false);}}>Log out</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
                     </Nav>
@@ -95,6 +95,23 @@ const NavBar = (input: NavBarDefinition, props: any) => {
         )
     }
 }
+
+{/* <Dropdown alignRight>
+                        <Dropdown.Toggle id="user-dropdown" as={NavLink}>
+                            <FontAwesomeIcon icon={faBars}/>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+
+                            <Dropdown.Item onSelect={() => changeRoute("/createclub")}>Create a club</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("")}>Explore Events</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/yourevents")}>Explore Your Events</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("")}>Manage your clubs</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Your settings</Dropdown.Item>
+                            <Dropdown.Item href="/">Log out</Dropdown.Item>
+                        </Dropdown.Menu>
+                        </Dropdown> */}
+
 const mapStateToProps = (state: RootState) => {
     return {
         isLogged: state.system.isLoggedIn,

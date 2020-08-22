@@ -1,0 +1,39 @@
+.dropdown-toggle {
+    color: #ffffff;
+    font-size: 2rem;
+}
+
+.dropdown-toggle::after {
+    color: #ffffff;
+    display: none;
+}
+
+.bg{
+    color: #696de9;
+    padding: 0 1vw;
+}
+
+.logo {
+    margin: .25rem;
+    color: #fff!important;
+    font-size: 2rem;
+}
+
+.logo:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.navbarLink {
+    color: #fff!important;
+    font-size: 1.25rem;
+
+}
+
+.navbarLink:hover {
+    color: #dadcff!important;
+}
+
+a {
+    color: white;
+}

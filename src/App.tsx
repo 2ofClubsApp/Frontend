@@ -20,6 +20,7 @@ import AdminLogin from './containers/AdminLogin';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
 import ExploreAllEvents from './containers/ExploreEvents/ExploreAllEvents';
 import YourEvents from './containers/ExploreEvents/YourEvents';
+import UserRequests from './containers/2ofClubsAdmin/UserRequests';
 
 // type AppProps = {
 //     system: SystemState
@@ -45,6 +46,8 @@ const App = (props: any) => {
                     return (props.isLogged ? <UserSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin"} component={AdminPanel}/>
                 <Route exact path={"/admin/clubrequests"} component={ClubRequests}/>
+                <Route exact path={"/admin/userrequests"} render={() => {
+                    return (props.isLogged ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/settings"} component={AdminSettings}/>
                 <Route exact path={"/admin/application"} component={ClubApplication}/>
                 <Route exact path={"/resetpassword"} render={() => {
@@ -52,7 +55,7 @@ const App = (props: any) => {
                 <Route exact path={"/explore/events"} render={() => {
                     return (props.isLogged ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/yourevents"} render={() => {
-                return (props.isLogged ? <YourEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged ? <YourEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

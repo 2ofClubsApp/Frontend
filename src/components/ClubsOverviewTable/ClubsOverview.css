@@ -27,3 +27,14 @@ a:hover {
 b {
     color: #696de9;
 }
+
+.btnpurple {
+    color: #fff;
+    background-color: #696de9;
+    border: none;
+    text-transform: uppercase;
+}
+
+.btnpurple:hover{
+    background-color: #9fa2f5;
+}

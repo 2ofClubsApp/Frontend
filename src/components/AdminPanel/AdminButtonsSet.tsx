@@ -3,20 +3,24 @@ import React from "react";
 import {useHistory} from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog, faScroll } from '@fortawesome/free-solid-svg-icons'
+import { faCog, faScroll, faUsers } from '@fortawesome/free-solid-svg-icons'
 import styles from "./AdminButton.module.css"
 import { RootState } from "../../store";
 import { connect } from "react-redux";
 
 
-library.add(faCog, faScroll)
+library.add(faCog, faScroll, faUsers)
 
-const AdminButtonsSet = (props:any) => {
+type AdminButtonsSetDefinition = {
+    newToken: string
+}
+
+const AdminButtonsSet = (input:AdminButtonsSetDefinition, props:any) => {
     
     const history = useHistory();
 
-    const changeRoute = (path: string, history: any) => {
-        history.push({pathname: path})
+    const changeRoute = (path: string) => {
+        history.replace({pathname: path})
     };
     
     return (
@@ -24,19 +28,19 @@ const AdminButtonsSet = (props:any) => {
             <Container className={"d-flex justify-content-center align-items-center w-100"}>
                 <Row>
                     <Col xs={12} lg={4}>
-                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/clubrequests', history)}> 
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/clubrequests')}> 
                             <FontAwesomeIcon icon={faScroll} className={styles.icon}/>
                             Club Requests
                         </Button>
                     </Col>
                     <Col xs={12} lg={4}>
-                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/requests', history)}> 
-                            <FontAwesomeIcon icon={faScroll} className={styles.icon}/>
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/userrequests')}> 
+                            <FontAwesomeIcon icon={faUsers} className={styles.icon}/>
                             User Requests
                         </Button>
                     </Col>
                     <Col xs={12} lg={4}>
-                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/settings', history)}>
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/settings')}>
                             <FontAwesomeIcon icon={faCog} className={styles.icon}/>
                             Settings
                         </Button>
