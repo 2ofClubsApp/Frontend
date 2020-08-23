@@ -25,14 +25,15 @@
 }
 
 .rightNavLinks {
-    width: 12vw;
+    width: 13vw;
     justify-content: space-between;
 }
 
 .navbarLink {
     color: #fff!important;
-    font-size: 1.25rem;
-
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .navbarLink:hover {
