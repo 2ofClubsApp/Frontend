@@ -73,7 +73,7 @@ const Login = (props: any) => {
     const handleShow = () => setShow(true);
   
     return (
-        <div>
+        <div className="login-background h-100 w-100">
             <Modal show={show} onHide={handleClose} dialogClassName={"w-25"} centered={true}>
                 <Modal.Header closeButton>
                 </Modal.Header>
