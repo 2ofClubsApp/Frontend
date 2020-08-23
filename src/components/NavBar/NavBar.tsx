@@ -61,7 +61,7 @@ const NavBar = (input: NavBarDefinition, props: any) => {
     else {
         return (
             <>
-            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2 "+ styles.navbarShadow}>
+            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2"}>
                 <h1 className={styles.logo}><RouterNavLink exact to="/" className={styles.logo}>2ofClubs</RouterNavLink></h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
