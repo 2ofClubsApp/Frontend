@@ -13,7 +13,7 @@ import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
 import axios from "../axios";
 import jwt_decode from 'jwt-decode';
-import {StatusResponse} from "../types/DataResponses"
+import {LoginResponse} from "../types/DataResponses"
 
 const AdminLogin = (props: any) => {
     const history = useHistory();
@@ -24,28 +24,6 @@ const AdminLogin = (props: any) => {
         username: "",
         password: "",
     });
-
-    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     const value = event.target.value
-    //     const id = event.target.id
-    //     setState({
-    //         ...state,
-    //         [id]: value
-    //     })
-    // }
-
-    // const validatelogin = async (values: any) => {
-    //     return axios.get(`/users/${}`, JSON.stringify({
-    //         "Username": values["username"],
-    //         "Password": values["password"],
-    //     })).then(response => {
-    //         console.log(response.data);
-    //         const token = response.data
-    //         return token;
-    //     }).catch(err => {
-    //         console.log(err + "Unable to get student ;.;");
-    //     });
-    // };
 
     const getUserInfo = async (username: string, token: any) => {
         return axios({
@@ -62,43 +40,11 @@ const AdminLogin = (props: any) => {
         });
     }
 
-    // const createClub = async (values: any, token: string) => {
-    //     // return axios.post("/clubs", JSON.stringify({
-    //     //     "Email": "hacklab@hl.com",
-    //     //     "Bio": "Hacklab is cool",
-    //     //     "Size": 20,
-    //     //     "Name": "Hacklab"
-    //     // })).then(response => {
-    //     //     console.log(response);
-    //     // }).catch(err => {
-    //     //     console.log(err + " failed to login");
-    //     // });
-    //     return axios({
-    //         method: 'post', //you can set what request you want to be
-    //         url: `/clubs`,
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`;
-    //         },
-    //         data: {
-    //             Email: "hacklab@hl.com",
-    //             Bio: "Hacklab",
-    //             Size: 20,
-    //             Name: "Hacklab"
-    //         }
-    //       }).then(response => {
-    //         console.log("trying to create club");
-    //         console.log(response);
-    //     }).catch(err => {
-    //         console.log(err + " unable to retrieve student info");
-    //     });
-    // };
-
     const login = async (values: any) => {
         return axios.post("/login", JSON.stringify({
             "Username": values["username"],
             "Password": values["password"],
-        })).then((response: StatusResponse) => {
-            console.log(JSON.stringify(response.data.message));
+        })).then((response: LoginResponse) => {
             if (response.data.code === -1){
                 return -1;
             }

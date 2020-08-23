@@ -1,15 +1,14 @@
-import { Navbar, Nav, Dropdown, NavLink, NavDropdown} from "react-bootstrap";
+import { Navbar, Nav, Dropdown, NavLink } from "react-bootstrap";
 import React from "react";
 import {useHistory } from 'react-router-dom'
 import { NavLink as RouterNavLink} from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import styles from "./NavBar.module.css"
 import axios from "../../axios";
 import { RootState } from "../../store";
 import { connect } from "react-redux";
-import {setLogin, setToken, setUsername, setExpiry} from "../../store/actions/actions";
+import {setLogin, setToken} from "../../store/actions/actions";
 
 library.add(faBars)
 

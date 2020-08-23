@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
-import Button from "react-bootstrap/Button";
-import Label from "../components/Form/Label";
-import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
-import {useHistory} from 'react-router-dom'
+import {Button, Form, Modal} from "react-bootstrap";
 import '../app.css';
 import {Formik} from "formik";
 import {loginSchema} from "../components/Form/Schemas";
 import FormContainer from "../components/Form/FormContainer";
-import {Form, Modal} from "react-bootstrap";
+import Label from "../components/Form/Label";
 import FormButton from "../components/Form/FormButton";
+import ResetPasswordLink from "../components/ResetPassword/ResetPasswordLink"
+import {FormInfo, passLabel, userLabel} from "../types/FormInfo";
+import {useHistory} from 'react-router-dom'
 import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../store/actions/actions";
 import axios from "../axios";
 import jwt_decode from 'jwt-decode';
-import ResetPasswordLink from "../components/ResetPassword/ResetPasswordLink"
-import {StatusResponse} from "../types/DataResponses"
 
 const Login = (props: any) => {
     const history = useHistory();

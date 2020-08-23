@@ -24,11 +24,6 @@
     color: #fff;
 }
 
-.rightNavLinks {
-    width: 13vw;
-    justify-content: space-between;
-}
-
 .navbarLink {
     color: #fff!important;
     text-transform: uppercase;

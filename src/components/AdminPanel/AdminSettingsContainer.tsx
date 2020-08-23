@@ -14,35 +14,7 @@ type AdminSettingsDefinition = {
 }
 
 const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
-
-    type dataResponse = {
-        Code: number,
-        Message: string,
-        Data: {}
-    }
-
-    // const [data, setData] = useState({ Tags: ["No tags yet!"] });
     const [fileData, setFile] = useState<any>({file: null});
-
-    // const newFileData = new FormData();
-   
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const result = await axios({
-    //             method: 'get', //you can set what request you want to be
-    //             url: `/tags`})
-    //         if (result.data.data.Tags === null) {
-    //             const tags = {Tags: ["No tags yet!"]}
-    //             setData(tags);
-    //         }
-    //         else {
-    //             setData(result.data.data);
-    //         }
-    //         };
-
-    //     fetchData();
-    // }, []);
-
     const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
     const [userData, setUserData] = useState(["None"]);
     const [saved, setSaved] = useState(false);
@@ -112,10 +84,8 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
         .min(1, 'Tags must be at least 1 character')
         .max(24, 'Tags cannot be more than 24 characters')
         .required('A tag is required'),
-        //image: yup.string().required(),
     });
 
-    // const file: string[] = [];
 
     const onChangeHandler = (e: any) => {
         const file = e.target.files[0];
@@ -132,12 +102,12 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                     .then((response:StatusResponse) => { 
                         console.log(response.data)
                         const fetchData = async () => {
-                            const result = await axios({
+                            await axios({
                                 method: 'get', //you can set what request you want to be
                                 url: `/tags`}).then((result: any) => {
                                     console.log(result.data.data);
                                     setData(result.data.data);})
-                            const result2 = await axios({
+                            await axios({
                                 method: 'get', //you can set what request you want to be
                                 url: `/tags/active`,
                             }).then((result2: any) => {
@@ -157,7 +127,6 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
     };
 
     const toggleTags = () => {
-        console.log("toggling" + toggledTags);
         toggledTags.map((item: string) => toggleTag(item));
         setSaved(true);
     }
@@ -207,12 +176,12 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
                                             }
                                             else {
                                                 const fetchData = async () => {
-                                                    const result = await axios({
+                                                    await axios({
                                                         method: 'get', //you can set what request you want to be
                                                         url: `/tags`}).then((result: any) => {
                                                             console.log(result.data.data);
                                                             setData(result.data.data);})
-                                                    const result2 = await axios({
+                                                    await axios({
                                                         method: 'get', //you can set what request you want to be
                                                         url: `/tags/active`,
                                                     }).then((result2: any) => {

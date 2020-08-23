@@ -3,15 +3,34 @@ export type StatusResponse = {
         code: number,
         message: string,
         data: {
+        }
+    }
+}
+
+export type DataResponse = {
+    code: number,
+    message: string,
+    data: {}
+}
+
+export type LoginResponse = {
+    data: {
+        code: number,
+        message: string,
+        data: {
             Token: string
         }
     }
 }
 
-export type Status = {
-    code: number,
-    message: string,
-    data: {}
+export type Club = {
+    id: number,
+    name: string,
+    email: string,
+    bio: string,
+    size: number,
+    tags: string[],
+    hosts: string[]
 }
 
 export type tag = {

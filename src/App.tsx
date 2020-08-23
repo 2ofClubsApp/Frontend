@@ -4,23 +4,23 @@ import {Route, Switch, Redirect} from "react-router-dom";
 import Login from "./containers/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./containers/Signup";
-import Home from "./containers/Home";
+import Home from "./containers/Users/UserHome/UserHome";
 import {connect} from "react-redux";
 import {RootState} from "./store";
-import ClubInfo from "./containers/ClubInfo/ClubInfo";
-import CreateClub from "./containers/CreateClub";
-import ManageClubs from "./containers/ManageClubs/ManageClubs"
-import AdvancedSettings from "./containers/ManageClubs/AdvancedSettings"
-import UserSettings from "./containers/UserSettings/UserSettings"
-import AdminPanel from "./containers/2ofClubsAdmin/AdminPanel"
-import ClubRequests from "./containers/2ofClubsAdmin/ClubRequests"
-import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings"
-import ClubApplication from "./containers/2ofClubsAdmin/ClubApplication"
+import ClubInfo from "./containers/Users/Clubs/ClubInfo/ClubInfo";
+import CreateClub from "./containers/Users/Clubs/CreateClub/CreateClub";
+import ManageClubs from "./containers/Users/Clubs/ManageClubs/ManageClubs"
+import AdvancedSettings from "./containers/Users/Clubs/ManageClubs/AdvancedSettings"
+import UserSettings from "./containers/Users/UserSettings/UserSettings"
+import AdminPanel from "./containers/2ofClubsAdmin/AdminHome/AdminHome"
+import ClubRequests from "./containers/2ofClubsAdmin/ClubRequests/ClubRequests"
+import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings/AdminSettings"
+import ClubApplication from "./containers/2ofClubsAdmin/ClubApplication/ClubApplication"
 import AdminLogin from './containers/AdminLogin';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
-import ExploreAllEvents from './containers/ExploreEvents/ExploreAllEvents';
-import YourEvents from './containers/ExploreEvents/YourEvents';
-import UserRequests from './containers/2ofClubsAdmin/UserRequests';
+import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAllEvents';
+import YourEvents from './containers/Users/Events/ExploreEvents/YourEvents';
+import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 
 // type AppProps = {
 //     system: SystemState
