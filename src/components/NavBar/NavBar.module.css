@@ -24,6 +24,11 @@
     color: #fff;
 }
 
+.rightNavLinks {
+    width: 12vw;
+    justify-content: space-between;
+}
+
 .navbarLink {
     color: #fff!important;
     font-size: 1.25rem;

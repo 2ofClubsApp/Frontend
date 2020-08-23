@@ -18,7 +18,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background:linear-gradient(-135deg, rgba(106, 189, 226, 1), rgba(105, 109, 233, 1));
+    background: linear-gradient(90deg, rgba(104,110,232,1) 0%, rgba(106,201,224,1) 100%);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }

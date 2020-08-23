@@ -45,7 +45,7 @@ const NavBar = (input: NavBarDefinition, props: any) => {
     if (input.isSiteAdmin) {
         return (
             <>
-            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2"} variant="dark">
+            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2 " + styles.navbarShadow} variant="dark">
                 <h1 className={styles.logo}><RouterNavLink exact to="/" className={styles.logo}>2ofClubs</RouterNavLink></h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
@@ -61,11 +61,11 @@ const NavBar = (input: NavBarDefinition, props: any) => {
     else {
         return (
             <>
-            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content- pt-2"}>
+            <Navbar collapseOnSelect expand="lg" className={"bg d-flex justify-content-center pt-2 "+ styles.navbarShadow}>
                 <h1 className={styles.logo}><RouterNavLink exact to="/" className={styles.logo}>2ofClubs</RouterNavLink></h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
-                    <Nav>
+                    <Nav className={styles.rightNavLinks}>
                         <NavLink className={styles.navbarLink} onClick={() => changeRoute("/manageclubs")}>Clubs</NavLink>
                         <NavLink className={styles.navbarLink} onClick={() => changeRoute("/explore/events")}>Events</NavLink>
                         <Dropdown alignRight>
