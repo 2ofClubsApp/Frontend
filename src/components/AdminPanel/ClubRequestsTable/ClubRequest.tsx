@@ -6,6 +6,7 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
 import axios from "../../../axios"
+import styles from "./ClubRequests.module.css"
 
 library.add(faCheck, faTimes)
 
@@ -13,7 +14,9 @@ type ClubRequestDefinition = {
     clubName: string
     clubID: number
     newToken: string
-    setData: any
+    updateClubs: any
+    showPreview: any
+    setPreviewClub: any
 }
 
 const ClubRequest = (input: ClubRequestDefinition) => {
@@ -36,7 +39,7 @@ const ClubRequest = (input: ClubRequestDefinition) => {
                         }
                     })
                     console.log(result.data);
-                    input.setData(result.data.data);
+                    input.updateClubs(result.data.data);
                     };
         
                 fetchData();
@@ -47,7 +50,7 @@ const ClubRequest = (input: ClubRequestDefinition) => {
 
     return (
         <tr>
-            <td colSpan={3} key={input.clubName}>{input.clubName}</td>
+            <td colSpan={3} key={input.clubName}><Button className={styles.clubLink} onClick={() => {input.setPreviewClub(input.clubID); input.showPreview();}}>{input.clubName}</Button></td>
 
             <td className={"text-center"}>
                 <Button className="mr-2" onClick={activateClub}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></Button>

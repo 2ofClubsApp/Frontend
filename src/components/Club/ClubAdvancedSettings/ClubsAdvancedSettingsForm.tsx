@@ -35,7 +35,6 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
 
     const [managers, setManagers] = useState([{ id: -1, username: "" }]);
 
-    const [foundClub, setFoundClub] = useState(false)
    
     useEffect(() => {
         const fetchData = async () => {
@@ -48,10 +47,9 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
             })
             .then ((result: any) => {
                 setManagers(result.data.data);
-                setFoundClub(true);
             })
             .catch( err => {
-                setFoundClub(false);
+
             })
         };
         fetchData();

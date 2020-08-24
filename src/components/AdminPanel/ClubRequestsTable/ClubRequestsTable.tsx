@@ -1,9 +1,8 @@
-import {Container, Table, Row, Button} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
+import { Container, Table, Row } from "react-bootstrap";
 import axios from "../../../axios";
-import { RootState } from "../../../store";
-import { connect } from "react-redux";
 import ClubRequest from "./ClubRequest";
+import ClubRequestForm from "./ClubRequestForm";
 
 type ClubListingsTableOverviewDefinition = {
     newUsername: string;
@@ -11,7 +10,9 @@ type ClubListingsTableOverviewDefinition = {
 }
 
 function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
+
     const [clubs, setClubs] = useState([{ id: -1, name: ""}]);
+    const [previewClub, setPreviewClub] = useState(-1);
    
     useEffect(() => {
         const fetchData = async () => {
@@ -27,8 +28,16 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
         fetchData();
     }, [input.newToken]);
 
+    const [showPreview, setShowPreview] = useState(false);
+
+    const handleClosePreview = () => setShowPreview(false);
+    const handleShowPreview = () => setShowPreview(true);
+
    
     return (
+        <>
+        <ClubRequestForm show={showPreview} onHide={handleClosePreview} userToken={input.newToken} clubID={previewClub} updateClubs={setClubs}/>
+
         <Container className={"clubsOverviewContainer"}>
             <Row className={"d-flex justify-content-between align-items-end ml-2 mr-2 mt-5 mb-3 row"}>
                 <h1 className={"title m-0"}>Clubs Awaiting Approval</h1>
@@ -45,21 +54,14 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
                 </thead>
                 <tbody>
                     {clubs.map((item: any) => (
-                        <ClubRequest key={item.id} clubID={item.id} clubName={item.name} setData={setClubs} newToken={input.newToken}/>
+                        <ClubRequest key={item.id} clubID={item.id} clubName={item.name} updateClubs={setClubs} newToken={input.newToken} showPreview={handleShowPreview} setPreviewClub={setPreviewClub}/>
                     ))}
                 </tbody>
             </Table>
          </Container>
+        </>
     );
-  }
-
-  const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn,
-        token: state.system.token,
-        username: state.system.username,
-        date: state.system.date
-    }
 }
 
-export default connect(mapStateToProps)(ClubListingTable);
+
+export default ClubListingTable;

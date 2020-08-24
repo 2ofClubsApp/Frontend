@@ -6,13 +6,17 @@ import AdminButtonsSet from "../../../components/AdminPanel/AdminButtonsSet"
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
 
+/**
+ * 
+ * 
+ * @param props - Props from store including isLoggedIn, token, username, date 
+ */
 const AdminPanel = (props: any) => {
-    console.log(props.token)
     return (
         <>
         <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center m-auto h-75"}>
-            <AdminButtonsSet newToken={props.token}></AdminButtonsSet>
+            <AdminButtonsSet />
         </Container>
         </>
     )

@@ -1,8 +1,6 @@
-import {Form, Modal, Button } from "react-bootstrap";
+import {Form, Modal, Button, Col } from "react-bootstrap";
 import React from "react";
 import "../../Club/ClubsListingTable/ClubsOverview.css";
-import { RootState } from "../../../store";
-import { connect } from "react-redux";
 import styles from "../../Club/ClubForm/ClubForm.module.css"
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -25,6 +23,8 @@ const EventForm = (input: eventFormDefinition) => {
         .required('A name for the event is required'),
         location: yup.string()
         .required('A location is required'),
+        date: yup.date(),
+        //.required('A location is required'),
         bio: yup.string()
         .max(150, 'Bios can be a maximum of 150 characters'),
         //image: yup.string().required(),
@@ -92,6 +92,7 @@ const EventForm = (input: eventFormDefinition) => {
                     initialValues={{
                         eventName: ``,
                         location: `asdf`,
+                        date: ``,
                         bio: `asdf`,
                         fee: `0`,
                     }}
@@ -124,23 +125,22 @@ const EventForm = (input: eventFormDefinition) => {
                             </Form.Control.Feedback>
                         </Form.Row>
                         <Form.Row>
-
-                                <Form.Label className={styles.subtitle + " mt-3"}>Bio</Form.Label>
-                                <Form.Control
-                                    className={styles.inputBox}
-                                    required
-                                    as="textarea"
-                                    rows={3}
-                                    name="bio"
-                                    defaultValue={''}
-                                    onChange={handleChange}
-                                    isInvalid={!!errors.bio}
-                                />
-                                <Form.Control.Feedback type="invalid" className={styles.inputBox}>{errors.bio}</Form.Control.Feedback>
-
+                            <Form.Label className={styles.subtitle + " mt-3"}>Bio</Form.Label>
+                            <Form.Control
+                                className={styles.inputBox}
+                                required
+                                as="textarea"
+                                rows={3}
+                                name="bio"
+                                defaultValue={''}
+                                onChange={handleChange}
+                                isInvalid={!!errors.bio}
+                            />
+                            <Form.Control.Feedback type="invalid" className={styles.inputBox}>{errors.bio}</Form.Control.Feedback>
                         </Form.Row>
                         <Form.Row>
-                            <Form.Label className={styles.subtitle + " mt-3"}>Location</Form.Label>
+                            <Form.Group as={Col} md={6}>
+                                <Form.Label className={styles.subtitle + " mt-3"}>Location</Form.Label>
                                 <Form.Control
                                     className={styles.inputBox}
                                     type="text"
@@ -154,6 +154,23 @@ const EventForm = (input: eventFormDefinition) => {
                                 <Form.Control.Feedback type="invalid" className={styles.inputBox}>
                                     {errors.location}
                                 </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group as={Col} md={6}>
+                                <Form.Label className={styles.subtitle + " mt-3"}>Date</Form.Label>
+                                <Form.Control
+                                    className={styles.inputBox}
+                                    type="text"
+                                    placeholder="Date"
+                                    name="date"
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.location}
+                                    id="date"
+                                />
+
+                                <Form.Control.Feedback type="invalid" className={styles.inputBox}>
+                                    {errors.date}
+                                </Form.Control.Feedback>
+                            </Form.Group>
                         </Form.Row>
                         
 
@@ -196,13 +213,4 @@ const EventForm = (input: eventFormDefinition) => {
     )
 }
 
-const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn,
-        token: state.system.token,
-        username: state.system.username,
-        date: state.system.date
-    }
-}
-
-export default connect(mapStateToProps)(EventForm);
+export default EventForm;
