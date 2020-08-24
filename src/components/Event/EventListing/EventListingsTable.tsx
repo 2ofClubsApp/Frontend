@@ -7,14 +7,17 @@ import styles from "../../Club/ClubForm/ClubForm.module.css"
 import { eventGET } from "../../../types/DataResponses";
 
 type EventsOverviewDefinition = {
-    newToken: any
-    clubID: number
-    myVar: eventGET[]
-    setMyVar: any
-    deleteCommand: any
+    userToken: string,
+    clubID: number,
+    myVar: eventGET[],
+    setMyVar: any,
+    deleteCommand: any,
+    setIsNew: any,
+    updateCommand: any,
+    setEventID: any
 }
 
-function EventsOverview(input: EventsOverviewDefinition) {
+function EventListingsTable(input: EventsOverviewDefinition) {
     return (
         <div className={styles.eventsContainer}>
              <Table hover striped>
@@ -28,7 +31,7 @@ function EventsOverview(input: EventsOverviewDefinition) {
                  </thead>
                  <tbody>
                      {input.myVar.map((item: any) => (
-                         <EventListing key={item.id} clubID={input.clubID} eventID={item.id} active={false} title={item.name} overviewType={true} deleteCommand={input.deleteCommand}/>
+                         <EventListing key={item.id} clubID={input.clubID} eventID={item.id} active={false} title={item.name} overviewType={true} deleteCommand={input.deleteCommand} setIsNew={input.setIsNew} updateCommand={input.updateCommand} setEventID={input.setEventID}/>
                      ))}
                  </tbody>
              </Table>
@@ -45,4 +48,4 @@ function EventsOverview(input: EventsOverviewDefinition) {
     }
 }
 
-export default connect(mapStateToProps)(EventsOverview);
+export default connect(mapStateToProps)(EventListingsTable);

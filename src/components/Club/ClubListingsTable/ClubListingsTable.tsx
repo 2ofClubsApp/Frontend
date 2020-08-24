@@ -38,7 +38,7 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
    
     return (
         <Container className={styles.clubListingsTable}>
-            <Row className={"d-flex justify-content-between align-items-end m-2 mt-4 row"}>
+            <Row className={"d-flex justify-content-between align-items-end m-2 mt-5 row"}>
                 <h1 className={"m-0 " + styles.title}>Your Clubs</h1>
                 <Button className={"h-50 " + styles.btnpurple} onClick={() => changeRoute("/club/create")}>Create a Club</Button>
             </Row>

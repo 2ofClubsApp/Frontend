@@ -8,8 +8,8 @@ import * as yup from "yup";
 import axios from "../../../axios";
 import TagListing from '../../TagsContainer/TagListing';
 import {tag, Club, StatusResponse} from "../../../types/DataResponses"
-import EventsOverview from '../../Event/EventListing/EventsOverview';
 import EventForm from '../../Event/EventListing/EventForm';
+import EventListingsTable from '../../Event/EventListing/EventListingsTable';
 
 type ClubFormDefinition = {
     title: string,
@@ -175,7 +175,12 @@ function ClubForm(input: ClubFormDefinition) {
     const handleCloseEventForm = () => setShowEventForm(false);
     const handleShowEventForm = () => setShowEventForm(true);
 
-    const [eventsData, setEventsData] = useState([{"id": -1, "name": "N/A", "description": "", "location": "", "fee": 1}]);
+    const showNewEventForm = () => {
+        setIsNew(true);
+        handleShowEventForm();
+    }
+
+    const [events, setEvents] = useState([{"id": -1, "name": "N/A", "description": "", "location": "", "fee": 1}]);
    
     useEffect(() => {
         const fetchData = async () => {
@@ -183,7 +188,7 @@ function ClubForm(input: ClubFormDefinition) {
                 method: 'get', //you can set what request you want to be
                 url: `/clubs/${input.clubID}/events`,
             }).then((result: any) => {
-                setEventsData(result.data.data.hosts);
+                setEvents(result.data.data.hosts);
                 console.log(result.data.data.hosts);
             }
             )
@@ -213,7 +218,7 @@ function ClubForm(input: ClubFormDefinition) {
                     method: 'get', //you can set what request you want to be
                     url: `/clubs/${input.clubID}/events`,
                 }).then((result: any) => {
-                    setEventsData(result.data.data.hosts);
+                    setEvents(result.data.data.hosts);
                     console.log(result.data.data.hosts);
                     }
                 )
@@ -223,6 +228,8 @@ function ClubForm(input: ClubFormDefinition) {
             }
         );
     }
+
+    const [isNew, setIsNew] = useState(true);
 
     if (input.clubID === -1) {
         return (
@@ -369,7 +376,7 @@ function ClubForm(input: ClubFormDefinition) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <EventForm show={showEventForm} onHide={handleCloseEventForm} newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData}/>
+            <EventForm isNew={isNew} show={showEventForm} onHide={handleCloseEventForm} newToken={input.token} clubID={input.clubID} events={events} setEvents={setEvents} eventID={eventID}/>
             <Container className={styles.container}>
                 
                 <Row>
@@ -503,10 +510,10 @@ function ClubForm(input: ClubFormDefinition) {
                             <Form.Group as={Col} md="6" controlId="events" className={"mt-2"}>
                                 <div className="d-flex justify-content-between align-items-center mb-2">
                                     <Form.Label className={styles.subtitle}>Events</Form.Label>
-                                    <Button onClick={handleShowEventForm}>+</Button>
+                                    <Button onClick={showNewEventForm}>+</Button>
                                 </div>
                                 
-                                <EventsOverview newToken={input.token} clubID={input.clubID} myVar={eventsData} setMyVar={setEventsData} deleteCommand={deletePopup}/>
+                                <EventListingsTable userToken={input.token} clubID={input.clubID} myVar={events} setMyVar={setEvents} deleteCommand={deletePopup} setIsNew={setIsNew} updateCommand={handleShowEventForm} setEventID={setEventID}/>
                             </Form.Group>
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-end align-items-center">
