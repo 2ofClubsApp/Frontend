@@ -10,19 +10,22 @@ import { connect } from "react-redux";
 library.add(faCog)
 
 type EventListingDefinition = {
-    title: string
-    overviewType: boolean
-    active: boolean
-    clubID: number
-    eventID: number
-    deleteCommand: any
+    title: string,
+    overviewType: boolean,
+    active: boolean,
+    clubID: number,
+    eventID: number,
+    deleteCommand: any,
+    setIsNew: any,
+    updateCommand: any,
+    setEventID: any
 }
 
 const EventListing = (input: EventListingDefinition) => {
 
-    const eventListingDelete = () => {
-        input.deleteCommand(input.clubID, input.eventID)
-    }
+    // const eventListingDelete = () => {
+    //     input.deleteCommand(input.clubID, input.eventID);
+    // }
 
     return (
         <tr className={"d-flex"} key={input.eventID}>
@@ -35,8 +38,8 @@ const EventListing = (input: EventListingDefinition) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Edit Event</Dropdown.Item>
-                    <Dropdown.Item onClick={eventListingDelete}>Delete Event</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {input.setIsNew(false);console.log("new event id is " + input.eventID); input.setEventID(input.eventID);input.updateCommand()}}>Edit Event</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {input.deleteCommand(input.clubID, input.eventID)}}>Delete Event</Dropdown.Item>
                 </Dropdown.Menu>
                 </Dropdown>
             </td>
