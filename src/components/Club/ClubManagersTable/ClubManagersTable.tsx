@@ -30,11 +30,23 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
 
     const [managers, setManagers] = useState([{ id: -1, username: "" }]);
 
+    const [isOwner, setIsOwner] = useState(false);
+
+    const checkOwner = (arr: any[]) => {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].username === input.userUsername) {
+                setIsOwner(false);
+                return;
+            }
+        }
+        setIsOwner(true);
+        return;
+    }
    
     useEffect(() => {
         const fetchData = async () => {
             await axios({
-                method: 'get', //you can set what request you want to be
+                method: 'get',
                 url: `clubs/${input.clubID}/manages`,
                 headers: {
                 Authorization: `Bearer ${input.userToken}`
@@ -42,6 +54,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
             })
             .then ((result: any) => {
                 setManagers(result.data.data);
+                checkOwner(result.data.data);
             })
             .catch( err => {
 
@@ -91,9 +104,26 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         });
     };
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const promoteManager = async (username: string) => {
+        const lowerUsername = username.toString().toLowerCase();
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/clubs/${input.clubID}/promote/${lowerUsername}`,
+            headers: {
+                Authorization: `Bearer ${input.userToken}`
+            },
+            })
+        .then((response: StatusResponse) => {
+            return response.data
+        })
+        .catch(err => {
+            
+        });
+    };
+
+    const [showDelete, setShowDelete] = useState(false);
+    const handleDeleteClose = () => setShowDelete(false);
+    const handleDeleteShow = () => setShowDelete(true);
 
     const [managerUsername, setManagerUsername] = useState("");
 
@@ -119,15 +149,55 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         });
     }
 
+    const [showPromote, setShowPromote] = useState(false);
+    const handlePromoteClose = () => setShowPromote(false);
+    const handlePromoteShow = () => setShowPromote(true);
+
+    const promoteConfirmed = () => {
+        promoteManager(managerUsername)
+        .then( () => {
+            const fetchData = async () => {
+                await axios({
+                    method: 'get', //you can set what request you want to be
+                    url: `clubs/${input.clubID}/manages`,
+                    headers: {
+                    Authorization: `Bearer ${input.userToken}`
+                    }
+                })
+                .then ((result: any) => {
+                    setManagers(result.data.data);
+                })
+                .catch( err => {
+                
+                })
+            };
+            fetchData();
+        });
+    }
+
     return (
         <>
-        <Modal show={show} onHide={handleClose} dialogClassName="w-25" centered={true}>
-            <Modal.Body>Are you sure you want to remove this manager?</Modal.Body>
+        <Modal show={showDelete} onHide={handleDeleteClose} dialogClassName="w-25" centered={true}>
+            <Modal.Header closeButton />
+            <Modal.Body className="text-center">Are you sure you want to <b className={styles.red}>remove</b> this manager?</Modal.Body>
             <Modal.Footer>
-                <Button variant="danger" onClick={() => {deleteConfirmed(); handleClose()}}>
+                <Button variant="danger" onClick={() => {deleteConfirmed(); handleDeleteClose()}}>
                     Remove Manager
                 </Button>
-                <Button variant="light" onClick={handleClose}>
+                <Button variant="light" onClick={handleDeleteClose}>
+                    Cancel
+                </Button>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal show={showPromote} onHide={handlePromoteClose} dialogClassName={"p-3 " + styles.w30} centered={true}>
+            <Modal.Header closeButton />
+            <Modal.Body className="text-center"><p>Are you sure you want to <b>promote this manager</b> to <b>owner</b>?</p>(This action is irreversible and will demote you to a manager!)</Modal.Body>
+            <Modal.Footer>
+                <Button className={styles.btnpurple} onClick={() => {promoteConfirmed(); handlePromoteClose()}}>
+                    Promote to Owner
+                </Button>
+                <Button variant="light" onClick={handlePromoteClose}>
                     Cancel
                 </Button>
             </Modal.Footer>
@@ -189,22 +259,30 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                             )}
                         </Formik>
 
-                        <span className={styles.subtitle}>Existing Users</span>
-                        <Table responsive >
-                        <thead>
-                            <tr>
-                                <td colSpan={3} className={"col-11"}>
-                                    <b>Username</b>
-                                </td>
-                                <td className={"col-1"}><b>Manage</b></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {managers.map((item: User) => <ClubManagerListing key={item.username} clubID={input.clubID} username={item.username} userToken={input.userToken} confirmPopup={handleShow} setManagerUsername={setManagerUsername}/>)}
-                        </tbody>
-                        </Table>
+                        <span className={styles.subtitle}>Existing Managers</span>
+                        <div className={"p-4"}>
+                            <Table responsive>
+                                <thead>
+                                    <tr>
+                                        <td colSpan={3} className={"col-8"}>
+                                            <b>Username</b>
+                                        </td>
+                                        <td colSpan={2} className={"col-4 text-center"}>
+                                            <b>Manage</b>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {managers.map((item: User) => <ClubManagerListing key={item.username} clubID={input.clubID} username={item.username} userToken={input.userToken} confirmDeletionPopup={handleDeleteShow} confirmPromotePopup={handlePromoteShow} setManagerUsername={setManagerUsername} isOwner={isOwner}/>)}
+                                </tbody>
+                            </Table>
+                        </div>
                     </Col>
                 </Row>
+                <Row className="d-flex justify-content-end mt-2 mr-4">
+                    <Button variant="outline-danger">Leave Club</Button>
+                </Row>
+                
         </Container>
         </>
     )

@@ -1,10 +1,19 @@
+.w30 {
+    width: 30%!important;
+}
+
 .container {
     background-color: white;
     box-shadow: 2px 2px 5px rgb(98, 96, 179);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 3rem;
     
 }
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: rgb(248, 248, 248);
+ }
+
 
 .title {
     font-family: "Poppins", Helvetica, sans-serif;
@@ -19,28 +28,26 @@
     margin: 1rem 2rem;
     font-size: 1rem;
 }
+
 .inputBox {
     margin-left: 30px;
 }
 
-.tagsContainer {
-    background-color: white;
-    font-size: .85rem;
-    padding: 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    margin: 0 0.5rem 0 2rem;
-    height: 15vh;
-    overflow-y: scroll;
+a {
+    color: black;
 }
 
-.tagsContainer::-webkit-scrollbar {
-    width: .5rem;
+.red {
+    color: #dc3545!important;
 }
 
-.tagsContainer::-webkit-scrollbar-thumb {
-    border-radius: 15px;
-    background-color: #ced4da;
-    box-shadow: inset 0 0 14px 14px transparent;
-    border: solid 3px transparent;
+.btnpurple {
+    color: #fff;
+    background-color: #696de9;
+    border: none;
+    text-transform: uppercase;
+}
+
+.btnpurple:hover{
+    background-color: #9fa2f5;
 }
