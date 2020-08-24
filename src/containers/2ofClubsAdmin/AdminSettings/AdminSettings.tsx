@@ -1,23 +1,17 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
 import NavBar from "../../../components/NavBar/NavBar"
-import AdminSettingsContainer from "../../../components/AdminPanel/AdminSettingsContainer"
-//import {useHistory} from 'react-router-dom'
+import TagSettingsContainer from "../../../components/AdminPanel/TagSettingsContainer/TagSettingsContainer"
 import { RootState } from '../../../store';
 import { connect } from 'react-redux';
 
 const AdminSettings = (props: any) => {
-    // const history = useHistory();
-    // const changeRoute = (path: string) => {
-    //     history.replace({pathname: path})
-    // };
-
     return (
         <>
-        <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
-        <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <AdminSettingsContainer inputToken={props.token}></AdminSettingsContainer>
-        </Container>
+            <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
+            <Container className={"d-flex justify-content-center align-items-center mt-5"}>
+                <TagSettingsContainer userToken={props.token} />
+            </Container>
         </>
     )
 };

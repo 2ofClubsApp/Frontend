@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
-import ClubsListingTable from "../../../../components/Club/ClubsListingTable/ClubListingTable";
+import ClubsListingTable from "../../../../components/Club/ClubListingsTable/ClubListingsTable";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../../components/NavBar/NavBar"
 import { connect } from 'react-redux';

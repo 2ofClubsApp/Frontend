@@ -3,7 +3,7 @@ import React from "react";
 import {useHistory} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faScroll, faUsers } from '@fortawesome/free-solid-svg-icons'
-import styles from "./AdminButton.module.css"
+import styles from "./AdminButtonsSet.module.css"
 
 /**
  * Creates the buttons displayed on the AdminPanel container
@@ -35,7 +35,7 @@ const AdminButtonsSet = () => {
                     <Col xs={12} lg={4}>
                         <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/settings')}>
                             <FontAwesomeIcon icon={faCog} className={styles.icon}/>
-                            Settings
+                            Tag Settings
                         </Button>
                     </Col>
                 </Row>

@@ -21,11 +21,6 @@ import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAll
 import YourEvents from './containers/Users/Events/ExploreEvents/YourEvents';
 import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 
-
-// type AppProps = {
-//     system: SystemState
-// }<Route exact path={"/admin/userrequests"} component={UserRequests}/>
-
 const App = (props: any) => {
     return (
         <div>
@@ -50,9 +45,9 @@ const App = (props: any) => {
                     return (props.isLogged ? <ClubRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/requests/users"} render={() => {
                     return (props.isLogged ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
-                <Route exact path={"/admin/settings"} component={AdminSettings}/>
-                <Route exact path={"/resetpassword"} render={() => {
-                    return (<ResetPassword/>)}}/>
+                <Route exact path={"/admin/tags"} render={() => {
+                    return (props.isLogged ? <AdminSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                <Route exact path={"/resetpassword"} render={() => {return (<ResetPassword/>)}}/>
                 <Route exact path={"/explore/events"} render={() => {
                     return (props.isLogged ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/yourevents"} render={() => {
@@ -64,7 +59,6 @@ const App = (props: any) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-    // console.log("islogged in is " + state.system.isLoggedIn);
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,

@@ -1,6 +1,6 @@
 import {Container, Table, Row, Button} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import "./ClubsOverview.css";
+import styles from "./ClubListingsTable.module.css"
 import ClubListing from "./ClubListing";
 import axios from "../../../axios";
 import { RootState } from "../../../store";
@@ -37,15 +37,15 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
 
    
     return (
-        <Container className={"clubsOverviewContainer"}>
-            <Row className={"d-flex justify-content-between align-items-end ml-2 mr-2 mt-5 mb-3 row"}>
-                <h1 className={"title m-0"}>Your Clubs</h1>
-                <Button className="btnpurple h-50" onClick={() => changeRoute("/club/create")}>Create a Club</Button>
+        <Container className={styles.clubListingsTable}>
+            <Row className={"d-flex justify-content-between align-items-end m-2 mt-4 row"}>
+                <h1 className={"m-0 " + styles.title}>Your Clubs</h1>
+                <Button className={"h-50 " + styles.btnpurple} onClick={() => changeRoute("/club/create")}>Create a Club</Button>
             </Row>
              
             <Table responsive hover striped>
                 <thead>
-                <tr className={"d-flex"}>
+                <tr>
                     <td colSpan={3} className={"col-11"}>
                         <b>Club Name</b>
                     </td>

@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react'
 import {Container, Row, Form, Table, Modal} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import styles from "./ClubsAdvancedSettings.module.css";
+import styles from "./ClubManagersTable.module.css";
 import ClubManagerListing from "./ClubManagerListing";
 import { Formik } from 'formik';
 import * as yup from "yup";
 import axios from "../../../axios";
-import { StatusResponse } from '../../../types/DataResponses';
+import { StatusResponse, User } from '../../../types/DataResponses';
 
 type advancedSettingsDefinition = {
     userToken: string
     clubID: number
     clubName: string
     userUsername: string
-}
-
-type User = {
-    id: number
-    username: string
 }
 
 const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {

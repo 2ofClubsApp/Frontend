@@ -11,8 +11,15 @@ type ClubListingsTableOverviewDefinition = {
 
 function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
 
-    const [clubs, setClubs] = useState([{ id: -1, name: ""}]);
     const [previewClub, setPreviewClub] = useState(-1);
+
+    const [showPreview, setShowPreview] = useState(false);
+
+    const handleClosePreview = () => setShowPreview(false);
+    
+    const handleShowPreview = () => setShowPreview(true);
+
+    const [clubs, setClubs] = useState([{ id: -1, name: ""}]);
    
     useEffect(() => {
         const fetchData = async () => {
@@ -27,12 +34,6 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
             };
         fetchData();
     }, [input.newToken]);
-
-    const [showPreview, setShowPreview] = useState(false);
-
-    const handleClosePreview = () => setShowPreview(false);
-    const handleShowPreview = () => setShowPreview(true);
-
    
     return (
         <>

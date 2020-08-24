@@ -2,7 +2,7 @@ import React from 'react'
 import {Container} from "react-bootstrap";
 import '../../../app.css';
 import NavBar from "../../../components/NavBar/NavBar"
-import AdminButtonsSet from "../../../components/AdminPanel/AdminButtonsSet"
+import AdminButtonsSet from "../../../components/AdminPanel/AdminButtonsSet/AdminButtonsSet"
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
 
