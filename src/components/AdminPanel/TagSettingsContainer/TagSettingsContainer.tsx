@@ -2,18 +2,18 @@ import React, { useState, useEffect} from 'react'
 import {Container, Row, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import styles from "./AdminSettingsContainer.module.css"
-import TagListing from "../TagsContainer/TagListing"
+import styles from "./TagSettingsContainer.module.css"
+import TagListing from "../../TagsContainer/TagListing"
 import {Formik} from "formik";
 import * as yup from "yup";
-import axios from "../../axios";
-import {StatusResponse, tag} from "../../types/DataResponses"
+import axios from "../../../axios";
+import {StatusResponse, tag} from "../../../types/DataResponses"
 
 type AdminSettingsDefinition = {
-    inputToken: string
+    userToken: string
 }
 
-const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
+const TagSettings = ( input: AdminSettingsDefinition ) => {
     const [fileData, setFile] = useState<any>({file: null});
     const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
     const [userData, setUserData] = useState(["None"]);
@@ -62,7 +62,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
             method: 'post', //you can set what request you want to be
             url: `/tags`,
             headers: {
-                Authorization: `Bearer ${input.inputToken}`
+                Authorization: `Bearer ${input.userToken}`
             },
             data: {
                 "Name": values["tag"],
@@ -98,7 +98,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
         const formData = new FormData();
         formData.append("file", fileData.file);
         console.log(formData);
-        return axios.post(`/upload/tags`, formData, {headers: {Authorization: `Bearer ${input.inputToken}`}})
+        return axios.post(`/upload/tags`, formData, {headers: {Authorization: `Bearer ${input.userToken}`}})
                     .then((response:StatusResponse) => { 
                         console.log(response.data)
                         const fetchData = async () => {
@@ -136,7 +136,7 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
             method: 'post', //you can set what request you want to be
             url: `/toggle/tags/${tagName}`,
             headers: {
-                Authorization: `Bearer ${input.inputToken}`
+                Authorization: `Bearer ${input.userToken}`
             },
             }).then((response: any) => {
                 console.log(JSON.stringify(response));
@@ -281,4 +281,4 @@ const AdminSettingsContainer = (input: AdminSettingsDefinition, props:any) => {
 };
 
 
-export default AdminSettingsContainer;
+export default TagSettings;

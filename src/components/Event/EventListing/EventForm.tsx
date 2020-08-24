@@ -1,6 +1,5 @@
 import {Form, Modal, Button, Col } from "react-bootstrap";
 import React from "react";
-import "../../Club/ClubsListingTable/ClubsOverview.css";
 import styles from "../../Club/ClubForm/ClubForm.module.css"
 import { Formik } from "formik";
 import * as yup from "yup";

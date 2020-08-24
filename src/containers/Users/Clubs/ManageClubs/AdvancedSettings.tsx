@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {Container} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
 import NavBar from "../../../../components/NavBar/NavBar"
-import ClubsAdvancedSettingsForm from "../../../../components/Club/ClubAdvancedSettings/ClubsAdvancedSettingsForm"
+import ClubsAdvancedSettingsForm from "../../../../components/Club/ClubManagersTable/ClubManagersTable"
 import { RootState } from '../../../../store';
 import { connect } from 'react-redux';
 import axios from "../../../../axios";

@@ -1,6 +1,5 @@
 import React from "react";
-import "./ClubsOverview.css";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from "../../../store";
@@ -16,7 +15,7 @@ type clubListingDefinition = {
 const ClubListing = (club: clubListingDefinition) => {
 
     return (
-        <tr className={"d-flex"}>
+        <tr>
             <td colSpan={3} className={"col-11"} key={club.id}><NavLink to={`/settings/info/${club.id}`} className={styles.clubLink}>{club.title}</NavLink></td>
             <td className={"col-1 text-center"}><NavLink to={`/manageclubs/advancedsettings/${club.id}`} className={styles.clubLink}><FontAwesomeIcon icon={faCog}/></NavLink></td>
         </tr>           

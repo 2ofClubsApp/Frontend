@@ -1,6 +1,5 @@
 import { Table } from "react-bootstrap";
 import React from "react";
-import "../../Club/ClubsListingTable/ClubsOverview.css";
 import EventListing from "./EventListing";
 import { RootState } from "../../../store";
 import { connect } from "react-redux";

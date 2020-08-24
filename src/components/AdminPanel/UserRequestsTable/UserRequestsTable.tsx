@@ -1,16 +1,17 @@
-import {Container, Table} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import { RootState } from "../../../store";
-import { connect } from "react-redux";
+import { Container, Table } from "react-bootstrap";
 import UserRequest from "./UserRequest";
 import axios from "../../../axios";
 
 type UserRequestsTableDefinition = {
+
     newUsername: string;
     newToken: string;
+
 }
 
-function UserRequestsTable(input: UserRequestsTableDefinition, props: any) {
+function UserRequestsTable(input: UserRequestsTableDefinition) {
+
     const [data, setData] = useState({ data: [{id: -1, username: ""}] });
    
     useEffect(() => {
@@ -49,15 +50,7 @@ function UserRequestsTable(input: UserRequestsTableDefinition, props: any) {
              </Table>
          </Container>
     );
-  }
 
-  const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn,
-        token: state.system.token,
-        username: state.system.username,
-        date: state.system.date
-    }
 }
 
-export default connect(mapStateToProps)(UserRequestsTable);
+export default (UserRequestsTable);

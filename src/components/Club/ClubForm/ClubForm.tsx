@@ -354,9 +354,8 @@ function ClubForm(input: ClubFormDefinition) {
 
         )
     }
+
     else {
-        // EDITING CLUB HERE
-        // const name = data["Name"]
         return (
             <>
             <Modal show={show} onHide={handleClose} dialogClassName="w-25" centered={true}>

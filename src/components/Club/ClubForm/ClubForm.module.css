@@ -81,12 +81,6 @@
     padding: 5rem;
 }
 
-.EventFormDialog {
-    background-color:red;
-    max-width: none!important;
-}
-
-
 .EventFormContent{
     width: 100%;
     padding: 3rem;

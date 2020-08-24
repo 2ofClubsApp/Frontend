@@ -1,6 +1,5 @@
 import {Form, Modal, Button, Col, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import "../../Club/ClubsListingTable/ClubsOverview.css";
 import styles from "./ClubRequestForm.module.css"
 import axios from "../../../axios";
 
