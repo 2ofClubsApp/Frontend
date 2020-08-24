@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
-import ClubsRequestsTable from "../../../../components/Club/ClubsListingTable/ClubListingTable";
+import ClubsListingTable from "../../../../components/Club/ClubsListingTable/ClubListingTable";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../../components/NavBar/NavBar"
 import { connect } from 'react-redux';
@@ -41,7 +41,7 @@ const ManageClubs = (props: any) => {
         <>
         <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsRequestsTable newUsername={props.username} newToken={props.token}/>
+            <ClubsListingTable newUsername={props.username} newToken={props.token}/>
         </Container>
         </>
     )

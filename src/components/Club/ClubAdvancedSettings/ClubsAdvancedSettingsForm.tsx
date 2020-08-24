@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Container, Row, Form, Table} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -10,9 +10,15 @@ import axios from "../../../axios";
 import { StatusResponse } from '../../../types/DataResponses';
 
 type advancedSettingsDefinition = {
-    newToken: string
+    userToken: string
     clubID: number
     clubName: string
+    userUsername: string
+}
+
+type User = {
+    id: number
+    username: string
 }
 
 const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
@@ -27,33 +33,76 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
 
     const [invited, setInvited] = useState("");
 
+    const [managers, setManagers] = useState([{ id: -1, username: "" }]);
+
+    const [foundClub, setFoundClub] = useState(false)
+   
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios({
+                method: 'get', //you can set what request you want to be
+                url: `clubs/${input.clubID}/manages`,
+                headers: {
+                Authorization: `Bearer ${input.userToken}`
+                }
+            })
+            .then ((result: any) => {
+                setManagers(result.data.data);
+                setFoundClub(true);
+            })
+            .catch( err => {
+                setFoundClub(false);
+            })
+        };
+        fetchData();
+    }, [input.clubID, input.userToken]);
+
     const addManager = async (values: any) => {
+        const username = values.username
+        const lowerUsername = username.toString().toLowerCase()
         return axios({
             method: 'post', //you can set what request you want to be
-            url: `/clubs/${input.clubID}/manages/${values.username}`,
+            url: `/clubs/${input.clubID}/manages/${lowerUsername}`,
             headers: {
-                Authorization: `Bearer ${input.newToken}`
+                Authorization: `Bearer ${input.userToken}`
             },
-            }).then((response: StatusResponse) => {
-                setInvited(response.data.message);
-                return response.data
-        }).catch(err => {
-            console.log(err + " failed to add user");
+            })
+        .then((response: StatusResponse) => {
+            if (response.data.code === 1) {
+                setInvited("Successfully added manager!");
+            }
+            else {
+                setInvited("Oops, something went wrong! Please try again later")
+            }
+            return response.data
+        })
+        .catch(err => {
+            setInvited("Oops, something went wrong! Please check the username.")
         });
     };
 
-
     return (
-
         <Container className={styles.container}>
-            
                 <Row>
                     <Col>
                         <Formik
                             validationSchema={schema}
                             onSubmit={async (values, actions) => {
                                 console.log(values.username);
-                                addManager(values)
+                                addManager(values).then((result: any) => {
+                                    const fetchData = async () => {
+                                        const result = await axios({
+                                            method: 'get', //you can set what request you want to be
+                                            url: `clubs/${input.clubID}/manages`,
+                                            headers: {
+                                            Authorization: `Bearer ${input.userToken}`
+                                            }
+                                        })
+                                        setManagers(result.data.data);
+                                        };
+                            
+                                    fetchData();
+                                })
                             }}
                             initialValues={{
                                 username: ''
@@ -93,7 +142,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                         <span className={styles.subtitle}>Existing Users</span>
                         <Table responsive >
                         <thead>
-                            <tr className={"d-flex"}>
+                            <tr>
                                 <td colSpan={3} className={"col-11"}>
                                     <b>Username</b>
                                 </td>
@@ -101,15 +150,16 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <ClubManagerListing active={false} title={"JohnSmith"}></ClubManagerListing>
+                            {managers.map((item: User) => <ClubManagerListing key={item.username} active={false} title={item.username}></ClubManagerListing>)}
                         </tbody>
                         </Table>
                     </Col>
                 </Row>
-           
+        
         </Container>
 
-        )
+    )
+    
 };
 
 export default ClubsAdvancedSettingsForm;

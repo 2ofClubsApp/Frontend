@@ -1,38 +1,19 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
 import '../../../app.css';
-import ClubListingTable from "../../../components/Club/ClubsListingTable/ClubListingTable";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../components/NavBar/NavBar"
 import { RootState } from '../../../store';
 import { connect } from 'react-redux';
+import ClubRequestsTable from '../../../components/AdminPanel/ClubRequestsTable/ClubRequestsTable';
 
 const ClubRequests = (props:any) => {
-    // const history = useHistory();
-    // const changeRoute = (path: string) => {
-    //     history.replace({pathname: path})
-    // };
-
-    // const [state, setState] = React.useState({
-    //     username: "",
-    //     password: "",
-    // });
-
-    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     const value = event.target.value
-    //     const id = event.target.id
-    //     setState({
-    //         ...state,
-    //         [id]: value
-    //     })
-    // }
     
-//<ClubsOverview title={"Incoming Requests"} view={false} token={props.token}></ClubsOverview>
     return (
         <>
         <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token}></NavBar>
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubListingTable newUsername={props.username} newToken={props.token} />
+            <ClubRequestsTable newUsername={props.username} newToken={props.token} />
         </Container>
         </>
     )

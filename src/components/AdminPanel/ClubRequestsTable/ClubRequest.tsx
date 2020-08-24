@@ -9,19 +9,19 @@ import axios from "../../../axios"
 
 library.add(faCheck, faTimes)
 
-type UserRequestDefinition = {
-    newUsername: string
-    id: number
+type ClubRequestDefinition = {
+    clubName: string
+    clubID: number
     newToken: string
     setData: any
 }
 
-const UserRequest = (input: UserRequestDefinition) => {
+const ClubRequest = (input: ClubRequestDefinition) => {
 
-    const activateUser = async (values: any) => {
+    const activateClub = async (values: any) => {
         return axios({
             method: 'post',
-            url: `/toggle/users/${input.newUsername}`,
+            url: `/toggle/clubs/${input.clubID}`,
             headers: {
                 Authorization: `Bearer ${input.newToken}`
             },
@@ -30,13 +30,13 @@ const UserRequest = (input: UserRequestDefinition) => {
                 const fetchData = async () => {
                     const result = await axios({
                         method: 'get',
-                        url: `/users/toggle`,
+                        url: `/clubs/toggle`,
                         headers: {
                             Authorization: `Bearer ${input.newToken}`
                         }
                     })
                     console.log(result.data);
-                    input.setData(result.data);
+                    input.setData(result.data.data);
                     };
         
                 fetchData();
@@ -47,10 +47,10 @@ const UserRequest = (input: UserRequestDefinition) => {
 
     return (
         <tr>
-            <td colSpan={3} key={input.newUsername}>{input.newUsername}</td>
+            <td colSpan={3} key={input.clubName}>{input.clubName}</td>
 
             <td className={"text-center"}>
-                <Button className="mr-2" onClick={activateUser}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></Button>
+                <Button className="mr-2" onClick={activateClub}><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></Button>
             </td>
 
         </tr>           
@@ -67,4 +67,4 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(UserRequest);
+export default connect(mapStateToProps)(ClubRequest);

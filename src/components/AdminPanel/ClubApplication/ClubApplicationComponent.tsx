@@ -11,7 +11,6 @@ type ClubDefinition = {
     active: boolean
 }
 
-
 const ClubApplicationComponent = (club: ClubDefinition) => {
     let activeText = "Active"
 

@@ -32,7 +32,6 @@ const Login = (props: any) => {
                 'Authorization': `Bearer ${token}`
             }
           }).then(response => {
-            //console.log(response.data);
             changeRoute("/usersettings");
         }).catch(err => {
             console.log(err + " unable to retrieve student info");
@@ -49,12 +48,10 @@ const Login = (props: any) => {
             }
         })
           .then((response: any) => {
-            const token = response.data.data.Token;
+            const token = response.data.data.token;
             return token;
         })
         .catch(err => {
-            console.log(err + " failed to login");
-            console.log(err.response);
             if (err.response.data.message === "sorry, your account has not been approved yet") {
                 return -2;
             }
@@ -96,7 +93,6 @@ const Login = (props: any) => {
                         })
                     }
                     else {
-                    // console.log(values)
                         login(values).then(result => {
                             const token = result;
                             if (result === -1) {
@@ -109,6 +105,7 @@ const Login = (props: any) => {
                                 handleShow();
                             }
                             else if (typeof token === "string") {
+                                
                                 props.setToken(token);
                                 const decoded = jwt_decode(token) as any;
                                 props.setUsername(decoded.sub);
