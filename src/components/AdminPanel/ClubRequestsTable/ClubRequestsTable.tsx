@@ -1,11 +1,9 @@
 import {Container, Table, Row, Button} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import "./ClubsOverview.css";
-import ClubListing from "./ClubListing";
 import axios from "../../../axios";
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import ClubRequest from "./ClubRequest";
 
 type ClubListingsTableOverviewDefinition = {
     newUsername: string;
@@ -13,39 +11,32 @@ type ClubListingsTableOverviewDefinition = {
 }
 
 function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
-    const history = useHistory();
-        const changeRoute = (path: string) => {
-            history.replace({pathname: path})
-        };
-
-    const [data, setData] = useState({ manages: [] });
+    const [clubs, setClubs] = useState([{ id: -1, name: ""}]);
    
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios({
                 method: 'get', //you can set what request you want to be
-                url: `/users/${input.newUsername}/manages`,
+                url: `/clubs/toggle`,
                 headers: {
                 Authorization: `Bearer ${input.newToken}`
                           }
                         })
-            setData(result.data.data);
+            setClubs(result.data.data);
             };
-
         fetchData();
-    }, [input.newUsername, input.newToken]);
+    }, [input.newToken]);
 
    
     return (
         <Container className={"clubsOverviewContainer"}>
             <Row className={"d-flex justify-content-between align-items-end ml-2 mr-2 mt-5 mb-3 row"}>
-                <h1 className={"title m-0"}>Your Clubs</h1>
-                <Button className="btnpurple h-50" onClick={() => changeRoute("/club/create")}>Create a Club</Button>
+                <h1 className={"title m-0"}>Clubs Awaiting Approval</h1>
             </Row>
              
             <Table responsive hover striped>
                 <thead>
-                <tr className={"d-flex"}>
+                <tr>
                     <td colSpan={3} className={"col-11"}>
                         <b>Club Name</b>
                     </td>
@@ -53,8 +44,8 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
                 </tr>
                 </thead>
                 <tbody>
-                    {data.manages.map((item: any) => (
-                        <ClubListing key={item.id} id={item.id} active={false} title={item.name} />
+                    {clubs.map((item: any) => (
+                        <ClubRequest key={item.id} clubID={item.id} clubName={item.name} setData={setClubs} newToken={input.newToken}/>
                     ))}
                 </tbody>
             </Table>

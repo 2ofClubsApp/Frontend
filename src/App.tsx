@@ -22,6 +22,7 @@ import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAll
 import YourEvents from './containers/Users/Events/ExploreEvents/YourEvents';
 import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 
+
 // type AppProps = {
 //     system: SystemState
 // }<Route exact path={"/admin/userrequests"} component={UserRequests}/>
@@ -37,7 +38,8 @@ const App = (props: any) => {
                 <Route exact path={"/signup"} component={SignUp}/>
                 <Route exact path={"/settings/info/:id"} render={() => {
                     return (props.isLogged ? <ClubInfo /> : <Redirect from={"*"} to={"/"}/>)}}/>
-                <Route exact path={"/createclub"} component={CreateClub}/>
+                <Route exact path={"/club/create"} render={() => {
+                    return (props.isLogged ? <CreateClub /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/manageclubs"} render={() => {
                     return (props.isLogged ? <ManageClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/manageclubs/advancedsettings/:id"} render={() => {

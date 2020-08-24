@@ -37,6 +37,7 @@ function ClubForm(input: ClubFormDefinition) {
     });
 
     const create = async (values: any) => {
+        console.log(values);
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/clubs`,
@@ -44,19 +45,25 @@ function ClubForm(input: ClubFormDefinition) {
                 Authorization: `Bearer ${input.token}`
             },
             data: {
-                "Name": values["clubName"],
-                "Email": values["clubEmail"],
-                "Bio": values["bio"],
-                "Size": values["size"]
+                "name": values["clubName"],
+                "email": values["clubEmail"],
+                "bio": values["bio"],
+                "size": parseInt(values["size"])
             }
             }).then((response: StatusResponse) => {
-                
+                if (response.data.code === -1){
+                    setSaved(-1);
+                }
+                else {
+                    setSaved(1);
+                }
         }).catch(err => {
             console.log(err + " submission failed");
+            setSaved(-1);
         });
     };
 
-    const update = async (values: any) => {
+    const updateClub = async (values: any) => {
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/clubs/${input.clubObject.id}`,
@@ -64,10 +71,8 @@ function ClubForm(input: ClubFormDefinition) {
                 Authorization: `Bearer ${input.token}`
             },
             data: {
-                "Name": values["clubName"],
-                "Email": values["clubEmail"],
-                "Bio": values["bio"],
-                "Size": parseInt(values["size"])
+                "bio": values["bio"],
+                "size": parseInt(values["size"])
             }
             }).then((response: StatusResponse) => {
                 return (response.data)
@@ -107,24 +112,9 @@ function ClubForm(input: ClubFormDefinition) {
         });
     };
 
-    // const [show, setShow] = useState(false);
-
-    // const handleClose = () => setShow(false);
-    // const handleShow = (result: DataResponse) => {
-    //     if (result.Code === 1){
-    //         setPopupMsg({header: "Yay!", body: "Club was successfully updated!"})
-    //     }
-    //     else {
-    //         setPopupMsg({header: "Whoops!", body:`An error occurred please try again later or contact an administrator {"\n"} (Error code ${result.Code}: ${result.Message})`})
-    //     }
-    //     setShow(true);
-    // };
-
-    // const [popupMsg, setPopupMsg] = useState({header: "", body: ""})
-
     const [data, setData] = useState([{id: -1, name: "N/A", isActive: true}]);
     const [clubData, setClubData] = useState(["None"]);
-    const [saved, setSaved] = useState(false);
+    const [saved, setSaved] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -169,11 +159,14 @@ function ClubForm(input: ClubFormDefinition) {
     }
 
     const savedMessage = () => {
-        if (saved) {
+        if (saved === 0) {
+            return "";
+        }
+        else if (saved === 1) {
             return "Saved!";
         }
         else {
-            return "";
+            return "Something went wrong, please try again later";
         }
     }
 
@@ -347,9 +340,10 @@ function ClubForm(input: ClubFormDefinition) {
                             </Form.Control.Feedback>
                             </Form.Group>
                         </Form.Row>
-                        <Form.Row className="d-flex justify-content-end">
-                            <Button type="submit" className={"float-right " + styles.btnpurple}>
-                                Submit request for review
+                        <Form.Row className="d-flex justify-content-end align-items-center">
+                            <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
+                            <Button type="submit" className={"float-right "+ styles.btnpurple}>
+                                SUBMIT FOR REVIEW
                             </Button>
                         </Form.Row>
                         
@@ -387,12 +381,12 @@ function ClubForm(input: ClubFormDefinition) {
                 <Formik
                     validationSchema={schema}
                     onSubmit={(values) => {
-                        update(values)
+                        updateClub(values)
                         .then((result: any) => {
                             console.log(result)               
                         });
                         updateClubTags(values);
-                        setSaved(true);
+                        setSaved(1);
                     }   
                     }
                     initialValues={{

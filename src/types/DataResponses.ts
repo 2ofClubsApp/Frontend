@@ -18,7 +18,7 @@ export type LoginResponse = {
         code: number,
         message: string,
         data: {
-            Token: string
+            token: string
         }
     }
 }

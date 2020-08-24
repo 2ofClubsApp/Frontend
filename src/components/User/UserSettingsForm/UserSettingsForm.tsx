@@ -16,8 +16,7 @@ type UserSettingsDefinition = {
     title: string
     username: string
     email: string
-    children: React.ReactNode
-    newToken: string
+    userToken: string
 }
 
 const UserSettingsForm = (input: UserSettingsDefinition) => {
@@ -65,7 +64,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
             method: 'post', //you can set what request you want to be
             url: `/changePassword/users/${input.username}`,
             headers: {
-                Authorization: `Bearer ${input.newToken}`
+                Authorization: `Bearer ${input.userToken}`
             },
             data: {
                 "oldPassword": values.password,
@@ -84,7 +83,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
             method: 'post', //you can set what request you want to be
             url: `/users/${input.username}/tags`,
             headers: {
-                Authorization: `Bearer ${input.newToken}`
+                Authorization: `Bearer ${input.userToken}`
             },
             data: {
                 "Tags": userData
@@ -127,7 +126,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                 method: 'get', //you can set what request you want to be
                 url: `/users/${input.username}`,
                 headers: {
-                    Authorization: `Bearer ${input.newToken}`
+                    Authorization: `Bearer ${input.userToken}`
                 },
             })
             const tagsArray = result.data.data.tags;
@@ -141,7 +140,7 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
             
         };
         fetchData();
-    }, [input.newToken, input.username]);
+    }, [input.userToken, input.username]);
 
     
 
@@ -170,13 +169,11 @@ const UserSettingsForm = (input: UserSettingsDefinition) => {
                     onSubmit={(values, actions) => {
                         updateUserTags(values);
                         setSaved(true);
-                        console.log("new password is " + values.password)
                         if (values.password) {
                             const check = checkPasswords(values.newPassword, values.confirmNewPassword);
                             if (check === 1) {
                                 changePassword(values)
                                 .then( (result: any) => {
-                                    console.log(result.message)
                                     if (result.code === -1) {
                                         actions.setErrors({password: `Password is incorrect`});
                                     }

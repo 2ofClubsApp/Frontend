@@ -49,7 +49,7 @@ const AdminLogin = (props: any) => {
                 return -1;
             }
             else{
-                const token = response.data.data.Token;
+                const token = response.data.data.token;
                 changeRoute("/admin");
                 return token;
             }

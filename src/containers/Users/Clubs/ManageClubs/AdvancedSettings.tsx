@@ -6,53 +6,54 @@ import ClubsAdvancedSettingsForm from "../../../../components/Club/ClubAdvancedS
 import { RootState } from '../../../../store';
 import { connect } from 'react-redux';
 import axios from "../../../../axios";
+import ErrorPage from '../../../../components/ErrorPage/ErrorPage';
 
 const AdvancedSettings = (props: any) => {
-    // const history = useHistory();
-    // const changeRoute = (path: string) => {
-    //     history.replace({pathname: path})
-    // };
-
-    // const [state, setState] = React.useState({
-    //     username: "",
-    //     password: "",
-    // });
-
-    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     const value = event.target.value
-    //     const id = event.target.id
-    //     setState({
-    //         ...state,
-    //         [id]: value
-    //     })
-    // }
     let { id } = useParams();
 
     const [data, setData] = useState({ id: -1, name: '', email: '', bio: '', size: 1, tags: [], hosts: []});
+
+    const [foundClub, setFoundClub] = useState(false)
    
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios({
+            await axios({
                 method: 'get', //you can set what request you want to be
                 url: `/clubs/${id}`,
                 headers: {
                 Authorization: `Bearer ${props.token}`
                           }
-                        })
-            setData(result.data.data);
+            })
+            .then ((result: any) => {
+                setData(result.data.data);
+                setFoundClub(true);
+            })
+            .catch( err => {
+                setFoundClub(false);
+            })
             };
 
         fetchData();
     }, [id, props.token]);
-    
-    return (
-        <>
-        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
-        <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsAdvancedSettingsForm newToken={props.token} clubID={id} clubName={data.name}></ClubsAdvancedSettingsForm>
-        </Container>
-        </>
-    )
+
+    if (foundClub) {
+        return (
+            <>
+            <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+            <Container className={"d-flex justify-content-center align-items-center mt-5"}>
+                <ClubsAdvancedSettingsForm userToken={props.token} clubID={id} clubName={data.name} userUsername={props.username}></ClubsAdvancedSettingsForm>
+            </Container>
+            </>
+        )
+    }
+    else {
+        return (
+            <>
+                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+                <ErrorPage/>
+            </>
+        )
+    }
 }
 
 const mapStateToProps = (state: RootState) => {
