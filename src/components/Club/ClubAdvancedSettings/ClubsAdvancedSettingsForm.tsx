@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Container, Row, Form, Table} from "react-bootstrap";
+import {Container, Row, Form, Table, Modal} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "./ClubsAdvancedSettings.module.css";
@@ -81,7 +81,64 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         });
     };
 
+    const deleteManager = async (username: string) => {
+        const lowerUsername = username.toString().toLowerCase();
+        return axios({
+            method: 'delete', //you can set what request you want to be
+            url: `/clubs/${input.clubID}/manages/${lowerUsername}`,
+            headers: {
+                Authorization: `Bearer ${input.userToken}`
+            },
+            })
+        .then((response: StatusResponse) => {
+            return response.data
+        })
+        .catch(err => {
+            
+        });
+    };
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [managerUsername, setManagerUsername] = useState("");
+
+    const deleteConfirmed = () => {
+        deleteManager(managerUsername)
+        .then( () => {
+            const fetchData = async () => {
+                await axios({
+                    method: 'get', //you can set what request you want to be
+                    url: `clubs/${input.clubID}/manages`,
+                    headers: {
+                    Authorization: `Bearer ${input.userToken}`
+                    }
+                })
+                .then ((result: any) => {
+                    setManagers(result.data.data);
+                })
+                .catch( err => {
+                
+                })
+            };
+            fetchData();
+        });
+    }
+
     return (
+        <>
+        <Modal show={show} onHide={handleClose} dialogClassName="w-25" centered={true}>
+            <Modal.Body>Are you sure you want to remove this manager?</Modal.Body>
+            <Modal.Footer>
+                <Button variant="danger" onClick={() => {deleteConfirmed(); handleClose()}}>
+                    Remove Manager
+                </Button>
+                <Button variant="light" onClick={handleClose}>
+                    Cancel
+                </Button>
+            </Modal.Footer>
+        </Modal>
         <Container className={styles.container}>
                 <Row>
                     <Col>
@@ -150,14 +207,13 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {managers.map((item: User) => <ClubManagerListing key={item.username} active={false} title={item.username}></ClubManagerListing>)}
+                            {managers.map((item: User) => <ClubManagerListing key={item.username} clubID={input.clubID} username={item.username} userToken={input.userToken} confirmPopup={handleShow} setManagerUsername={setManagerUsername}/>)}
                         </tbody>
                         </Table>
                     </Col>
                 </Row>
-        
         </Container>
-
+        </>
     )
     
 };
