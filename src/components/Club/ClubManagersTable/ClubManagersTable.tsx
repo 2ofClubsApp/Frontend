@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 import * as yup from "yup";
 import axios from "../../../axios";
 import { StatusResponse, User } from '../../../types/DataResponses';
+import { useHistory } from 'react-router-dom';
 
 type advancedSettingsDefinition = {
     userToken: string
@@ -17,6 +18,11 @@ type advancedSettingsDefinition = {
 }
 
 const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
+    const history = useHistory();
+
+    const changeRoute = (path: string) => {
+        history.replace({pathname: path})
+    };
 
     const schema = yup.object({
         username: yup.string()
@@ -121,6 +127,22 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         });
     };
 
+    const leaveClub = async () => {
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: `/clubs/${input.clubID}/leave`,
+            headers: {
+                Authorization: `Bearer ${input.userToken}`
+            },
+            })
+        .then((response: StatusResponse) => {
+            return response.data
+        })
+        .catch(err => {
+            
+        });
+    };
+
     const [showDelete, setShowDelete] = useState(false);
     const handleDeleteClose = () => setShowDelete(false);
     const handleDeleteShow = () => setShowDelete(true);
@@ -175,6 +197,17 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         });
     }
 
+    const [showLeave, setShowLeave] = useState(false);
+    const handleLeaveClose = () => setShowLeave(false);
+    const handleLeaveShow = () => setShowLeave(true);
+
+    const leaveConfirmed = () => {
+        leaveClub()
+        .then( () => {
+            changeRoute("/");
+        });
+    }
+
     return (
         <>
         <Modal show={showDelete} onHide={handleDeleteClose} dialogClassName="w-25" centered={true}>
@@ -202,6 +235,20 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                 </Button>
             </Modal.Footer>
         </Modal>
+
+        <Modal show={showLeave} onHide={handleLeaveClose} dialogClassName="w-25" centered={true}>
+            <Modal.Header closeButton />
+            <Modal.Body className="text-center">Are you sure you want to <b className={styles.red}>leave</b> {input.clubName}?</Modal.Body>
+            <Modal.Footer>
+                <Button variant="danger" onClick={() => {leaveConfirmed(); handleLeaveClose()}}>
+                    Leave
+                </Button>
+                <Button variant="light" onClick={handleLeaveClose}>
+                    Cancel
+                </Button>
+            </Modal.Footer>
+        </Modal>
+
         <Container className={styles.container}>
                 <Row>
                     <Col>
@@ -280,7 +327,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                     </Col>
                 </Row>
                 <Row className="d-flex justify-content-end mt-2 mr-4">
-                    <Button variant="outline-danger">Leave Club</Button>
+                    <Button variant="outline-danger" onClick={handleLeaveShow}>Leave Club</Button>
                 </Row>
                 
         </Container>
