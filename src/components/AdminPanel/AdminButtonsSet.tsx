@@ -1,21 +1,14 @@
 import {Button, Row, Col, Container} from "react-bootstrap";
 import React from "react";
 import {useHistory} from 'react-router-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faScroll, faUsers } from '@fortawesome/free-solid-svg-icons'
 import styles from "./AdminButton.module.css"
-import { RootState } from "../../store";
-import { connect } from "react-redux";
 
-
-library.add(faCog, faScroll, faUsers)
-
-type AdminButtonsSetDefinition = {
-    newToken: string
-}
-
-const AdminButtonsSet = (input:AdminButtonsSetDefinition, props:any) => {
+/**
+ * Creates the buttons displayed on the AdminPanel container
+ */
+const AdminButtonsSet = () => {
     
     const history = useHistory();
 
@@ -46,19 +39,9 @@ const AdminButtonsSet = (input:AdminButtonsSetDefinition, props:any) => {
                         </Button>
                     </Col>
                 </Row>
-                
             </Container>
-            
         </>
     )
 }
-const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn,
-        token: state.system.token,
-        username: state.system.username,
-        date: state.system.date
-    }
-}
 
-export default connect(mapStateToProps)(AdminButtonsSet);
+export default AdminButtonsSet;

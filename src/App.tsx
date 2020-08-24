@@ -15,7 +15,6 @@ import UserSettings from "./containers/Users/UserSettings/UserSettings"
 import AdminPanel from "./containers/2ofClubsAdmin/AdminHome/AdminHome"
 import ClubRequests from "./containers/2ofClubsAdmin/ClubRequests/ClubRequests"
 import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings/AdminSettings"
-import ClubApplication from "./containers/2ofClubsAdmin/ClubApplication/ClubApplication"
 import AdminLogin from './containers/AdminLogin';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
 import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAllEvents';
@@ -52,7 +51,6 @@ const App = (props: any) => {
                 <Route exact path={"/admin/requests/users"} render={() => {
                     return (props.isLogged ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/settings"} component={AdminSettings}/>
-                <Route exact path={"/admin/application"} component={ClubApplication}/>
                 <Route exact path={"/resetpassword"} render={() => {
                     return (<ResetPassword/>)}}/>
                 <Route exact path={"/explore/events"} render={() => {

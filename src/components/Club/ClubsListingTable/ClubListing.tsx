@@ -1,15 +1,11 @@
-import {Form} from "react-bootstrap";
 import React from "react";
 import "./ClubsOverview.css";
-import {Link, NavLink} from "react-router-dom";
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { NavLink} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
 import styles from "./ClubListing.module.css"
-
-library.add(faCog, faCoffee)
 
 type clubListingDefinition = {
     title: string

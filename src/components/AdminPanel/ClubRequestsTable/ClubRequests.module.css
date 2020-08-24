@@ -1,0 +1,26 @@
+.clubLink {
+    color: #000!important;
+    background-color: transparent;
+    border: none;
+}
+
+.clubLink:hover {
+    color: #696de9!important;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+}
+
+.clubLink:active {
+    color: #696de9!important;
+    text-decoration: none;
+    background-color: transparent!important;
+    border: none!important;
+}
+
+.clubLink:focus {
+    color: #696de9!important;
+    text-decoration: none;
+    background-color: transparent!important;
+    border: none!important;
+}
