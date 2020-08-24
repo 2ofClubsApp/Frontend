@@ -208,6 +208,10 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
         });
     }
 
+    const [showOwnerWarning, setShowOwnerWarning] = useState(false);
+    const handleOwnerWarningClose = () => setShowOwnerWarning(false);
+    const handleOwnerWarningShow = () => setShowOwnerWarning(true);
+
     return (
         <>
         <Modal show={showDelete} onHide={handleDeleteClose} dialogClassName="w-25" centered={true}>
@@ -238,12 +242,22 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
 
         <Modal show={showLeave} onHide={handleLeaveClose} dialogClassName="w-25" centered={true}>
             <Modal.Header closeButton />
-            <Modal.Body className="text-center">Are you sure you want to <b className={styles.red}>leave</b> {input.clubName}?</Modal.Body>
+            <Modal.Body className="text-center">Are you sure you want to <b className={styles.red}>leave {input.clubName}</b>?</Modal.Body>
             <Modal.Footer>
                 <Button variant="danger" onClick={() => {leaveConfirmed(); handleLeaveClose()}}>
                     Leave
                 </Button>
                 <Button variant="light" onClick={handleLeaveClose}>
+                    Cancel
+                </Button>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal show={showOwnerWarning} onHide={handleOwnerWarningClose} dialogClassName="w-25" centered={true}>
+            <Modal.Header closeButton />
+            <Modal.Body className="text-center"><p>Please <b>promote another manager to owner</b> before leaving {input.clubName}!</p></Modal.Body>
+            <Modal.Footer>
+                <Button className={styles.btnpurple} onClick={handleOwnerWarningClose}>
                     Cancel
                 </Button>
             </Modal.Footer>
@@ -327,7 +341,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                     </Col>
                 </Row>
                 <Row className="d-flex justify-content-end mt-2 mr-4">
-                    <Button variant="outline-danger" onClick={handleLeaveShow}>Leave Club</Button>
+                    <Button variant="outline-danger" onClick={() => { isOwner ? handleOwnerWarningShow() : handleLeaveShow() }}>Leave Club</Button>
                 </Row>
                 
         </Container>
