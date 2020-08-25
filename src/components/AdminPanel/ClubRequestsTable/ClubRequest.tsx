@@ -6,7 +6,7 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
 import axios from "../../../axios"
-import styles from "./ClubRequests.module.css"
+import styles from "./ClubRequestsTable.module.css"
 
 library.add(faCheck, faTimes)
 

@@ -26,7 +26,7 @@ const App = (props: any) => {
         <div>
             <Switch>
                 <Route exact path={"/"} render={() => {
-                    return ((props.isLogged && props.username !== "admin") ? <Home /> : ((props.username === "admin") ? <AdminPanel /> : <LandingPage />))}}/>
+                    return ((props.isLogged && props.username !== "admin") ? <Home /> : ((props.isLogged && props.username === "admin") ? <AdminPanel /> : <LandingPage />))}}/>
                 <Route exact path={"/login"} component={Login}/>
                 <Route exact path={"/adminlogin"} component={AdminLogin}/>
                 <Route exact path={"/signup"} component={SignUp}/>

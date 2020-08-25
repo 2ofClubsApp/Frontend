@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Container, Table } from "react-bootstrap";
 import UserRequest from "./UserRequest";
 import axios from "../../../axios";
+import styles from "./UserRequestsTable.module.css"
 
 type UserRequestsTableDefinition = {
 
@@ -23,7 +24,6 @@ function UserRequestsTable(input: UserRequestsTableDefinition) {
                     Authorization: `Bearer ${input.newToken}`
                 }
             })
-            console.log(result.data);
             setData(result.data);
             };
 
@@ -31,8 +31,8 @@ function UserRequestsTable(input: UserRequestsTableDefinition) {
     }, [input.newToken]);
    
     return (
-        <Container className={"clubsOverviewContainer"}>
-             <h1 className={"title"}>Users Awaiting Approval</h1>
+        <Container className={styles.container}>
+             <h1 className={styles.title}>Users Awaiting Approval</h1>
              <Table responsive hover striped>
                  <thead>
                  <tr>
