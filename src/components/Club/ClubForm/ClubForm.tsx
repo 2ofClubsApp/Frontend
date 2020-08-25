@@ -464,7 +464,7 @@ function ClubForm(input: ClubFormDefinition) {
                             updateClub(values)
                             updateClubTags(values);
                             uploadImage(values);
-                            if (!imageVerify) {
+                            if ((!imageVerify) && (fileData.file !== null)) {
                                 setSaved(-2);
                             }
                             else {
