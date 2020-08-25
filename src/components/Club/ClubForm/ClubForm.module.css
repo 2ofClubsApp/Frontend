@@ -98,6 +98,10 @@
     background-color:transparent;
 }
 
+.note {
+    font-size: .85rem;
+}
+
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: none!important;

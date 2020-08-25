@@ -14,7 +14,7 @@ import AdvancedSettings from "./containers/Users/Clubs/ManageClubs/AdvancedSetti
 import UserSettings from "./containers/Users/UserSettings/UserSettings"
 import AdminPanel from "./containers/2ofClubsAdmin/AdminHome/AdminHome"
 import ClubRequests from "./containers/2ofClubsAdmin/ClubRequests/ClubRequests"
-import AdminSettings from "./containers/2ofClubsAdmin/AdminSettings/AdminSettings"
+import AdminSettings from "./containers/2ofClubsAdmin/AdminTagSettings/AdminTagSettings"
 import AdminLogin from './containers/AdminLogin';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
 import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAllEvents';
