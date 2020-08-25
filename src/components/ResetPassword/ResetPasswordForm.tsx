@@ -63,35 +63,11 @@ const ResetPasswordForm = () => {
             <Formik
                 validationSchema={resetPasswordSchema}
                 onSubmit={ async (values, actions) => {
-                    resetPassword(values).then( (result: any) => {
+                    resetPassword(values)
+                    .then( (result: any) => {
                         console.log(result);
                         changeSuccessMessage(result);
-
-                    } )
-                    // if(values["username"] === "admin") {
-                    //     actions.setErrors({
-                    //         username: "Please login through the admin page"
-                    //     })
-                    // }
-                    // else {
-                    //     // console.log(values)
-                    //     // login(values).then(result => {
-                    //     //     const token = result;
-                    //     //     if (result === -1) {
-                    //     //         actions.setErrors({
-                    //     //             username: "Username is incorrect or does not exist",
-                    //     //             password: "Password is incorrect"
-                    //     //         });
-                    //     //     }
-                    //     //     else if (typeof token === "string") {
-                    //     //         props.setToken(token);
-                    //     //         const decoded = jwt_decode(token) as any;
-                    //     //         props.setUsername(decoded.sub);
-                    //     //         props.setExpiry(decoded.exp);
-                    //     //         props.onSetLogin(true);
-                    //     //         getUserInfo(values.username, token);
-                    //     //     }
-                    //     });
+                    });
                     }
                 }
                 validateOnChange={false}

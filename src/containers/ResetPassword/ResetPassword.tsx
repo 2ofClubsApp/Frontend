@@ -4,7 +4,8 @@ import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import ResetPasswordForm from '../../components/ResetPassword/ResetPasswordForm';
 import {RootState} from "../../store";
-import {connect} from "react-redux";
+import {connect, MapDispatchToProps} from "react-redux";
+import {setLogin, setToken, setUsername, setExpiry} from "../../store/actions/actions";
 
 const ResetPassword = (props: any) => {
     const history = useHistory();
@@ -16,9 +17,9 @@ const ResetPassword = (props: any) => {
     if (props.isLoggedIn) {
         return (
             <>
-            <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+            <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
             <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-                <ResetPasswordForm></ResetPasswordForm>
+                <ResetPasswordForm />
             </Container>
             </>
         )
@@ -30,7 +31,7 @@ const ResetPassword = (props: any) => {
                     Home
                 </Button>
                 <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-                    <ResetPasswordForm></ResetPasswordForm>
+                    <ResetPasswordForm />
                 </Container>
             </>
         )
@@ -46,4 +47,13 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(ResetPassword);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

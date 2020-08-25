@@ -1,0 +1,29 @@
+.title {
+    font-family: "Poppins", Helvetica, sans-serif;
+    font-size: 2.5rem;
+}
+
+.clubCardButton {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    color: #fff;
+    background: #696de9;
+    border: none;
+}
+
+.clubCardButton:hover{
+    background-color: #979afc!important;
+}
+
+.clubCardButton:active{
+    background-color: #979afc!important;
+}
+
+.clubCardButton:focus{
+    background-color: #979afc!important;
+}
+
+.size {
+    font-size: 1.85rem;
+}

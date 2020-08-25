@@ -1,11 +1,12 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
 import '../../../app.css';
-import Card from "../../../components/Swipe/Card";
+import Card from "../../../components/ClubCard/ClubCard";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../components/NavBar/NavBar"
 import { RootState } from '../../../store';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
+import {setLogin, setToken, setUsername, setExpiry} from "../../../store/actions/actions";
 
 const Home = (props: any) => {
     // const history = useHistory();
@@ -29,8 +30,8 @@ const Home = (props: any) => {
 
     return (
         <>
-           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
-            <Container className={"d-flex justify-content-center align-items-center mt-5"}>
+           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
+            <Container className={"d-flex justify-content-center align-items-center"}>
                 <Card />
             </Container>
         </> 
@@ -47,4 +48,13 @@ const mapStateToProps = (state: RootState) => {
     }
 };
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

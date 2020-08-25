@@ -16,9 +16,11 @@ type NavBarDefinition = {
     isSiteAdmin: boolean
     userUsername: string
     userToken: string
+    setToken: any
+    setLogin: any
 }
 
-const NavBar = (input: NavBarDefinition, props: any) => {
+const NavBar = (input: NavBarDefinition) => {
     
     const history = useHistory();
 
@@ -34,7 +36,8 @@ const NavBar = (input: NavBarDefinition, props: any) => {
                 Authorization: `Bearer ${input.userToken}`
             },
             }).then((response: any) => {
-                console.log(response.data)
+                input.setToken("");
+                input.setLogin(false);
                 return (response.data)
         }).catch(err => {
             console.log(err + " failed to logout");
@@ -74,7 +77,7 @@ const NavBar = (input: NavBarDefinition, props: any) => {
 
                         <Dropdown.Menu>
                             <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Settings</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => {logout(); setToken(""); setLogin(false);}}>Log out</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => {logout(); changeRoute("/");}}>Log out</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
                     </Nav>

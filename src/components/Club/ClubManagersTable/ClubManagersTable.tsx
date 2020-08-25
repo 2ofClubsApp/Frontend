@@ -38,18 +38,19 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
 
     const [isOwner, setIsOwner] = useState(false);
 
-    const checkOwner = (arr: any[]) => {
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].username === input.userUsername) {
-                setIsOwner(false);
-                return;
-            }
-        }
-        setIsOwner(true);
-        return;
-    }
    
     useEffect(() => {
+        const checkOwner = (arr: any[]) => {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].username === input.userUsername) {
+                    setIsOwner(false);
+                    return;
+                }
+            }
+            setIsOwner(true);
+            return;
+        }
+
         const fetchData = async () => {
             await axios({
                 method: 'get',
@@ -67,7 +68,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
             })
         };
         fetchData();
-    }, [input.clubID, input.userToken]);
+    }, [input.userUsername, input.clubID, input.userToken]);
 
     const addManager = async (values: any) => {
         const username = values.username
@@ -227,7 +228,7 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
             </Modal.Footer>
         </Modal>
 
-        <Modal show={showPromote} onHide={handlePromoteClose} dialogClassName={"p-3 " + styles.w30} centered={true}>
+        <Modal show={showPromote} onHide={handlePromoteClose} dialogClassName={"p-2 " + styles.w30} centered={true}>
             <Modal.Header closeButton />
             <Modal.Body className="text-center"><p>Are you sure you want to <b>promote this manager</b> to <b>owner</b>?</p>(This action is irreversible and will demote you to a manager!)</Modal.Body>
             <Modal.Footer>
