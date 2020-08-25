@@ -6,9 +6,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import styles from "./NavBar.module.css"
 import axios from "../../axios";
-import { RootState } from "../../store";
-import { connect } from "react-redux";
-import {setLogin, setToken} from "../../store/actions/actions";
 
 library.add(faBars)
 
@@ -88,13 +85,4 @@ const NavBar = (input: NavBarDefinition) => {
     }
 }
 
-const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn,
-        token: state.system.token,
-        username: state.system.username,
-        date: state.system.date
-    }
-}
-
-export default connect(mapStateToProps)(NavBar);
+export default NavBar;

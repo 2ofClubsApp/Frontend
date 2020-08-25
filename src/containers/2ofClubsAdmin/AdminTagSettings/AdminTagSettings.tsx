@@ -6,7 +6,7 @@ import { RootState } from '../../../store';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../store/actions/actions';
 
-const AdminSettings = (props: any) => {
+const AdminTagSettings = (props: any) => {
     return (
         <>
             <NavBar isSiteAdmin={true} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminTagSettings);
