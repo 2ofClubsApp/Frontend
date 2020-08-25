@@ -1,33 +1,15 @@
 import React from 'react'
 import {Container} from "react-bootstrap";
 import ClubsListingTable from "../../../../components/Club/ClubListingsTable/ClubListingsTable";
-// import {useHistory} from 'react-router-dom'
 import NavBar from "../../../../components/NavBar/NavBar"
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
 import { RootState } from '../../../../store';
 import jwt_decode from 'jwt-decode';
+import { setLogin, setToken, setUsername, setExpiry } from '../../../../store/actions/actions';
 
 
 const ManageClubs = (props: any) => {
-    // const history = useHistory();
-    // const changeRoute = (path: string) => {
-    //     history.replace({pathname: path})
-    // };
-
-    // const [state, setState] = React.useState({
-    //     username: "",
-    //     password: "",
-    // });
-
-    // const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     const value = event.target.value
-    //     const id = event.target.id
-    //     setState({
-    //         ...state,
-    //         [id]: value
-    //     })
-    // }
-
+    
     const decode = () => {
         const decoded = jwt_decode(props.token);
         return decoded;
@@ -35,13 +17,11 @@ const ManageClubs = (props: any) => {
 
     decode();
     
-    //console.log("manageclubs token:" + props.token);
-//<ClubsOverview title={"Your Clubs"} view={true} token={props.token}></ClubsOverview>
     return (
         <>
-        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken} />
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsListingTable newUsername={props.username} newToken={props.token}/>
+            <ClubsListingTable newUsername={props.username} newToken={props.token} />
         </Container>
         </>
     )
@@ -55,4 +35,13 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(ManageClubs);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageClubs);

@@ -28,5 +28,13 @@ b {
 }
 
 .btnpurple:hover{
-    background-color: #9fa2f5;
+    background-color: #979afc!important;
+}
+
+.btnpurple:active{
+    background-color: #979afc!important;
+}
+
+.btnpurple:focus{
+    background-color: #979afc!important;
 }

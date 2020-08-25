@@ -3,7 +3,8 @@ import UserSettingsForm from '../../../components/User/UserSettingsForm/UserSett
 import NavBar from "../../../components/NavBar/NavBar"
 import axios from "../../../axios";
 import { RootState } from '../../../store';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
+import { setLogin, setToken, setUsername, setExpiry } from '../../../store/actions/actions';
 
 const UserSettings = (props: any) => {
 
@@ -28,7 +29,7 @@ const UserSettings = (props: any) => {
 
     return (
         <>
-        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
         <UserSettingsForm title={"Save your profile"} username={props.username} email={data} userToken={props.token} />
 
         </>
@@ -44,4 +45,13 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(UserSettings);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserSettings);

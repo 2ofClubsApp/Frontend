@@ -3,8 +3,6 @@ import React, {useState, useEffect} from "react";
 import styles from "./ClubListingsTable.module.css"
 import ClubListing from "./ClubListing";
 import axios from "../../../axios";
-import { RootState } from "../../../store";
-import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 type ClubListingsTableOverviewDefinition = {
@@ -31,7 +29,6 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
                         })
             setData(result.data.data);
             };
-
         fetchData();
     }, [input.newUsername, input.newToken]);
 
@@ -62,13 +59,4 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
     );
   }
 
-  const mapStateToProps = (state: RootState) => {
-    return {
-        isLogged: state.system.isLoggedIn,
-        token: state.system.token,
-        username: state.system.username,
-        date: state.system.date
-    }
-}
-
-export default connect(mapStateToProps)(ClubListingTable);
+export default ClubListingTable;

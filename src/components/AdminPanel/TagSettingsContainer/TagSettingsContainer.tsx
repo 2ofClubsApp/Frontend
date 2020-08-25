@@ -159,125 +159,123 @@ const TagSettings = ( input: AdminSettingsDefinition ) => {
         <Container className={styles.container}>
                 <Row>
                     <Col>
-                            <span className={styles.subtitle}>Add to Available Tags</span>
-                            <Row className="d-flex justify-content-center">
-                                <p>Add tags one at a time or upload a .txt with each tag on a new line</p>
-                            </Row>
-                            <Row className="d-flex justify-content-center">
-                                <Col sm={12} md={12} lg={5} className="d-flex justify-content-center align-items-center m-2">
-                                <Formik
-                                    validationSchema={schema}
-                                    onSubmit={async (values, actions) => {
-                                        createTag(values).then((result: any) => {
-                                            if (result.code === -1) {
-                                                actions.setErrors({
-                                                    tag: `${result.Message}`
-                                                });
-                                            }
-                                            else {
-                                                const fetchData = async () => {
-                                                    await axios({
-                                                        method: 'get', //you can set what request you want to be
-                                                        url: `/tags`}).then((result: any) => {
-                                                            console.log(result.data.data);
-                                                            setData(result.data.data);})
-                                                    await axios({
-                                                        method: 'get', //you can set what request you want to be
-                                                        url: `/tags/active`,
-                                                    }).then((result2: any) => {
-                                                        const tagsArray = result2.data.data;
-                                                        if (tagsArray !== []){
-                                                            const tagNamesArray = tagsArray.map((item: tag) => item.name);
-                                                            setUserData(tagNamesArray);
-                                                        }
-                                                        else{
-                                                            return ["None"];
-                                                        }})
-                                                    };
-                                        
-                                                fetchData();
-                                                values.tag = ""
-                                                actions.setErrors({
-                                                    tag: ``
-                                                });
-                                            }
-                                            })
-                                        }
+                    <span className={styles.subtitle}>Add to Available Tags</span>
+                    <Row className="d-flex justify-content-center">
+                        <p>Add tags one at a time or upload a .txt with each tag on a new line</p>
+                    </Row>
+                    <Row className="d-flex justify-content-center">
+                        <Col sm={12} md={12} lg={5} className="d-flex justify-content-center align-items-center m-2">
+                        <Formik
+                            validationSchema={schema}
+                            onSubmit={async (values, actions) => {
+                                createTag(values).then((result: any) => {
+                                    if (result.code === -1) {
+                                        actions.setErrors({
+                                            tag: `${result.Message}`
+                                        });
                                     }
-                                    initialValues={{
-                                        tag: ''
-                                    }}
-                                    >
-                                    {({
-                                        handleSubmit,
-                                        handleChange,
-                                        handleBlur,
-                                        values,
-                                        touched,
-                                        isValid,
-                                        errors,
-                                    }) => (
-                                        <Form noValidate onSubmit={handleSubmit}>
-                                            <Form.Row>
-                                                <Form.Group as={Col} md="10" controlId="inputBox">
-                                                    <Form.Control
-                                                        className={styles.inputBox + "mr-2"}
-                                                        type="text"
-                                                        placeholder="Tag"
-                                                        name="tag"
-                                                        value={values.tag}
-                                                        onChange={handleChange}
-                                                        isInvalid={!!errors.tag}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {errors.tag}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="2" controlId="submitButton">
-                                                    <Button className={styles.btnpurple} type="submit">Add</Button>
-                                                </Form.Group>
-                                                
-                                            </Form.Row>
-                                            
-                                        </Form>
-                                    )}
-                                    </Formik>
-                                </Col>
-                                <Col sm={12} md={12} lg={6} className="d-flex justify-content-center m-2">
-                                    <Form onSubmit={(e: any) => e.preventDefault()}>
-                                        <Form.Row>
-                                            <input
-                                            type="file"
-                                            id="file"
-                                            aria-describedby="file"
-                                            onChange={onChangeHandler}
-                                            />
-                                            <Button className={styles.btnpurple} type="submit" onClick={async (values: any) => {
-                                            uploadTag(values)}}>Add</Button>
-                                        </Form.Row>
-                                    </Form>
+                                    else {
+                                        const fetchData = async () => {
+                                            await axios({
+                                                method: 'get', //you can set what request you want to be
+                                                url: `/tags`}).then((result: any) => {
+                                                    console.log(result.data.data);
+                                                    setData(result.data.data);})
+                                            await axios({
+                                                method: 'get', //you can set what request you want to be
+                                                url: `/tags/active`,
+                                            }).then((result2: any) => {
+                                                const tagsArray = result2.data.data;
+                                                if (tagsArray !== []){
+                                                    const tagNamesArray = tagsArray.map((item: tag) => item.name);
+                                                    setUserData(tagNamesArray);
+                                                }
+                                                else{
+                                                    return ["None"];
+                                                }})
+                                            };
                                 
+                                        fetchData();
+                                        values.tag = ""
+                                        actions.setErrors({
+                                            tag: ``
+                                        });
+                                    }
+                                    })
+                                }
+                            }
+                            initialValues={{
+                                tag: ''
+                            }}
+                            >
+                            {({
+                                handleSubmit,
+                                handleChange,
+                                handleBlur,
+                                values,
+                                touched,
+                                isValid,
+                                errors,
+                            }) => (
+                                <Form noValidate onSubmit={handleSubmit}>
+                                    <Form.Row>
+                                        <Form.Group as={Col} md="10" controlId="inputBox">
+                                            <Form.Control
+                                                className={styles.inputBox + "mr-2"}
+                                                type="text"
+                                                placeholder="Tag"
+                                                name="tag"
+                                                value={values.tag}
+                                                onChange={handleChange}
+                                                isInvalid={!!errors.tag}
+                                            />
+                                            <Form.Control.Feedback type="invalid">
+                                                {errors.tag}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
+                                        <Form.Group as={Col} md="2" controlId="submitButton">
+                                            <Button className={styles.btnpurple} type="submit">Add</Button>
+                                        </Form.Group>
+                                        
+                                    </Form.Row>
                                     
-                                </Col>
-                            </Row>
-
-                            <span className={styles.subtitle}>Existing Tags</span>
-                            
-                                <Form onSubmit={(e:any) => e.preventDefault()}>
-                                    <div className={styles.tagsContainer}>
-                                        {renderTags()}
-                                    </div>
-                                    <div className={"d-flex justify-content-end align-items-center mt-2 mr-2"}>
-                                        <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
-                                        <Button type="submit" className={styles.btnpurple} onClick={async () => {toggleTags()}}>Update Tags</Button>
-                                    </div>
                                 </Form>
+                            )}
+                            </Formik>
+                        </Col>
+                        <Col sm={12} md={12} lg={6} className="d-flex justify-content-center m-2">
+                            <Form onSubmit={(e: any) => e.preventDefault()}>
+                                <Form.Row>
+                                    <input
+                                    type="file"
+                                    id="file"
+                                    aria-describedby="file"
+                                    onChange={onChangeHandler}
+                                    />
+                                    <Button className={styles.btnpurple} type="submit" onClick={async (values: any) => {
+                                    uploadTag(values)}}>Add</Button>
+                                </Form.Row>
+                            </Form>
+                        
                             
+                        </Col>
+                    </Row>
+
+                    <span className={styles.subtitle}>Existing Tags</span>
+                    
+                        <Form onSubmit={(e:any) => e.preventDefault()}>
+                            <div className={styles.tagsContainer}>
+                                {renderTags()}
+                            </div>
+                            <div className={"d-flex justify-content-end align-items-center mt-2 mr-2"}>
+                                <div className={"mr-4 mb-0 mt-0 " + styles.subtitle}>{savedMessage()} </div>
+                                <Button type="submit" className={styles.btnpurple} onClick={async () => {toggleTags()}}>Update Tags</Button>
+                            </div>
+                        </Form>
                     </Col>
                 </Row>
         </Container>
-
-        )
+    )
 };
 
 

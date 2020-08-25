@@ -3,13 +3,10 @@ import ClubForm from "../../../../components/Club/ClubForm/ClubForm"
 import NavBar from "../../../../components/NavBar/NavBar"
 import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
 import { RootState } from '../../../../store';
 import ErrorPage from '../../../../components/ErrorPage/ErrorPage';
-
-type clubFormDefinition = {
-    clubID: number
-}
+import {setLogin, setToken, setUsername, setExpiry} from "../../../../store/actions/actions";
 
 const ClubInfo = (props:any) => {
 
@@ -39,7 +36,7 @@ const ClubInfo = (props:any) => {
     if (data.id === -1) {
         return (
             <>
-                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken} />
                 <ErrorPage/>
             </>
         )
@@ -48,7 +45,7 @@ const ClubInfo = (props:any) => {
     else{
         return (
             <>
-                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+                <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken} />
                 <ClubForm title={"Save Changes"} clubObject={data} clubID={id} isClub={true} token={props.token} />
             </>
         
@@ -66,4 +63,13 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(ClubInfo);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClubInfo);

@@ -33,7 +33,7 @@ const AdminButtonsSet = () => {
                         </Button>
                     </Col>
                     <Col xs={12} lg={4}>
-                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/settings')}>
+                        <Button className={styles.adminbtn} onClick={() => changeRoute('/admin/tags')}>
                             <FontAwesomeIcon icon={faCog} className={styles.icon}/>
                             Tag Settings
                         </Button>

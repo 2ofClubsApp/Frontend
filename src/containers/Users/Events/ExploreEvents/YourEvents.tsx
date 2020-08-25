@@ -3,10 +3,11 @@ import {Container, Row, Col} from "react-bootstrap";
 import '../../../../app.css';
 import NavBar from "../../../../components/NavBar/NavBar"
 import { RootState } from '../../../../store';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
 import EventCard from '../../../../components/Event/EventCard/EventCard';
 import axios from "../../../../axios";
 import { eventGET } from '../../../../types/DataResponses';
+import { setLogin, setToken, setUsername, setExpiry } from '../../../../store/actions/actions';
 
 const YourEvents = (props: any) => {
     
@@ -61,7 +62,7 @@ const YourEvents = (props: any) => {
 
     return (
         <>
-           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token}></NavBar>
+           <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
             <Container className={"w-100"}>
                 {allEventRows}
             </Container>
@@ -78,4 +79,13 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-export default connect(mapStateToProps)(YourEvents);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(YourEvents);

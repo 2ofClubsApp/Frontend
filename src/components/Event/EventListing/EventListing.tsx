@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { RootState } from "../../../store";
 import { connect } from "react-redux";
-
 library.add(faCog)
 
 type EventListingDefinition = {

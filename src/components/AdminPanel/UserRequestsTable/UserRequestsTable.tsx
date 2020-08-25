@@ -36,10 +36,12 @@ function UserRequestsTable(input: UserRequestsTableDefinition) {
              <Table responsive hover striped>
                  <thead>
                  <tr>
-                     <td colSpan={3} className={"col-10"}>
-                         <b>Username</b>
-                     </td>
-                     <td className={"col-2"}><b>Approve</b></td>
+                    <td colSpan={3} className={"col-10"}>
+                        <b>Username</b>
+                    </td>
+                    <td className={"col-2"}>
+                        <b>Approve</b>
+                    </td>
                  </tr>
                  </thead>
                  <tbody>
