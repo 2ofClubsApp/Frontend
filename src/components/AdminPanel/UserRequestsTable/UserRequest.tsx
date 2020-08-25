@@ -35,7 +35,6 @@ const UserRequest = (input: UserRequestDefinition) => {
                             Authorization: `Bearer ${input.newToken}`
                         }
                     })
-                    console.log(result.data);
                     input.setData(result.data);
                     };
         

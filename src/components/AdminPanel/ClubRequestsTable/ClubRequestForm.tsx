@@ -26,7 +26,9 @@ const ClubRequestForm = (input: eventFormDefinition) => {
                         })
             setClub(result.data.data);
             };
-        fetchData();
+        if (input.clubID !== -1) {
+            fetchData();
+        }
     }, [input.clubID, input.userToken]);
 
     const activateClub = async () => {

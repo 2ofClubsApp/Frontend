@@ -3,13 +3,14 @@ import { Container, Table, Row } from "react-bootstrap";
 import axios from "../../../axios";
 import ClubRequest from "./ClubRequest";
 import ClubRequestForm from "./ClubRequestForm";
+import styles from "./ClubRequestsTable.module.css"
 
 type ClubListingsTableOverviewDefinition = {
     newUsername: string;
     newToken: string;
 }
 
-function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
+const ClubListingTable = (input: ClubListingsTableOverviewDefinition) => {
 
     const [previewClub, setPreviewClub] = useState(-1);
 
@@ -32,16 +33,18 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
                         })
             setClubs(result.data.data);
             };
+        
         fetchData();
+        
     }, [input.newToken]);
    
     return (
         <>
         <ClubRequestForm show={showPreview} onHide={handleClosePreview} userToken={input.newToken} clubID={previewClub} updateClubs={setClubs}/>
 
-        <Container className={"clubsOverviewContainer"}>
+        <Container className={styles.container}>
             <Row className={"d-flex justify-content-between align-items-end ml-2 mr-2 mt-5 mb-3 row"}>
-                <h1 className={"title m-0"}>Clubs Awaiting Approval</h1>
+                <h1 className={styles.title + " m-0"}>Clubs Awaiting Approval</h1>
             </Row>
              
             <Table responsive hover striped>
