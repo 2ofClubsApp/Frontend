@@ -22,6 +22,7 @@ import FavouritedEvents from './containers/Users/Events/ExploreEvents/Favourited
 import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 import { setLogin, setToken, setUsername, setExpiry } from './store/actions/actions';
 import FavouritedClubs from './containers/Users/Clubs/LikedClubs/FavouritedClubs';
+import axios from "./axios";
 
 const App = (props: any) => {
     // returns the cookie with the given name,
@@ -36,39 +37,92 @@ const App = (props: any) => {
     if (!getCookie("isLogged")){
         props.onSetLogin(false);
     }
-    
+
+    console.log("refresh is" + getCookie("Refresh"))
+    console.log(props.isLogged);
+    console.log("expiry is "+ props.expiry);
+    if (props.isLogged) {
+        console.log(document.cookie);
+        console.log("starting");
+        var x = setInterval(function() {
+            
+            // Get today's date and time
+            var now = new Date().getTime();
+        
+            // Find the distance between now and the count down date
+            var distance = props.expiry - now;
+        
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+            // Display the result in the element with id="demo"
+            console.log("mintes" + minutes + "seconds" + seconds)
+        
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                console.log("grabbed new token");
+                axios.post('/refreshToken', {withCredentials: true})
+                .then((response: any) => {
+                    if (response.code === 1) {
+                        setToken(response.data)
+                    }
+                    else {
+                        props.setToken("")
+                        props.setUsername("")
+                        props.setExpiry(0)
+                        props.onSetLogin(false);
+                    }
+                })
+                .catch(() => {
+                    props.setToken("")
+                    props.setUsername("")
+                    props.setExpiry(0)
+                    props.onSetLogin(false);
+                });
+                clearInterval(x);
+                console.log("expired)");
+            }
+            else if (!props.isLogged) {
+                clearInterval(x);
+            }
+        }, 1000);
+    }
+
     return (
         <div>
             <Switch>
                 <Route exact path={"/"} render={() => {
-                    return ((props.isLogged && props.username !== "admin") ? <Home /> : ((props.isLogged && props.username === "admin") ? <AdminPanel /> : <LandingPage />))}}/>
+                    return ((props.isLogged && getCookie("isLogged") && props.username !== "admin") ? <Home /> : ((props.isLogged && getCookie("isLogged") && props.username === "admin") ? <AdminPanel /> : <LandingPage />))}}/>
                 <Route exact path={"/login"} component={Login}/>
                 <Route exact path={"/adminlogin"} component={AdminLogin}/>
                 <Route exact path={"/signup"} component={SignUp}/>
                 <Route exact path={"/settings/info/:id"} render={() => {
-                    return (props.isLogged ? <ClubInfo /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <ClubInfo /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/club/create"} render={() => {
-                    return (props.isLogged ? <CreateClub /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <CreateClub /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/manageclubs"} render={() => {
-                    return (props.isLogged ? <ManageClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <ManageClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/manageclubs/advancedsettings/:id"} render={() => {
-                    return (props.isLogged ? <AdvancedSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <AdvancedSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/settings/user"} render={() => {
-                    return (props.isLogged ? <UserSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <UserSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin"} component={AdminPanel}/>
                 <Route exact path={"/admin/requests/clubs"} render={() => {
-                    return (props.isLogged ? <ClubRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <ClubRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/requests/users"} render={() => {
-                    return (props.isLogged ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/tags"} render={() => {
-                    return (props.isLogged ? <AdminSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <AdminSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/resetpassword"} render={() => {return (<ResetPassword/>)}}/>
                 <Route exact path={"/explore/events"} render={() => {
-                    return (props.isLogged ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/favouritedevents"} render={() => {
-                    return (props.isLogged ? <FavouritedEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <FavouritedEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/favouritedclubs"} render={() => {
-                    return (props.isLogged ? <FavouritedClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    return (props.isLogged && getCookie("isLogged") ? <FavouritedClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>
@@ -79,7 +133,8 @@ const mapStateToProps = (state: RootState) => {
     return {
         isLogged: state.system.isLoggedIn,
         token: state.system.token,
-        username: state.system.username
+        username: state.system.username,
+        expiry: state.system.date
     }
 };
 
