@@ -1,39 +1,12 @@
-import React, {useState, Component} from 'react';
-import data from "./testdata";
-import {Button, Col, Row, Card} from "react-bootstrap";
-import { library } from '@fortawesome/fontawesome-svg-core'
+import React from 'react';
+import {Button, Row, Card} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faRedo, faHeart, faIdCard, faTimes, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import axios from "../../axios";
 import styles from "./ClubCard.module.css";
-
 import "./style.css"
-import { Club, tag } from '../../types/DataResponses';
+import { Club } from '../../types/DataResponses';
 import { useHistory } from 'react-router-dom';
-
-
-type values = {
-    i: number,
-    x: number,
-    y: number,
-    scale: number,
-    trans: any,
-    bind: any,
-}
-
-type info = {
-    name: string,
-    tags: any[]
-    text: string,
-    socialMedia: any[],
-    pics: any[]
-}
-
-type state = {
-    count: number,
-    info: any,
-    render: boolean
-}
 
 type ClubCardDefinition = {
     username: string

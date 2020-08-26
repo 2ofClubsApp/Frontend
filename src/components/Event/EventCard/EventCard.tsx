@@ -2,7 +2,7 @@ import {Card, Button, Row, Col} from "react-bootstrap";
 import React, { useState} from "react";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt, faDollarSign } from '@fortawesome/free-solid-svg-icons'
+import { faMapMarkerAlt, faDollarSign, faHeart } from '@fortawesome/free-solid-svg-icons'
 import styles from "./EventCard.module.css"
 import { eventGET } from "../../../types/DataResponses";
 import axios from "../../../axios";
@@ -47,7 +47,6 @@ const EventCard = (input: EventCardDefinition) => {
 
     const [show, setShow] = useState(false)
 
-
     const showMore = () => {
         setShow(true);
         document.getElementById(`${input.eventObject.name}card`)!.style.backgroundColor = '#f2f3ff';
@@ -67,9 +66,7 @@ const EventCard = (input: EventCardDefinition) => {
     }
 
     const makeButton = () => {
-        let buttonText = "";
-        buttonText = input.isAttending ? "Remove event" : "Add to attending"
-        return (show) ? (input.isAttending ? (<Button id={`${input.eventObject.name}button`} variant="primary" onClick={unattendEvent}>{buttonText}</Button>) : (<Button id={`${input.eventObject.name}button`} variant="primary" onClick={attendEvent}>{buttonText}</Button>)) : (<></>);
+        return (show) ? (input.isAttending ? (<Button id={`${input.eventObject.name}button`} variant="primary" onClick={unattendEvent}>Remove</Button>) : (<Button id={`${input.eventObject.name}button`} variant="primary" onClick={attendEvent} style={{borderRadius: "50%"}}><FontAwesomeIcon icon={faHeart} /></Button>)) : (<></>);
     }
 
     const makeDetails = () => {

@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 type ClubListingsTableOverviewDefinition = {
     newUsername: string;
     newToken: string;
+    isLogged: boolean;
 }
 
 function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
@@ -29,8 +30,10 @@ function ClubListingTable(input: ClubListingsTableOverviewDefinition) {
                         })
             setData(result.data.data);
             };
-        fetchData();
-    }, [input.newUsername, input.newToken]);
+        if (input.isLogged){
+            fetchData();
+        }
+    }, [input.newUsername, input.newToken, input.isLogged]);
 
    
     return (

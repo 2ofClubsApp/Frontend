@@ -70,16 +70,16 @@ const NavBar = (input: NavBarDefinition) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav className={styles.rightNavLinks}>
-                        <NavLink className={styles.navbarLink} onClick={() => changeRoute("/manageclubs")}>Clubs</NavLink>
                         <NavLink className={styles.navbarLink} onClick={() => changeRoute("/explore/events")}>Events</NavLink>
+                        <NavLink className={styles.navbarLink} onClick={() => changeRoute("/manageclubs")}>Clubs</NavLink>
                         <Dropdown alignRight>
                         <Dropdown.Toggle id="user-dropdown" as={NavLink} className={styles.navbarLink}>
                             {input.userUsername}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item onSelect={() => changeRoute("/explore/favouritedclubs")}>Favourited Clubs</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeRoute("/explore/favouritedevents")}>Favourited Events</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/favouritedclubs")}>Liked Clubs</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/favouritedevents")}>Attending Events</Dropdown.Item>
                             <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Settings</Dropdown.Item>
                             <Dropdown.Item onSelect={() => {logout(); changeRoute("/");}}>Log out</Dropdown.Item>
                         </Dropdown.Menu>

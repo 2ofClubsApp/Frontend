@@ -21,7 +21,7 @@ const ManageClubs = (props: any) => {
         <>
         <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken} />
         <Container className={"d-flex justify-content-center align-items-center mt-5"}>
-            <ClubsListingTable newUsername={props.username} newToken={props.token} />
+            <ClubsListingTable newUsername={props.username} newToken={props.token} isLogged={props.isLogged}/>
         </Container>
         </>
     )

@@ -1,9 +1,8 @@
-import {Container, Table, Row, Button} from "react-bootstrap";
+import {Container, Table, Row} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
 import styles from "./FavouritedClubsTable.module.css"
 import FavouritedClubListing from "./FavouritedClubListing";
 import axios from "../../../axios";
-import { useHistory } from "react-router-dom";
 
 type FavouritedClubsTableOverviewDefinition = {
     newUsername: string;
@@ -11,11 +10,6 @@ type FavouritedClubsTableOverviewDefinition = {
 }
 
 function FavouritedClubListingTable(input: FavouritedClubsTableOverviewDefinition) {
-    const history = useHistory();
-        const changeRoute = (path: string) => {
-            history.replace({pathname: path})
-        };
-
     const [data, setData] = useState([{id: -1, name: ""}]);
    
     useEffect(() => {
@@ -36,7 +30,7 @@ function FavouritedClubListingTable(input: FavouritedClubsTableOverviewDefinitio
     return (
         <Container className={styles.clubListingsTable}>
             <Row className={"d-flex justify-content-between align-items-end m-2 mt-5 row"}>
-                <h1 className={"m-0 " + styles.title}>Clubs you favourited</h1>
+                <h1 className={"m-0 " + styles.title}>Clubs you Liked</h1>
             </Row>
              
             <Table responsive hover striped>

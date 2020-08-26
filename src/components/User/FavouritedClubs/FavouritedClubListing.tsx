@@ -44,7 +44,7 @@ const ClubListing = (input: clubListingDefinition) => {
 
     return (
         <tr>
-            <td colSpan={3} className={"col-11"} key={input.clubID}><NavLink to={`/settings/info/${input.clubID}`} className={styles.clubLink}>{input.clubname}</NavLink></td>
+            <td colSpan={3} className={"col-11"} key={input.clubID}><NavLink to={`/explore/events/${input.clubID}`} className={styles.clubLink}>{input.clubname}</NavLink></td>
             <td className={"col-1 text-center"}><Button variant="outline-danger" onClick={() => { swipeClub() }}><FontAwesomeIcon icon={faHeartBroken} /></Button></td>
         </tr>
     )
