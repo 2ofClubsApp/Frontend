@@ -15,7 +15,6 @@ type EventCardDefinition = {
     isAttending: boolean;
 }
 
-
 const EventCard = (input: EventCardDefinition) => {
 
     const attendEvent = async () => {
@@ -79,9 +78,9 @@ const EventCard = (input: EventCardDefinition) => {
 
     const makeDetails = () => {
         return (!show) ? (
-            <Row className="mt-5 w-100 d-flex" style={{color: '#6367e0'}}> 
-                <Col md={6}><FontAwesomeIcon icon={faMapMarkerAlt}/> {input.eventObject.location}</Col> 
-                <Col md={6}><FontAwesomeIcon icon={faDollarSign}/> {input.eventObject.fee.toFixed(2)}</Col> 
+            <Row className="mt-5 w-100" style={{color: '#6367e0'}}> 
+                <Col md={6} className={"p-0"}><FontAwesomeIcon icon={faMapMarkerAlt}/> {input.eventObject.location}</Col> 
+                <Col md={6} className={"p-0"}><FontAwesomeIcon icon={faDollarSign}/> {input.eventObject.fee.toFixed(2)}</Col> 
             </Row>) : (<></>);
     }
 
@@ -89,11 +88,20 @@ const EventCard = (input: EventCardDefinition) => {
         return (show) ? (<Card.Text className={"text-center d-flex justify-content-center align-items-center flex-column"}>{input.eventObject.description}</Card.Text>) : (<></>);
     }
 
+    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+    const date = (new Date(Date.parse(input.eventObject.datetime))).toLocaleDateString(undefined, options);
+    console.log(date);
+
+    const time = (new Date(Date.parse(input.eventObject.datetime))).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
+
+
     return (
         <>
         <Card id={`${input.eventObject.name}card`} style={{ width: '20rem', height: '20rem'}} className={styles.box} onMouseOver={showMore} onMouseLeave={exitShowMore}>
             <Card.Body className={"text-center d-flex justify-content-between align-items-center flex-column"}>
-                <span>JUL 20, 2030</span>
+                <div className={"d-flex justify-content-center align-items-center flex-column"}>
+                    <b style={{color: '#6367e0'}}>{date + " at " + time}</b>
+                </div>
                 {makeTitle()}
                 {makeText()}
                 {makeButton()}

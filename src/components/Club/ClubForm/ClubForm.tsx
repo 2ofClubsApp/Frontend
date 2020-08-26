@@ -214,7 +214,7 @@ function ClubForm(input: ClubFormDefinition) {
         handleShowEventForm();
     }
 
-    const [events, setEvents] = useState([{ "id": -1, "name": "N/A", "description": "", "location": "", "fee": 1 }]);
+    const [events, setEvents] = useState([{ "id": -1, "name": "N/A", "description": "", "datetime": "", "location": "", "fee": 1 }]);
 
     useEffect(() => {
         const fetchData = async () => {

@@ -48,6 +48,7 @@ export type eventGET = {
     id: number,
     name: string,
     description: string,
+    datetime: string,
     location: string,
     fee: number
 };
