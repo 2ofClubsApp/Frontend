@@ -92,7 +92,7 @@ const AdminLogin = (props: any) => {
                                 props.setToken(token);
                                 const decoded = jwt_decode(token) as any;
                                 props.setUsername(decoded.sub);
-                                props.setExpiry(decoded.exp);
+                                props.setExpiry(decoded.exp*1000);
                                 props.onSetLogin(true);
                                 getUserInfo(values.username, token);
                             }
