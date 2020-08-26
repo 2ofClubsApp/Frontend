@@ -11,7 +11,7 @@ const ResetPasswordLink = () => {
 
     return (
         <div className={styles.passwordLinkDiv}>
-            <Link to={"/resetpassword"} className={styles.passwordLink}>Forgot your password?</Link>
+            <Link to={"/emailreset"} className={styles.passwordLink}>Forgot your password?</Link>
         </div>
     )
 }

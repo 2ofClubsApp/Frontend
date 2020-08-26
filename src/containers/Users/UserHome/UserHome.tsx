@@ -49,13 +49,13 @@ const Home = (props: any) => {
             let arr = result.data.data.tags.map((items: any) => {return items.name});
             setUserTags(result.data.data.tags);
             const result2 = await axios({
-                method: 'get', //you can set what request you want to be
+                method: 'post', //you can set what request you want to be
                 url: `/users/${props.username}/clubs`,
                 headers: {
                     Authorization: `Bearer ${props.token}`
                 },
                 data: {
-                    "tags": arr
+                    "Tags": arr
                 }
                 }).then((result2: any) => {
                     let arr2 = result2.data.data;

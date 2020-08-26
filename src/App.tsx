@@ -23,6 +23,7 @@ import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 import { setLogin, setToken, setUsername, setExpiry } from './store/actions/actions';
 import FavouritedClubs from './containers/Users/Clubs/LikedClubs/FavouritedClubs';
 import axios from "./axios";
+import ResetPasswordEmail from './containers/ResetPassword/ResetPasswordEmail';
 
 const App = (props: any) => {
     // returns the cookie with the given name,
@@ -37,57 +38,35 @@ const App = (props: any) => {
     if (!getCookie("isLogged")){
         props.onSetLogin(false);
     }
+    
+    // console.log(getCookie("RefreshToken"));
 
-    console.log("refresh is" + getCookie("Refresh"))
-    console.log(props.isLogged);
-    console.log("expiry is "+ props.expiry);
+    // axios.post('/refreshToken', {withCredentials: true})
+    //             .then((response: any) => {
+    //                 if (response.code === 1) {
+    //                     setToken(response.data)
+    //                 }
+    //                 else {
+    //                 }
+    //             })
+
     if (props.isLogged) {
-        console.log(document.cookie);
-        console.log("starting");
         var x = setInterval(function() {
             
-            // Get today's date and time
-            var now = new Date().getTime();
-        
-            // Find the distance between now and the count down date
-            var distance = props.expiry - now;
-        
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-            // Display the result in the element with id="demo"
-            console.log("mintes" + minutes + "seconds" + seconds)
-        
-            // If the count down is finished, write some text
-            if (distance < 0) {
-                console.log("grabbed new token");
-                axios.post('/refreshToken', {withCredentials: true})
-                .then((response: any) => {
-                    if (response.code === 1) {
-                        setToken(response.data)
-                    }
-                    else {
-                        props.setToken("")
-                        props.setUsername("")
-                        props.setExpiry(0)
-                        props.onSetLogin(false);
-                    }
-                })
-                .catch(() => {
-                    props.setToken("")
-                    props.setUsername("")
-                    props.setExpiry(0)
-                    props.onSetLogin(false);
-                });
-                clearInterval(x);
-                console.log("expired)");
-            }
-            else if (!props.isLogged) {
-                clearInterval(x);
-            }
+        var now = new Date().getTime();
+
+        var distance = props.expiry - now;
+    
+        if (distance < 0) {
+            props.setToken("")
+            props.setUsername("")
+            props.setExpiry(0)
+            props.onSetLogin(false);
+            clearInterval(x);
+        }
+        else if (!props.isLogged) {
+            clearInterval(x);
+        }
         }, 1000);
     }
 
@@ -116,7 +95,8 @@ const App = (props: any) => {
                     return (props.isLogged && getCookie("isLogged") ? <UserRequests /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/admin/tags"} render={() => {
                     return (props.isLogged && getCookie("isLogged") ? <AdminSettings /> : <Redirect from={"*"} to={"/"}/>)}}/>
-                <Route exact path={"/resetpassword"} render={() => {return (<ResetPassword/>)}}/>
+                <Route exact path={"/emailreset"} render={() => {return (<ResetPasswordEmail />)}}/>
+                <Route exact path={"/resetpassword/:user/:token"} render={() => {return (<ResetPassword />)}}/>
                 <Route exact path={"/explore/events"} render={() => {
                     return (props.isLogged && getCookie("isLogged") ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/favouritedevents"} render={() => {
