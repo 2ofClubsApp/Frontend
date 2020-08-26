@@ -215,7 +215,9 @@ const ClubCard = (input: ClubCardDefinition) => {
             <Card className={"w-50 h-75"}>
                 <Card.Img variant="top" height="50%" src="https://vettedpetcare.com/vetted-blog/wp-content/uploads/2017/09/How-To-Travel-With-a-Super-Anxious-Cat-square.jpeg" alt="Image" />
                 <Card.Body>
-                    <Card.Title className={styles.title + " d-flex justify-content-between align-items-end"}>MCSS <span className={styles.size}><FontAwesomeIcon icon={faUserFriends}/> 5</span></Card.Title>
+                    <Card.Title className={styles.title + " d-flex justify-content-between align-items-end"}>MCSS 
+                        <span className={styles.size + " mb-1"}><FontAwesomeIcon icon={faUserFriends}/> 5</span>
+                    </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">Computer Science, Computer Science,Computer Science, + more</Card.Subtitle>
                     <Card.Text>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
