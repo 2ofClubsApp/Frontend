@@ -22,8 +22,8 @@ import FavouritedEvents from './containers/Users/Events/ExploreEvents/Favourited
 import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 import { setLogin, setToken, setUsername, setExpiry } from './store/actions/actions';
 import FavouritedClubs from './containers/Users/Clubs/LikedClubs/FavouritedClubs';
-import axios from "./axios";
 import ResetPasswordEmail from './containers/ResetPassword/ResetPasswordEmail';
+import ClubHostedEvents from './containers/Users/Events/ExploreEvents/ClubHostedEvents';
 
 const App = (props: any) => {
     // returns the cookie with the given name,
@@ -99,6 +99,8 @@ const App = (props: any) => {
                 <Route exact path={"/resetpassword/:user/:token"} render={() => {return (<ResetPassword />)}}/>
                 <Route exact path={"/explore/events"} render={() => {
                     return (props.isLogged && getCookie("isLogged") ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                    <Route exact path={"/explore/events/:id"} render={() => {
+                    return (props.isLogged && getCookie("isLogged") ? <ClubHostedEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/favouritedevents"} render={() => {
                     return (props.isLogged && getCookie("isLogged") ? <FavouritedEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Route exact path={"/explore/favouritedclubs"} render={() => {

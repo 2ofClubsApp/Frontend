@@ -6,7 +6,6 @@ import ResetPasswordForm from '../../components/ResetPassword/ResetPasswordForm'
 import {RootState} from "../../store/reducers";
 import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../../store/actions/actions";
-import {useParams} from 'react-router-dom';
 
 const ResetPasswordEmail = (props: any) => {
     const history = useHistory();

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Form, Col} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import styles from "./ResetPasswordForm.module.css"
 import {Formik} from "formik";
 import axios from "../../axios";
@@ -8,7 +8,7 @@ import {FormInfo, userLabel} from "../../types/FormInfo";
 import Label from "../Form/Label";
 import FormContainer from "../Form/FormContainer";
 import FormButton from "../Form/FormButton";
-import { StatusResponse, DataResponse } from "../../types/DataResponses"
+import {  DataResponse } from "../../types/DataResponses"
 
 //import {useHistory} from "react-router-dom";
 
@@ -39,12 +39,12 @@ const ResetPasswordForm = () => {
     const [successMessage, setSuccessMessage] = useState({successMessage: ""})
 
     const changeSuccessMessage = (response: DataResponse) => {
-        // if (response.code === 1) {
-        //     setSuccessMessage({successMessage: "Reset email successfully sent!"})
-        // }
-        // else {
-        //     setSuccessMessage({successMessage: "Oops! Something went wrong :("})
-        // }
+        if (response.code === 1) {
+            setSuccessMessage({successMessage: "Reset email successfully sent!"})
+        }
+        else {
+            setSuccessMessage({successMessage: "Oops! Something went wrong :("})
+        }
     }
 
     return (

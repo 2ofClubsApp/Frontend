@@ -4,7 +4,7 @@ import styles from "../../Club/ClubForm/ClubForm.module.css"
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "../../../axios";
-import { eventPOST, DataResponse, StatusResponse } from "../../../types/DataResponses";
+import { eventPOST, StatusResponse } from "../../../types/DataResponses";
 
 type eventFormDefinition = {
     isNew: boolean

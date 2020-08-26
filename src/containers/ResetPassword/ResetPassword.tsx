@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
-import {Container, Button, Form, Col} from "react-bootstrap";
+import React from 'react'
+import { Button, Form, Col} from "react-bootstrap";
 import {useHistory} from 'react-router-dom'
-import NavBar from "../../components/NavBar/NavBar"
-import ResetPasswordForm from '../../components/ResetPassword/ResetPasswordForm';
 import {RootState} from "../../store/reducers";
 import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../../store/actions/actions";
 import {useParams} from 'react-router-dom';
 import * as yup from "yup";
 import { Formik } from 'formik';
-import { resetPasswordSchema } from '../../components/Form/Schemas';
 import FormContainer from '../../components/Form/FormContainer';
-import FormButton from '../../components/Form/FormButton';
+
 import axios from "./../../axios"
-import { DataResponse } from '../../types/DataResponses';
+
 import styles from "./ResetPassword.module.css"
 
 const ResetPassword = (props: any) => {

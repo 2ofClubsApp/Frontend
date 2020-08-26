@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {Container} from "react-bootstrap";
 import '../../../app.css';
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../components/NavBar/NavBar"
@@ -33,8 +32,6 @@ const Home = (props: any) => {
 
     const [userTags, setUserTags] = useState([{"id": -1, "name": "", "isActive": true}]);
     const [tagFilteredClubs, setTagFilteredClubs] = useState([{ id: -100, name: '', email: '', bio: '', logo: '', size: 1, tags: [], hosts: []}]);
-    const [index, setIndex] = useState(-1);
-    const [club, setClub] = useState({ id: -100, name: '', email: '', bio: '', logo: '', size: 1, tags: [], hosts: []})
     const [cards, setCards] = useState([<ClubCard username={props.username} token={props.token} key={1} clubObject={{ id: -1, name: '', email: '', bio: '', logo: '', size: 1, tags: [], hosts: []}} index={0}/>]);
 
     useEffect(() => {
@@ -48,7 +45,7 @@ const Home = (props: any) => {
                 })
             let arr = result.data.data.tags.map((items: any) => {return items.name});
             setUserTags(result.data.data.tags);
-            const result2 = await axios({
+            await axios({
                 method: 'post', //you can set what request you want to be
                 url: `/users/${props.username}/clubs`,
                 headers: {
@@ -58,9 +55,7 @@ const Home = (props: any) => {
                     "Tags": arr
                 }
                 }).then((result2: any) => {
-                    let arr2 = result2.data.data;
                     setTagFilteredClubs(result2.data.data);
-                    
                 })
         };
         fetchData();
@@ -71,7 +66,7 @@ const Home = (props: any) => {
         let arrOfClubCard = tagFilteredClubs.map((item: Club, index: number) => {return <ClubCard key={item.id}  username={props.username} token={props.token} clubObject={item} index={index+1}/>});
         arrOfClubCard.push(<ClubCard key={-1} username={props.username} token={props.token} clubObject={{ id: -1, name: '', email: '', bio: '', logo: '', size: 1, tags: [], hosts: []}} index={0} />)
         setCards(arrOfClubCard);
-    }, [tagFilteredClubs, userTags])
+    }, [props.token, props.username, tagFilteredClubs, userTags])
     
 
 

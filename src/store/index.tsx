@@ -1,10 +1,10 @@
 //import {combineReducers, createStore, applyMiddleware} from "redux"
-import {combineReducers, createStore} from "redux"
+import {  createStore} from "redux"
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import reducer, { rootReducer } from "./reducers"
+import { rootReducer } from "./reducers"
 //import {SystemActionTypes} from "./actions/actionTypes";
 
 // const middleware = (store: Object) => (next: (action: SystemActionTypes) => void) => (action: SystemActionTypes) => {
