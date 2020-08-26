@@ -68,7 +68,6 @@ const TagSettings = ( input: AdminSettingsDefinition ) => {
                 "Name": values["tag"],
             }
             }).then((response: any) => {
-                console.log(JSON.stringify(response));
                 if (response.data.code === 1) {
                     setSaved(true);
                 }
@@ -88,24 +87,18 @@ const TagSettings = ( input: AdminSettingsDefinition ) => {
 
 
     const onChangeHandler = (e: any) => {
-        const file = e.target.files[0];
-        console.log(file.name);
         setFile({file: e.target.files[0]})
     }
 
     const uploadTag = async (values: any) => {
-        console.log("uploading file called " + fileData.file);
         const formData = new FormData();
         formData.append("file", fileData.file);
-        console.log(formData);
         return axios.post(`/upload/tags`, formData, {headers: {Authorization: `Bearer ${input.userToken}`}})
                     .then((response:StatusResponse) => { 
-                        console.log(response.data)
                         const fetchData = async () => {
                             await axios({
                                 method: 'get', //you can set what request you want to be
                                 url: `/tags`}).then((result: any) => {
-                                    console.log(result.data.data);
                                     setData(result.data.data);})
                             await axios({
                                 method: 'get', //you can set what request you want to be
@@ -139,7 +132,6 @@ const TagSettings = ( input: AdminSettingsDefinition ) => {
                 Authorization: `Bearer ${input.userToken}`
             },
             }).then((response: any) => {
-                console.log(JSON.stringify(response));
                 return response.data
         }).catch(err => {
             console.log(err + " failed to submit tag");
@@ -179,7 +171,6 @@ const TagSettings = ( input: AdminSettingsDefinition ) => {
                                             await axios({
                                                 method: 'get', //you can set what request you want to be
                                                 url: `/tags`}).then((result: any) => {
-                                                    console.log(result.data.data);
                                                     setData(result.data.data);})
                                             await axios({
                                                 method: 'get', //you can set what request you want to be

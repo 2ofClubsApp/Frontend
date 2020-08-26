@@ -12,7 +12,7 @@ import { setLogin, setToken, setUsername, setExpiry } from '../../../../store/ac
 const ExploreAllEvents = (props: any) => {
 
     let [counter, setCounter] = useState(0);
-    const [eventCardRows, setEventCardRows] = useState([<h1 key="error"></h1>]);
+    const [eventCardRows, setEventCardRows] = useState([<span key="error"></span>]);
     const [attendingEvents, setAttendingEvents] = useState([{id: -1, name: "", description: "", location: "", fee: 0}]);
     const [events, setEvents] = useState([-1]);
     let eventRows:JSX.Element[] = [];
