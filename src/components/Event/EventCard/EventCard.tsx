@@ -18,8 +18,6 @@ type EventCardDefinition = {
 const EventCard = (input: EventCardDefinition) => {
 
     const attendEvent = async () => {
-        console.log("attending Event " + input.token)
-        console.log("event id is " + input.eventObject.id)
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/events/${input.eventObject.id}/attend`,
@@ -34,8 +32,6 @@ const EventCard = (input: EventCardDefinition) => {
     };
 
     const unattendEvent = async () => {
-        console.log("unattending Event " + input.token)
-        console.log("event id is " + input.eventObject.id)
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/events/${input.eventObject.id}/unattend`,
@@ -90,7 +86,6 @@ const EventCard = (input: EventCardDefinition) => {
 
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     const date = (new Date(Date.parse(input.eventObject.datetime))).toLocaleDateString(undefined, options);
-    console.log(date);
 
     const time = (new Date(Date.parse(input.eventObject.datetime))).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
 

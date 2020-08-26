@@ -53,7 +53,6 @@ const AdminLogin = (props: any) => {
                 changeRoute("/admin");
                 return token;
             }
-            
         }).catch(err => {
             console.log(err + " failed to login");
         });

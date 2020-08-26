@@ -6,22 +6,26 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useHistory} from 'react-router-dom'
 import "../app.css"
+import { RootState } from '../store/reducers';
+import { MapDispatchToProps, connect } from 'react-redux';
+import { setLogin, setToken, setUsername, setExpiry } from '../store/actions/actions';
 
-const signup = {
-    fontSize: "1.25rem",
-    backgroundColor: "white",
-    color: "#696DE9",
-    padding: "1rem 2rem",
-    margin: "10vh 0 0 0",
-    borderRadius: "1rem"
-};
 
-const changeRoute = (path: string, history: any) => {
-    history.push({pathname: path})
-};
-
-export const LandingPage = () => {
+const LandingPage = (props:any) => {
     const history = useHistory();
+    
+    const changeRoute = (path: string, history: any) => {
+        history.push({pathname: path})
+    };
+
+    const signup = {
+        fontSize: "1.25rem",
+        backgroundColor: "white",
+        color: "#696DE9",
+        padding: "1rem 2rem",
+        margin: "10vh 0 0 0",
+        borderRadius: "1rem"
+    };
 
     return (
         <Jumbotron fluid bsPrefix="landing">
@@ -61,3 +65,21 @@ export const LandingPage = () => {
     );
 };
 
+const mapStateToProps = (state: RootState) => {
+    return {
+        isLogged: state.system.isLoggedIn,
+        token: state.system.token,
+        username: state.system.username
+    }
+};
+
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

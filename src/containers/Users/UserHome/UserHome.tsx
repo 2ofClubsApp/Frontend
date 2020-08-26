@@ -4,7 +4,7 @@ import '../../../app.css';
 import Card from "../../../components/ClubCard/ClubCard";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../components/NavBar/NavBar"
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/reducers';
 import { connect, MapDispatchToProps } from 'react-redux';
 import {setLogin, setToken, setUsername, setExpiry} from "../../../store/actions/actions";
 

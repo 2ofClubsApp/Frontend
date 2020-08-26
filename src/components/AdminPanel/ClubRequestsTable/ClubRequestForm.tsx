@@ -39,7 +39,6 @@ const ClubRequestForm = (input: eventFormDefinition) => {
                 Authorization: `Bearer ${input.userToken}`
             },
             }).then((response: any) => {
-                console.log(response);
                 const fetchData = async () => {
                     const result = await axios({
                         method: 'get',
@@ -48,7 +47,6 @@ const ClubRequestForm = (input: eventFormDefinition) => {
                             Authorization: `Bearer ${input.userToken}`
                         }
                     })
-                    console.log(result.data);
                     input.updateClubs(result.data.data);
                     };
         

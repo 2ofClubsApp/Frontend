@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap";
 import React from "react";
 import EventListing from "./EventListing";
-import { RootState } from "../../../store";
+import { RootState } from "../../../store/reducers";
 import { connect } from "react-redux";
 import styles from "../../Club/ClubForm/ClubForm.module.css"
 import { eventGET } from "../../../types/DataResponses";

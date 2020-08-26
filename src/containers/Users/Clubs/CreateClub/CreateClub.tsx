@@ -2,7 +2,7 @@ import React from 'react'
 import ClubForm from '../../../../components/Club/ClubForm/ClubForm';
 import NavBar from "../../../../components/NavBar/NavBar"
 import { connect, MapDispatchToProps} from 'react-redux';
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/reducers';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../../store/actions/actions';
 
 const CreateClub = (props:any) => {

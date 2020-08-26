@@ -1,5 +1,6 @@
 import {SystemActionTypes, SET_LOGIN, SET_TOKEN, SET_USERNAME, SET_EXPIRY} from "../actions/actionTypes";
 import {SystemState} from "../types/types";
+import { combineReducers } from "redux"
 
 const initialState: SystemState = {
     isLoggedIn: false,
@@ -35,3 +36,7 @@ const reducer = (state =  initialState, action: SystemActionTypes): SystemState 
     }
 };
 export default reducer;
+
+export const rootReducer = combineReducers({system: reducer});
+
+export type RootState = ReturnType<typeof rootReducer>

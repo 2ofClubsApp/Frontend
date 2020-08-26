@@ -4,7 +4,7 @@ import NavBar from "../../../../components/NavBar/NavBar"
 import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
 import { connect, MapDispatchToProps } from 'react-redux';
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/reducers';
 import ErrorPage from '../../../../components/ErrorPage/ErrorPage';
 import {setLogin, setToken, setUsername, setExpiry} from "../../../../store/actions/actions";
 

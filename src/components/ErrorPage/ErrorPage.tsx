@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Button} from "react-bootstrap";
 import {useHistory} from 'react-router-dom'
-import {RootState} from "../../store";
+import {RootState} from "../../store/reducers";
 import {connect} from "react-redux";
 import styles from "./ErrorPage.module.css"
 

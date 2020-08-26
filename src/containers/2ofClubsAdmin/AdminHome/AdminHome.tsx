@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap";
 import '../../../app.css';
 import NavBar from "../../../components/NavBar/NavBar"
 import AdminButtonsSet from "../../../components/AdminPanel/AdminButtonsSet/AdminButtonsSet"
-import { RootState } from "../../../store";
+import { RootState } from "../../../store/reducers";
 import { connect, MapDispatchToProps } from "react-redux";
 import { setLogin, setToken, setUsername, setExpiry } from '../../../store/actions/actions';
 

@@ -3,7 +3,7 @@ import React from "react";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { RootState } from "../../../store";
+import { RootState } from "../../../store/reducers";
 import { connect } from "react-redux";
 import axios from "../../../axios"
 import styles from "./ClubRequestsTable.module.css"
@@ -29,7 +29,6 @@ const ClubRequest = (input: ClubRequestDefinition) => {
                 Authorization: `Bearer ${input.newToken}`
             },
             }).then((response: any) => {
-                console.log(response);
                 const fetchData = async () => {
                     const result = await axios({
                         method: 'get',
@@ -38,7 +37,6 @@ const ClubRequest = (input: ClubRequestDefinition) => {
                             Authorization: `Bearer ${input.newToken}`
                         }
                     })
-                    console.log(result.data);
                     input.updateClubs(result.data.data);
                     };
         

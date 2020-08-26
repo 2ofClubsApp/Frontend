@@ -40,7 +40,6 @@ const ResetPasswordForm = () => {
             method: 'post', //you can set what request you want to be
             url: `resetpassword/${values.username}`,
         }).then((response: StatusResponse) => {
-            console.log(JSON.stringify(response.data.Message));
             return (response.data)
         }).catch(err => {
             console.log(err + " submission failed");
@@ -65,7 +64,6 @@ const ResetPasswordForm = () => {
                 onSubmit={ async (values, actions) => {
                     resetPassword(values)
                     .then( (result: any) => {
-                        console.log(result);
                         changeSuccessMessage(result);
                     });
                     }

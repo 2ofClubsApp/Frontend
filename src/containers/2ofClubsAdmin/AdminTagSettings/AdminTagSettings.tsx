@@ -2,7 +2,7 @@ import React from 'react'
 import {Container} from "react-bootstrap";
 import NavBar from "../../../components/NavBar/NavBar"
 import TagSettingsContainer from "../../../components/AdminPanel/TagSettingsContainer/TagSettingsContainer"
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/reducers';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../store/actions/actions';
 

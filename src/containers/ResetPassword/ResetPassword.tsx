@@ -3,7 +3,7 @@ import {Container, Button} from "react-bootstrap";
 import {useHistory} from 'react-router-dom'
 import NavBar from "../../components/NavBar/NavBar"
 import ResetPasswordForm from '../../components/ResetPassword/ResetPasswordForm';
-import {RootState} from "../../store";
+import {RootState} from "../../store/reducers";
 import {connect, MapDispatchToProps} from "react-redux";
 import {setLogin, setToken, setUsername, setExpiry} from "../../store/actions/actions";
 
@@ -13,7 +13,6 @@ const ResetPassword = (props: any) => {
         history.replace({pathname: path})
     };
     
-    console.log(props.isLoggedIn);
     if (props.isLoggedIn) {
         return (
             <>

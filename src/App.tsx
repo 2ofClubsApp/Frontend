@@ -1,12 +1,12 @@
 import React from 'react';
-import {LandingPage} from "./containers/LandingPage";
+import LandingPage from "./containers/LandingPage";
 import {Route, Switch, Redirect} from "react-router-dom";
 import Login from "./containers/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from "./containers/Signup";
 import Home from "./containers/Users/UserHome/UserHome";
-import {connect} from "react-redux";
-import {RootState} from "./store";
+import {connect, MapDispatchToProps} from "react-redux";
+import { RootState } from "./store/reducers";
 import ClubInfo from "./containers/Users/Clubs/ClubInfo/ClubInfo";
 import CreateClub from "./containers/Users/Clubs/CreateClub/CreateClub";
 import ManageClubs from "./containers/Users/Clubs/ManageClubs/ManageClubs"
@@ -20,8 +20,22 @@ import ResetPassword from './containers/ResetPassword/ResetPassword';
 import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAllEvents';
 import YourEvents from './containers/Users/Events/ExploreEvents/YourEvents';
 import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
+import { setLogin, setToken, setUsername, setExpiry } from './store/actions/actions';
 
 const App = (props: any) => {
+    // returns the cookie with the given name,
+    // or undefined if not found
+    function getCookie(name: string) {
+        let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    if (!getCookie("isLogged")){
+        props.onSetLogin(false);
+    }
+
     return (
         <div>
             <Switch>
@@ -66,4 +80,13 @@ const mapStateToProps = (state: RootState) => {
     }
 };
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
+    return {
+        onSetLogin: (isLogged: boolean) => dispatch(setLogin(isLogged)),
+        setToken: (token: string) => dispatch(setToken(token)),
+        setUsername: (username: string) => dispatch(setUsername(username)),
+        setExpiry: (date: number) => dispatch(setExpiry(date))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
