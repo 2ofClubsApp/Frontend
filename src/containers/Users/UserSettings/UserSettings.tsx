@@ -17,8 +17,8 @@ const UserSettings = (props: any) => {
                 url: `/users/${props.username}`,
                 headers: {
                 Authorization: `Bearer ${props.token}`
-                          }
-                        })
+                }
+            })
             .then((result: any) => {
                 setData(result.data.data.email);
             })
@@ -29,9 +29,8 @@ const UserSettings = (props: any) => {
 
     return (
         <>
-        <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
-        <UserSettingsForm title={"Save your profile"} username={props.username} email={data} userToken={props.token} />
-
+            <NavBar isSiteAdmin={false} userUsername={props.username} userToken={props.token} setLogin={props.onSetLogin} setToken={props.setToken}/>
+            <UserSettingsForm title={"Save your profile"} username={props.username} email={data} userToken={props.token} />
         </>
     )
 };

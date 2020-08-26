@@ -26,6 +26,7 @@ const NavBar = (input: NavBarDefinition) => {
     };
 
     const logout = async () => {
+
         return axios({
             method: 'post', //you can set what request you want to be
             url: `/logout/${input.userUsername}`,
@@ -39,6 +40,9 @@ const NavBar = (input: NavBarDefinition) => {
                 return (response.data)
         }).catch(err => {
             console.log(err + " failed to logout");
+            document.cookie = "isLogged=; token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            input.setToken("");
+            input.setLogin(false);
         });
     };
 
@@ -74,6 +78,8 @@ const NavBar = (input: NavBarDefinition) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/favouritedclubs")}>Favourited Clubs</Dropdown.Item>
+                            <Dropdown.Item onSelect={() => changeRoute("/explore/favouritedevents")}>Favourited Events</Dropdown.Item>
                             <Dropdown.Item onSelect={() => changeRoute("/settings/user")}>Settings</Dropdown.Item>
                             <Dropdown.Item onSelect={() => {logout(); changeRoute("/");}}>Log out</Dropdown.Item>
                         </Dropdown.Menu>

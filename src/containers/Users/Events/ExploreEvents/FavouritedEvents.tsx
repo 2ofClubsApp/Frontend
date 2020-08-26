@@ -9,9 +9,7 @@ import axios from "../../../../axios";
 import { eventGET } from '../../../../types/DataResponses';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../../store/actions/actions';
 
-const YourEvents = (props: any) => {
-    
-
+const FavouritedEvents = (props: any) => {
     let [counter, setCounter] = useState(0);
     const [allEventRows, setAllEventRows] = useState([<span key="error"></span>]);
 
@@ -87,4 +85,4 @@ const mapDispatchToProps = (dispatch: MapDispatchToProps<any, null>) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(YourEvents);
+export default connect(mapStateToProps, mapDispatchToProps)(FavouritedEvents);

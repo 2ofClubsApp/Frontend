@@ -34,6 +34,7 @@ export type Club = {
     email: string,
     bio: string,
     size: number,
+    logo: string,
     tags: string[],
     hosts: string[]
 };

@@ -47,6 +47,7 @@ const ExploreAllEvents = (props: any) => {
                     for (let i = 0; i < numOfRows; i++) {
                         eventRows.push(createRow(allEvents, i));
                     }
+                    console.log(allEvents);
                     setEvents(allEvents);
                     setEventCardRows(eventRows);
                     // return (response.data.data.Events)

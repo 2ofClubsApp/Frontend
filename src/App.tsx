@@ -18,9 +18,10 @@ import AdminSettings from "./containers/2ofClubsAdmin/AdminTagSettings/AdminTagS
 import AdminLogin from './containers/AdminLogin';
 import ResetPassword from './containers/ResetPassword/ResetPassword';
 import ExploreAllEvents from './containers/Users/Events/ExploreEvents/ExploreAllEvents';
-import YourEvents from './containers/Users/Events/ExploreEvents/YourEvents';
+import FavouritedEvents from './containers/Users/Events/ExploreEvents/FavouritedEvents';
 import UserRequests from './containers/2ofClubsAdmin/UserRequests/UserRequests';
 import { setLogin, setToken, setUsername, setExpiry } from './store/actions/actions';
+import FavouritedClubs from './containers/Users/Clubs/LikedClubs/FavouritedClubs';
 
 const App = (props: any) => {
     // returns the cookie with the given name,
@@ -35,7 +36,7 @@ const App = (props: any) => {
     if (!getCookie("isLogged")){
         props.onSetLogin(false);
     }
-
+    
     return (
         <div>
             <Switch>
@@ -64,8 +65,10 @@ const App = (props: any) => {
                 <Route exact path={"/resetpassword"} render={() => {return (<ResetPassword/>)}}/>
                 <Route exact path={"/explore/events"} render={() => {
                     return (props.isLogged ? <ExploreAllEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
-                <Route exact path={"/explore/yourevents"} render={() => {
-                    return (props.isLogged ? <YourEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                <Route exact path={"/explore/favouritedevents"} render={() => {
+                    return (props.isLogged ? <FavouritedEvents /> : <Redirect from={"*"} to={"/"}/>)}}/>
+                <Route exact path={"/explore/favouritedclubs"} render={() => {
+                    return (props.isLogged ? <FavouritedClubs /> : <Redirect from={"*"} to={"/"}/>)}}/>
                 <Redirect from={"*"} to={"/"}/>
             </Switch>
         </div>

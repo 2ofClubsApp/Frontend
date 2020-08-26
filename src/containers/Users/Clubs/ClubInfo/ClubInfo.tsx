@@ -12,7 +12,7 @@ const ClubInfo = (props:any) => {
 
     let { id } = useParams();
 
-    const [data, setData] = useState({ id: -1, name: '', email: '', bio: '', size: 1, tags: [], hosts: []});
+    const [data, setData] = useState({ id: -1, name: '', email: '', bio: '', logo: '', size: 1, tags: [], hosts: []});
    
     useEffect(() => {
         const fetchData = async () => {

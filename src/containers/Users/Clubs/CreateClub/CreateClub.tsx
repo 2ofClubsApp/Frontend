@@ -10,7 +10,8 @@ const CreateClub = (props:any) => {
                     id: -1, 
                     name: '', 
                     email: '', 
-                    bio: '', 
+                    bio: '',
+                    logo: '',
                     size: 1, 
                     tags: [], 
                     hosts: []}

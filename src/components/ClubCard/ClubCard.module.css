@@ -27,3 +27,11 @@
 .size {
     font-size: 1.85rem;
 }
+
+.try{
+    border: solid red 2px; 
+    width: 400px; 
+    height: 800px; 
+    grid-column: 1; 
+    grid-row: 1
+}

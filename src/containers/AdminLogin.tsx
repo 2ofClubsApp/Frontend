@@ -85,6 +85,10 @@ const AdminLogin = (props: any) => {
                                 });
                             }
                             else if (typeof token === "string") {
+                                var s = new Date();
+                                s.setMinutes(s.getMinutes()+5);
+                                var time = s.toUTCString();
+                                document.cookie = "isLogged=true; path=/; samesite=strict; expires=" + time;
                                 props.setToken(token);
                                 const decoded = jwt_decode(token) as any;
                                 props.setUsername(decoded.sub);

@@ -1,0 +1,6 @@
+.dgrid {
+    display: grid;
+    grid-template-columns: 500px;
+    grid-template-rows: 100%;
+    z-index: -5000;
+}

@@ -1,5 +1,4 @@
 import React, {useState, Component} from 'react';
-import data from "./testdata";
 import {Button, Col, Row, Card} from "react-bootstrap";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -42,7 +41,7 @@ type ClubCardDefinition = {
     index: number
 }
 
-const ClubCard = (input: ClubCardDefinition) => {
+const ClubCardMini = (input: ClubCardDefinition) => {
 
     const history = useHistory();
 
@@ -133,5 +132,5 @@ const ClubCard = (input: ClubCardDefinition) => {
     }
 };
 
-export default ClubCard;
+export default ClubCardMini;
 

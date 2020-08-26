@@ -142,6 +142,7 @@ const EventForm = (input: eventFormDefinition) => {
                                 };
                                 if (response === 1) {
                                     input.onHide();
+                                    setSavedMessage("");
                                 }
                                 fetchData();
                             })
