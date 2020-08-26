@@ -33,6 +33,7 @@ const NavBar = (input: NavBarDefinition) => {
                 Authorization: `Bearer ${input.userToken}`
             },
             }).then((response: any) => {
+                document.cookie = "isLogged=; token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
                 input.setToken("");
                 input.setLogin(false);
                 return (response.data)

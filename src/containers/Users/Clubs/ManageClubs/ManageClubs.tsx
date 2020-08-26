@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap";
 import ClubsListingTable from "../../../../components/Club/ClubListingsTable/ClubListingsTable";
 import NavBar from "../../../../components/NavBar/NavBar"
 import { connect, MapDispatchToProps } from 'react-redux';
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/reducers';
 import jwt_decode from 'jwt-decode';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../../store/actions/actions';
 

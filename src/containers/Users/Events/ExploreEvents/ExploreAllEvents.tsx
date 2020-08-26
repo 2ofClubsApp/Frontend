@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Container, Row, Col} from "react-bootstrap";
 import '../../../../app.css';
 import NavBar from "../../../../components/NavBar/NavBar"
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/reducers';
 import { connect, MapDispatchToProps } from 'react-redux';
 import EventCard from '../../../../components/Event/EventCard/EventCard';
 import axios from "../../../../axios";

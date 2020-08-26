@@ -105,7 +105,14 @@ const Login = (props: any) => {
                                 handleShow();
                             }
                             else if (typeof token === "string") {
-                                
+                                var s = new Date();
+                                s.setMinutes(s.getMinutes()+5);
+                                var time = s.toUTCString();
+                                document.cookie = "isLogged=true; path=/; samesite=strict; expires=" + time;
+                                // document.cookie = `token=${token}; path=/; expires="${s.toUTCString()}; secure; samesite=strict`;
+                                // var x = document.cookie;
+                                // console.log(x);
+                                // document.cookie = "loggedin=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
                                 props.setToken(token);
                                 const decoded = jwt_decode(token) as any;
                                 props.setUsername(decoded.sub);

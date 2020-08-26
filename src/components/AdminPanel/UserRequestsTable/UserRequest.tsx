@@ -3,7 +3,7 @@ import React from "react";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { RootState } from "../../../store";
+import { RootState } from "../../../store/reducers";
 import { connect } from "react-redux";
 import axios from "../../../axios"
 

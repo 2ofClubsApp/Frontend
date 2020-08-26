@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import UserSettingsForm from '../../../components/User/UserSettingsForm/UserSettingsForm';
 import NavBar from "../../../components/NavBar/NavBar"
 import axios from "../../../axios";
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/reducers';
 import { connect, MapDispatchToProps } from 'react-redux';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../store/actions/actions';
 

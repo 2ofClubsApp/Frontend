@@ -57,16 +57,12 @@ const TagListing = (input: FormDefinition) => {
                 input.setMyVar(newTagsList);
                 const toggledTagsList = input.myVar2.concat(input.label);
                 input.setMyVar2(toggledTagsList);
-                console.log("toggled Tags List is now " + toggledTagsList);
-                console.log(input.label + "on")
             }
             else {
                 const newTagsList = input.myVar.filter(item => item !== input.label);
                 input.setMyVar(newTagsList);
                 const toggledTagsList = input.myVar2.concat(input.label);
                 input.setMyVar2(toggledTagsList);
-                console.log("toggled Tags List is now " + toggledTagsList);
-                console.log(input.label + "off")
             }
         };
         

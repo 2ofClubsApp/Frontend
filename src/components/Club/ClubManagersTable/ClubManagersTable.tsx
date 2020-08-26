@@ -270,7 +270,6 @@ const ClubsAdvancedSettingsForm = (input: advancedSettingsDefinition) => {
                         <Formik
                             validationSchema={schema}
                             onSubmit={async (values, actions) => {
-                                console.log(values.username);
                                 addManager(values).then((result: any) => {
                                     const fetchData = async () => {
                                         const result = await axios({

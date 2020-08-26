@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { RootState } from "../../../store";
+import { RootState } from "../../../store/reducers";
 import { connect } from "react-redux";
 import styles from "./ClubListing.module.css"
 

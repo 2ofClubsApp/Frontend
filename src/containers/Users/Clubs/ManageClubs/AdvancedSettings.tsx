@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
 import NavBar from "../../../../components/NavBar/NavBar"
 import ClubsAdvancedSettingsForm from "../../../../components/Club/ClubManagersTable/ClubManagersTable"
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/reducers';
 import { connect, MapDispatchToProps } from 'react-redux';
 import axios from "../../../../axios";
 import ErrorPage from '../../../../components/ErrorPage/ErrorPage';

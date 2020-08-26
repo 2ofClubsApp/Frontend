@@ -3,7 +3,7 @@ import {Container, Row, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import styles from "../../Club/ClubForm/ClubForm.module.css"
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/reducers';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from "yup";

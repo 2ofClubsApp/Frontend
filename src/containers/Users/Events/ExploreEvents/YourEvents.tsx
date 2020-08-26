@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Container, Row, Col} from "react-bootstrap";
 import '../../../../app.css';
 import NavBar from "../../../../components/NavBar/NavBar"
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/reducers';
 import { connect, MapDispatchToProps } from 'react-redux';
 import EventCard from '../../../../components/Event/EventCard/EventCard';
 import axios from "../../../../axios";
@@ -19,7 +19,7 @@ const YourEvents = (props: any) => {
         const createRow = (allEvents: eventGET[], row: number) => {
             let arr: JSX.Element[] = [];
             const maxColumns = counter + 3;
-            console.log(counter)
+            
             for (let i = counter; i < maxColumns; i++){
                 if ( i < allEvents.length) {
                     arr.push(<Col sm={12} md={4} key={row + i}><EventCard eventObject={allEvents[i]} token={props.token} isAttending={true}/></Col>);
@@ -43,7 +43,6 @@ const YourEvents = (props: any) => {
                     Authorization: `Bearer ${props.token}`
                 },
                 }).then((result: any) => {
-                    console.log(result.data.data.attends);
                     let allEvents = result.data.data.attends;
                     let numOfRows = ( (allEvents.length%3 === 0) ? (allEvents.length/3) : (allEvents.length/3) + 1);
 

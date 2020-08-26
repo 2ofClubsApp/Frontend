@@ -41,7 +41,6 @@ const SignUp = () => {
             "Password": values["password"],
             "Email": values["email"],
         })).then(response => {
-            console.log(response.data);
             if (response.data.Code === -1){ 
                 const username = response.data.Data.Username;
                 const email = response.data.Data.Email;

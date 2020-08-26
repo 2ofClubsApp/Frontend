@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap";
 // import {useHistory} from 'react-router-dom'
 import NavBar from "../../../components/NavBar/NavBar"
 import { connect, MapDispatchToProps } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/reducers';
 import jwt_decode from 'jwt-decode';
 import UserRequestsTable from '../../../components/AdminPanel/UserRequestsTable/UserRequestsTable';
 import { setLogin, setToken, setUsername, setExpiry } from '../../../store/actions/actions';
@@ -17,8 +17,6 @@ const UserRequests = (props: any) => {
     }
 
     decode();
-
-    console.log("user requests " + props.token)
     
     return (
         <>
