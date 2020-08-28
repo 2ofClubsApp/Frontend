@@ -13,6 +13,7 @@
   <a href="#documentation">Documentation</a> •
   <a href="#blog">Blog</a> •
   <a href="#contact">Contact</a> •
+  <a href="#honorable-mentions">Honorable Mentions</a> •
   <a href="#license">License</a>
 </p>
 
