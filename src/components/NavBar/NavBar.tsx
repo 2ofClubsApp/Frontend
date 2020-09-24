@@ -70,6 +70,7 @@ const NavBar = (input: NavBarDefinition) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav className={styles.rightNavLinks}>
+                    <NavLink className={styles.navbarLink} onClick={() => changeRoute("/")}>Home</NavLink>
                         <NavLink className={styles.navbarLink} onClick={() => changeRoute("/explore/events")}>Events</NavLink>
                         <NavLink className={styles.navbarLink} onClick={() => changeRoute("/manageclubs")}>Clubs</NavLink>
                         <Dropdown alignRight>
