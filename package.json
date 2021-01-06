@@ -19,7 +19,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-persist": "^4.3.1",
     "@types/yup": "^0.29.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "css-loader": "^3.6.0",
     "formik": "^2.1.4",
